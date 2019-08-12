@@ -1,13 +1,13 @@
 version: '3.0'
 services:
   back:
-    build: ./server/
+    image: node
     ports:
       - "8000:8000"
     volumes:
       - ./server:/usr/src/app
     working_dir: /usr/src/app
-    command: npm start
+    entrypoint: sh start.sh
     networks:
       - default
 
@@ -24,7 +24,7 @@ services:
       - default
 
   front:
-    build: ./client/
+    image: node
     ports:
       - "3000:3000"
     volumes:
@@ -32,9 +32,10 @@ services:
     depends_on:
       - back
     working_dir: /usr/src/app
-    command: npm start
+    entrypoint: sh start.sh
     networks:
       - default
+
 networks:
   default:
     driver: bridge

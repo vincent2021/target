@@ -5,7 +5,9 @@
   "main": "App.js",
   "dependencies": {
     "express": "^4.17.1",
-    "nodemon": "^1.19.1"
+    "nodemon": "^1.19.1",
+    "npm": "^6.10.3",
+    "start": "^5.1.0"
   },
   "devDependencies": {
     "nodemon": "^1.19.1"
