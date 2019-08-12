@@ -11,6 +11,7 @@ const clientStub = new dgraph.DgraphClientStub(
 );
 const dgraphClient = new dgraph.DgraphClient(clientStub);
 
+
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -18,8 +19,9 @@ app.use((req, res, next) => {
 });
 
 app.post('/login', (req, res) => {
-  console.log(dgraphClient)
-  res.send("Salut")
+  console.log("test-backend")  
+  var test = JSON.stringify({test : "AHHAHAHAHA"})
+  res.send(test)
   console.log(res);
 });
 

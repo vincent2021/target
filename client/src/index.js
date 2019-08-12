@@ -16,7 +16,9 @@ const request = {
 };
   
 fetch('http://localhost:8000/login', request).then((res) => {
-    console.log(res)
+    res.json().then((json) => {
+        console.log(json)
+    })
 });
 
 ReactDOM.render(<App />, document.getElementById('root'));

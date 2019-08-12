@@ -65,6 +65,6 @@ services:
 networks:
   default:
     driver: bridge
-  
+    
 volumes:
   dgraph:
