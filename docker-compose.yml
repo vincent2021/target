@@ -1,4 +1,4 @@
-version: '3.0'
+version: '3.2'
 services:
   back:
     image: node
@@ -11,17 +11,43 @@ services:
     networks:
       - default
 
-  neo4j:
-    image: neo4j
+  zero:
+    image: dgraph/dgraph:latest
     volumes:
-      - ./neo4j/data:/data
+      - type: volume
+        source: dgraph
+        target: /dgraph
+        volume:
+          nocopy: true
     ports:
-      - 7474:7474
-      - 7687:7687
-    environment:
-      NEO4J_AUTH: none
-    networks:
-      - default
+      - 5080:5080
+      - 6080:6080
+    restart: on-failure
+    command: dgraph zero --my=zero:5080
+  server:
+    image: dgraph/dgraph:latest
+    volumes:
+      - type: volume
+        source: dgraph
+        target: /dgraph
+        volume:
+          nocopy: true
+    ports:
+      - 8080:8080
+      - 9080:9080
+    restart: on-failure
+    command: dgraph alpha --my=server:7080 --lru_mb=2048 --zero=zero:5080
+  ratel:
+    image: dgraph/dgraph:latest
+    volumes:
+      - type: volume
+        source: dgraph
+        target: /dgraph
+        volume:
+          nocopy: true
+    ports:
+      - 8100:8000
+    command: dgraph-ratel
 
   front:
     image: node
@@ -39,3 +65,6 @@ services:
 networks:
   default:
     driver: bridge
+  
+volumes:
+  dgraph:

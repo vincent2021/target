@@ -4,7 +4,9 @@
   "description": "",
   "main": "App.js",
   "dependencies": {
+    "dgraph-js": "^1.3.1",
     "express": "^4.17.1",
+    "grpc": "^1.22.2",
     "nodemon": "^1.19.1",
     "npm": "^6.10.3",
     "start": "^5.1.0"
