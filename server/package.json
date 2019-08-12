@@ -7,11 +7,13 @@
     "express": "^4.17.1",
     "nodemon": "^1.19.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  },
   "scripts": {
     "start": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "fefe",
+  "author": "fedecomb - vimucchi",
   "license": "ISC"
 }

@@ -1,0 +1,40 @@
+version: '3.0'
+services:
+  back:
+    build: ./server/
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./server:/usr/src/app
+    working_dir: /usr/src/app
+    command: npm start
+    networks:
+      - default
+
+  neo4j:
+    image: neo4j
+    volumes:
+      - ./neo4j/data:/data
+    ports:
+      - 7474:7474
+      - 7687:7687
+    environment:
+      NEO4J_AUTH: none
+    networks:
+      - default
+
+  front:
+    build: ./client/
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./client:/usr/src/app
+    depends_on:
+      - back
+    working_dir: /usr/src/app
+    command: npm start
+    networks:
+      - default
+networks:
+  default:
+    driver: bridge
