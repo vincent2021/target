@@ -21,5 +21,5 @@ fetch('http://localhost:8000/login', request).then((res) => {
     })
 });
 
-ReactDOM.render(<App />, document.getElementById('root'));
+// ReactDOM.render(<App />, document.getElementById('root'));
 
