@@ -1,6 +1,7 @@
 version: '3.2'
 services:
   back:
+    container_name: server
     image: node
     ports:
       - "8000:8000"
@@ -12,6 +13,7 @@ services:
       - default
 
   zero:
+    container_name: dgraph-zero
     image: dgraph/dgraph:latest
     volumes:
       - type: volume
@@ -25,6 +27,7 @@ services:
     restart: on-failure
     command: dgraph zero --my=zero:5080
   server:
+    container_name: dgraph
     image: dgraph/dgraph:latest
     volumes:
       - type: volume
@@ -38,6 +41,7 @@ services:
     restart: on-failure
     command: dgraph alpha --my=server:7080 --lru_mb=2048 --zero=zero:5080
   ratel:
+    container_name: dgraph-browser
     image: dgraph/dgraph:latest
     volumes:
       - type: volume
@@ -50,6 +54,7 @@ services:
     command: dgraph-ratel
 
   front:
+    container_name: react
     image: node
     ports:
       - "3000:3000"
