@@ -1,42 +1,24 @@
-import './style/App.css';
-import React, {Component} from "react"
+// npm install axios --save  >>> for http request
 
+import './style/App.css';
+import React,{Component} from "react";
+import ReactDOM from "react-dom";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import {AppRouter} from "./MasterPage";
 
 class App extends Component {
-    constructor() {
-        super()
+    constructor(){
+        super();
         this.state = {
-            character: {}
+            value : 'yeah'
         }
     }
-    
-    componentDidMount() {
-    
-        const request = {
-            method: 'POST',
-            headers:{
-              'Content-Type': 'application/json'
-            },
-        };
-          
-        fetch('http://localhost:8000/login', request)
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
-                this.setState({
-                    character: data
-                })
-            })
 
-    }
-    
-    render() {
-        return (
-            <div>
-                <p className="test">{this.state.character.name}</p>
-            </div>
-        )
+    render(){
+        return(
+            < AppRouter/>
+        );
     }
 }
 
-export default App
+export default App;
