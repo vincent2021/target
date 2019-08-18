@@ -1,45 +1,41 @@
 import './style/App.css';
-import React from "react";
+import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import { LowBrain } from "./Components/Login";
+import Login from "./Components/Login";
+import Register from "./Components/Register";
 
-function Index() {
-    return <p>INDEX</p>;
+class AppRouter extends Component {
+    // constructor() {
+    // super();
+    // const Router = [
+    //     { path: '/Components/Login', name: < Login /> },
+    //     { path: '/Components/Register', name: 'Register' }
+    // ];
+    // }
+
+    Lolo = () => {
+        return (<Login />);
+    }
+
+    Rere = () => {
+        return <Register />
+    }
+
+    render() {
+        return (
+            <div>
+                <Router>
+                    <Link to="/Components/Login">Alredy have an account ? Sign in !</Link>
+                    <br />
+                    <Link to="/Components/Register">New in Target ? Create an account !</Link>
+                    <div>
+                        <Route path="/Components/Login" component={this.Lolo} />
+                        <Route path="/Components/Register" component={this.Rere} />
+                    </div>
+                </Router>
+            </div>
+        )
+    }
 }
 
-function Login() {
-    return < LowBrain />;
-}
-
-function Users() {
-    return <h2>Users</h2>;
-}
-
-export function AppRouter() {
-    return (
-        <div>
-            <Router>
-                <div>
-                    <nav>
-                        <ul>
-                            <li>
-                                <Link to="/">Home</Link>
-                            </li>
-                            <li>
-                                <Link to="/Components/Login">Login</Link>
-                            </li>
-                            <li>
-                                <Link to="/users/">Users</Link>
-                            </li>
-                        </ul>
-                    </nav>
-
-                    <Route path="/" exact component={Index} />
-                    <Route path="/Component/Login" component={Login} />
-                    <Route path="/users/" component={Users} />
-                </div>
-            </Router>
-        </div>
-    );
-}
-
+export default AppRouter;

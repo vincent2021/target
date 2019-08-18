@@ -1,61 +1,51 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom';
+
+class Login extends React.Component {
+
+    state = {
+        user: {
+            username: "",
+            fistname: "",
+            name: "",
+            email: "",
+            password: "",
+            confPassword: ""
+        },
+        confirm: false
+    }
 
 
-export function LowBrain() {
-    
+    handleChange = (event) => {
+        const { value } = event.target
+        this.setState({ value })
+    }
+
+    render() {
         return (
-            <p>Yeahjsdahjkashdlfajsdhajksdhkahjk</p>
-            // ReactDOM.render(<p>yeah</p>, document.getElementById('login'))
+            <form>
+                <input
+                    type="text"
+                    value={this.state.username}
+                    name="username"
+                    placeholder="Username"
+                    onChange={this.handleChange}
+                />
+                <br />
+                <input
+                    type="password"
+                    value={this.state.password}
+                    name="password"
+                    placeholder="Password"
+                    onChange={this.handleChange}
+                />
+                <br />
+                <button>Connection</button>
+
+            </form>
         )
-    
+    }
 }
 
-
-// class Login extends React.Component {
-// constructor() {
-//     super();
-//     this.state = {
-//         user: {
-//             username: "",
-//             fistname: "",
-//             name: "",
-//             email: "",
-//             password: "",
-//             confPassword: ""
-//         },
-//         confirm: false
-//     }
-//     console.log('?');
-// }
-
-// handleChange = (event) => {
-//     const { name, value, type, checked } = event.target
-//     type === "checkbox" ? this.setState({ [name]: checked }) : this.setState({ [name]: value })
-// }
-
-// render() {
-//     <form>
-//     <input
-//         type="text"
-//         value={this.state.firstName}
-//         name="firstName"
-//         placeholder="First Name"
-//         onChange={this.handleChange}
-//     />
-//     <br />
-//     <input
-//         type="text"
-//         value={this.state.lastName}
-//         name="lastName"
-//         placeholder="Last Name"
-//         onChange={this.handleChange}
-//     />
-// </form>
-// , 
-
-//     }
-// }
-
-// export default Login;
+export default Login;
 

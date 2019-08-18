@@ -4,9 +4,8 @@
 
 import './style/App.css';
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import { AppRouter } from "./MasterPage";
+// import ReactDOM from "react-dom";
+import  AppRouter  from "./MasterPage";
 
 class App extends Component {
     constructor() {
@@ -14,6 +13,7 @@ class App extends Component {
         this.state = {
             value: 'yeah'
         }
+        
     }
 
     render() {
