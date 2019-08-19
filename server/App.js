@@ -19,7 +19,7 @@ app.post('/', (req, res, next) => {
 })
 
 async function makeGetRequest() {
-  let res = await axios.get('http://localhost:3000/req/');
+  let res = await axios.get('http://localhost:8000/');
   let data = res.data;
   console.log(data);
 }

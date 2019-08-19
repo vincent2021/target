@@ -15,7 +15,7 @@ async function makePostRequest() {
         email: 'freddyb34@gmail.com'
       }
   
-    let res = await axios.post('http://localhost:3000/req/', params);
+    let res = await axios.post('http://localhost:8000/', params);
   
     console.log(res.data);
   }
