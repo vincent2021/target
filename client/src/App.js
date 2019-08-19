@@ -5,25 +5,67 @@
 import './style/App.css';
 import React, { Component } from "react";
 // import ReactDOM from "react-dom";
-import  AppRouter  from "./MasterPage";
+// import  AppRouter  from "./MasterPage";
+
+// class App extends Component {
+//     constructor() {
+//         super();
+//         this.state = {
+//             value: 'yeah'
+//         }
+//     }
+
+//     render() {
+//         return (
+//             <div>
+//                 <AppRouter/>
+//             </div>
+//         );
+//     }
+// }
+
+
+import axios from 'axios';
 
 class App extends Component {
-    constructor() {
-        super();
-        this.state = {
-            value: 'yeah'
-        }
-        
-    }
+  state = {
+    name: '',
+  }
 
-    render() {
-        return (
-            <div>
-                <AppRouter/>
-            </div>
-        );
+  handleChange = event => {
+    this.setState({ name: event.target.value });
+  }
 
-    }
+  handleSubmit = event => {
+    event.preventDefault();
+
+    const user = {
+      name: this.state.name
+    };
+
+    axios.post('http://localhost:8000', { user })
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
+      })
+      .catch(err => {
+          console.log(err);
+      })
+  }
+
+  render() {
+    return (
+      <div>
+        <form onSubmit={this.handleSubmit}>
+          <label>
+            Person Name:
+            <input type="text" name="name" onChange={this.handleChange} />
+          </label>
+          <button type="submit">Add</button>
+        </form>
+      </div>
+    )
+  }
 }
 
 export default App;

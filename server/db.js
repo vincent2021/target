@@ -110,7 +110,6 @@ async function queryData(dgraphClient) {
     const res = await dgraphClient.newTxn().queryWithVars(query, vars);
     const ppl = res.getJson();
     // ppl.all.forEach((person) => console.log(person));
-    
     return ppl.all[0];
     // send result
 
