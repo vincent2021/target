@@ -14,54 +14,37 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.post('/', (req, res, next) => {
-  console.log(req.body);
-})
+
+// recuperée un post client
+async function whoisit(){
+  await app.post('/newuser', (req, res, next) => {
+  return console.log(req.body);
+  })
+}
+whoisit().catch(err => console.log(err.message));
 
 
-// async function makePostRequest() {
+// Post serveur->client
 
-//   const params = {
+// app.post('/login', (req, res) => {
+//   async function makePostRequest() {
+//     const params = {
 //       id: 6,
 //       first_name: 'Fred',
 //       last_name: 'Blair',
 //       email: 'freddyb34@gmail.com'
 //     }
+//     console.log(res.body);
+//     res.send(params);
+//   }
+//   makePostRequest();
+// })
 
-//   let res = await axios.post('http://localhost:3000/users/', params);
-
-//   console.log(res.data);
-// }
-
-app.post('/login', (req, res) => {
-  async function makePostRequest() {
-    const params = {
-      id: 6,
-      first_name: 'Fred',
-      last_name: 'Blair',
-      email: 'freddyb34@gmail.com'
-    }
-    console.log(res.body);
-    res.send(params);
-  }
-  makePostRequest();
-})
-
-
-
-
-
-
-// app.use((req, res, next) => {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//   next();
-// });
+// Mise en place db + query + post serveur -> client
 
 // app.post('/login', (req, res) => {
 //   console.log("test-backend")
 //   async function f() {
-
 //     //get info
 //     const dgraphClientStub = db.newClientStub();
 //     const dgraphClient = db.newClient(dgraphClientStub);
