@@ -18,12 +18,34 @@ app.post('/', (req, res, next) => {
   console.log(req.body);
 })
 
-async function makeGetRequest() {
-  let res = await axios.get('http://localhost:8000/');
-  let data = res.data;
-  console.log(data);
-}
-makeGetRequest();
+
+// async function makePostRequest() {
+
+//   const params = {
+//       id: 6,
+//       first_name: 'Fred',
+//       last_name: 'Blair',
+//       email: 'freddyb34@gmail.com'
+//     }
+
+//   let res = await axios.post('http://localhost:3000/users/', params);
+
+//   console.log(res.data);
+// }
+
+app.post('/login', (req, res) => {
+  async function makePostRequest() {
+    const params = {
+      id: 6,
+      first_name: 'Fred',
+      last_name: 'Blair',
+      email: 'freddyb34@gmail.com'
+    }
+    console.log(res.body);
+    res.send(params);
+  }
+  makePostRequest();
+})
 
 
 
