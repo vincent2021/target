@@ -33,7 +33,7 @@ class Login extends React.Component {
                         name="username"
                         placeholder="Username"
                         onChange={this.handleChange}
-                        autocomplete="off"
+                        autoComplete="off"
                     />
                     <input
                         type="password"
@@ -41,7 +41,7 @@ class Login extends React.Component {
                         name="password"
                         placeholder="Password"
                         onChange={this.handleChange}
-                        autocomplete="off"
+                        autoComplete="off"
                     />
                      <input
                         className="Submit"

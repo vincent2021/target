@@ -1,5 +1,6 @@
 //include db
 const db = require('./db.js');
+const dgraph = require("dgraph-js");
 
 // POST
 const express = require('express');
@@ -15,12 +16,43 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 
-// recuperée un post client
-async function whoisit(){
+// recuperere un post client
+async function whoisit() {
   await app.post('/newuser', (req, res, next) => {
-  return console.log(req.body);
-  })
+  const data = req.body;
+  console.log(data);
+  console.log(data.user);
+    async function createData(dgraphClient, data) {
+      // Create a new transaction.
+      const txn = dgraphClient.newTxn();
+      try {
+          // Create data.
+          const p = data;
+
+          // Run mutation.
+          const mu = new dgraph.Mutation();
+          mu.setSetJson(p);
+          const assigned = await txn.mutate(mu);
+
+          // Commit transaction.
+          await txn.commit();
+
+          // Get uid of the outermost object (person named "Alice").
+          // Assigned#getUidsMap() returns a map from blank node names to uids.
+          // For a json mutation, blank node names "blank-0", "blank-1", ... are used
+          // for all the created nodes.
+          
+      } finally {
+          // Clean up. Calling this after txn.commit() is a no-op
+          // and hence safe.
+          await txn.discard();
+      }
+  }
+  createData(db.newClient(db.newClientStub()), data.user);
+return data; 
+})
 }
+
 whoisit().catch(err => console.log(err.message));
 
 
