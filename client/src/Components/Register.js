@@ -1,105 +1,105 @@
-import React from 'react';
-import zxcvbn from 'zxcvbn';
-import '../style/Register.css';
+import React, { Component } from 'react';
+import '../style/Connection.css';
 // import ReactDOM from 'react-dom';
+import axios from 'axios';
 
-class Register extends React.Component {
-
-    constructor() {
-        super();
-        this.state = {
-            type: 'input',
-            score: 'null',
-            user: {
-                username: "",
-                fistname: "",
-                name: "",
-                email: "",
-                password: "",
-                confPassword: ""
-            },
-            confirm: false
-        }
-        this.passwordStrength = this.passwordStrength.bind(this);
+class Register extends Component {
+    state = {
+        user: {
+            username: "",
+            fistname: "",
+            lastname: "",
+            email: "",
+            password: "",
+            confPassword: ""
+        },
+        confirm: false
     }
 
-    handleChange = (event) => {
-        const { value } = event.target
-        this.setState({ value })
+    handleChange = event => {
+        const target = event.target;
+        const value = target.value;
+        const name = target.name;
+        this.setState({
+            [name]: value
+        });
     }
 
-    passwordStrength(e) {
-        if (e.target.value === '') {
-            this.setState({
-                score: 'null'
+    handleSubmit = event => {
+        event.preventDefault();
+        const user = {
+            username: this.state.username,
+            firstname: this.state.firstname,
+            lastname: this.state.name,
+            email: this.state.email,
+            password: this.state.password,
+            confPassword: this.state.confPassword
+        };
+        axios.post('http://localhost:8000/newuser', { user })
+            .then(res => {
+                console.log(res);
+                console.log(res.data);
             })
-        }
-        else {
-            var pw = zxcvbn(e.target.value);
-            this.setState({
-                score: pw.score
-            });
-        }
-
+            .catch(err => {
+                console.log(err);
+            })
     }
 
     render() {
         return (
-            <form>
-                <input
-                    type="text"
-                    value={this.state.username}
-                    name="username"
-                    placeholder="Username"
-                    onChange={this.handleChange}
-                />
-                <br />
-                <input
-                    type="text"
-                    value={this.state.firstName}
-                    name="firstName"
-                    placeholder="First Name"
-                    onChange={this.handleChange}
-                />
-                <br />
-                <input
-                    type="text"
-                    value={this.state.lastName}
-                    name="lastName"
-                    placeholder="Last Name"
-                    onChange={this.handleChange}
-                />
-                <br />
-                <input
-                    type="text"
-                    value={this.state.email}
-                    name="email"
-                    placeholder="Email"
-                    onChange={this.handleChange}
-                /><br />
-                <input
-                    type={this.state.type}
-                    value={this.state.password}
-                    className="password__input"
-                    name="password"
-                    placeholder="Password"
-                    onChange={this.passwordStrength}
-                />
-                <br />
-                <input
-                    type="text"
-                    value={this.state.confPassword}
-                    name="confPassword"
-                    placeholder="Confirm Password"
-                    onChange={this.handleChange}
-                />
-                <br />
-                <input
-                    type="submit"
-                    value="Send"
-                />
-
-            </form>
+            <div className="Bloc">
+                <form onSubmit={this.handleSubmit}>
+                    <h1>CREATE USER</h1>
+                    <input
+                        type="text"
+                        name="username"
+                        placeholder="Username"
+                        onChange={this.handleChange}
+                        autocomplete="off"
+                    />
+                    <input
+                        type="text"
+                        name="firstname"
+                        placeholder="First Name"
+                        onChange={this.handleChange}
+                        autocomplete="off"
+                    />
+                    <input
+                        type="text"
+                        name="lastname"
+                        placeholder="Last Name"
+                        onChange={this.handleChange}
+                        autocomplete="off"
+                    />
+                    <input
+                        type="text"
+                        name="email"
+                        placeholder="Email"
+                        onChange={this.handleChange}
+                        autocomplete="off"
+                    />
+                    <input
+                        type={this.state.type}
+                        className="password__input"
+                        name="password"
+                        placeholder="Password"
+                        onChange={this.handleChange}
+                        autocomplete="off"
+                    />
+                    <input
+                        type="text"
+                        name="confPassword"
+                        placeholder="Confirm Password"
+                        onChange={this.handleChange}
+                        autocomplete="off"
+                    />
+                    <input
+                        className="Submit"
+                        type="submit"
+                        value="Submit"
+                    />
+                </form>
+            </div >
         )
     }
 }

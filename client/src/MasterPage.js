@@ -13,11 +13,11 @@ class AppRouter extends Component {
     // ];
     // }
 
-    Lolo = () => {
+    Login = () => {
         return (<Login />);
     }
 
-    Rere = () => {
+    Register = () => {
         return <Register />
     }
 
@@ -29,8 +29,8 @@ class AppRouter extends Component {
                     <br />
                     <Link to="/Components/Register">New in Target ? Create an account !</Link>
                     <div>
-                        <Route path="/Components/Login" component={this.Lolo} />
-                        <Route path="/Components/Register" component={this.Rere} />
+                        <Route path="/Components/Login" component={this.Login} />
+                        <Route path="/Components/Register" component={this.Register} />
                     </div>
                 </Router>
             </div>

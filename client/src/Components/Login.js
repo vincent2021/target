@@ -1,4 +1,5 @@
 import React from 'react';
+import '../style/Connection.css';
 // import ReactDOM from 'react-dom';
 
 class Login extends React.Component {
@@ -23,29 +24,35 @@ class Login extends React.Component {
 
     render() {
         return (
-            <form>
-                <input
-                    type="text"
-                    value={this.state.username}
-                    name="username"
-                    placeholder="Username"
-                    onChange={this.handleChange}
-                />
-                <br />
-                <input
-                    type="password"
-                    value={this.state.password}
-                    name="password"
-                    placeholder="Password"
-                    onChange={this.handleChange}
-                />
-                <br />
-                <button>Connection</button>
-
-            </form>
+            <div className="Bloc">
+                <form>
+                    <h1>LOGIN</h1>
+                    <input
+                        type="text"
+                        value={this.state.username}
+                        name="username"
+                        placeholder="Username"
+                        onChange={this.handleChange}
+                        autocomplete="off"
+                    />
+                    <input
+                        type="password"
+                        value={this.state.password}
+                        name="password"
+                        placeholder="Password"
+                        onChange={this.handleChange}
+                        autocomplete="off"
+                    />
+                     <input
+                        className="Submit"
+                        type="submit"
+                        value="Connection"
+                    />
+                </form>
+            </div>
         )
     }
 }
 
-export default Login;
 
+export default Login;

@@ -24,7 +24,7 @@ async function whoisit(){
 whoisit().catch(err => console.log(err.message));
 
 
-// Post serveur->client
+// * Post serveur->client
 
 // app.post('/login', (req, res) => {
 //   async function makePostRequest() {
@@ -40,7 +40,7 @@ whoisit().catch(err => console.log(err.message));
 //   makePostRequest();
 // })
 
-// Mise en place db + query + post serveur -> client
+// * Mise en place db + query + post serveur -> client
 
 // app.post('/login', (req, res) => {
 //   console.log("test-backend")
