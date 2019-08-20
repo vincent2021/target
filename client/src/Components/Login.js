@@ -1,8 +1,9 @@
 import React from 'react';
 import '../style/Connection.css';
 // import ReactDOM from 'react-dom';
+// https://jasonwatmore.com/post/2018/09/11/react-basic-http-authentication-tutorial-example
 
-class Login extends React.Component {
+class LoginPage extends React.Component {
 
     state = {
         user: {
@@ -55,4 +56,4 @@ class Login extends React.Component {
 }
 
 
-export default Login;
+export { LoginPage };
