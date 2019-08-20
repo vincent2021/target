@@ -4,7 +4,6 @@ import './style/Index.css';
 import App from './App';
 // import axios from 'axios';
 
-
 // * recuperer un post du serveur
 
 // async function makeGetRequest() {

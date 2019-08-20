@@ -3,7 +3,7 @@ import '../style/Connection.css';
 // import ReactDOM from 'react-dom';
 import axios from 'axios';
 
-class Register extends Component {
+class RegisterPage extends Component {
     state = {
         user: {
             username: "",
@@ -104,6 +104,6 @@ class Register extends Component {
     }
 }
 
-export default Register;
+export { RegisterPage };
 
 

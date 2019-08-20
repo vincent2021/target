@@ -4,58 +4,51 @@
 
 import './style/App.css';
 import React from "react";
+
 // import ReactDOM from "react-dom";
 import  AppRouter  from "./MasterPage";
 
-export default function App(){
-        return (
-            <div>
-                <AppRouter/>
-            </div>
-        );
-}
+console.log(window.fetch());
 
 
-// import axios from 'axios';
+const useStateWithLocalStorage = localStorageKey => {
+    console.log(localStorage);
+  const [value, setValue] = React.useState(
+    localStorage.getItem(localStorageKey) || ''
+  );
 
-// class App extends Component {
-//   state = {
-//     name: '',
-//   }
+  React.useEffect(() => {
+    localStorage.setItem(localStorageKey, value);
+  }, [value]);
 
-//   handleChange = event => {
-//     this.setState({ name: event.target.value });
-//   }
+  return [value, setValue];
+};
 
-//   handleSubmit = event => {
-//     event.preventDefault();
+const App = () => {
+  const [value, setValue] = useStateWithLocalStorage(
+    'myValueInLocalStorage'
+  );
 
-//     const user = {
-//       name: this.state.name
-//     };
+  const onChange = event => setValue(event.target.value);
 
-//     axios.post('http://localhost:8000/newuser', { user })
-//       .then(res => {
-//         console.log(res);
-//         console.log(res.data);
-//       })
-//       .catch(err => {
-//           console.log(err);
-//       })
-//   }
+  return (
+    <div>
+      <h1>Hello React with Local Storage!</h1>
 
-//   render() {
-//     return (
-//       <div>
-//         <form onSubmit={this.handleSubmit}>
-//           <label>
-//             Person Name:
-//             <input type="text" name="name" onChange={this.handleChange} />
-//           </label>
-//           <button type="submit">Add</button>
-//         </form>
-//       </div>
-//     )
-//   }
+      <input value={value} type="text" onChange={onChange} />
+
+      <p>{value}</p>
+    </div>
+  );
+};
+
+
+// export default function App(){
+//         return (
+//             <div>
+//                 <AppRouter/>
+//             </div>
+//         );
 // }
 
+export default App;

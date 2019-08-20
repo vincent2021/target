@@ -1,8 +1,8 @@
 import './style/App.css';
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import Login from "./Components/Login";
-import Register from "./Components/Register";
+import { LoginPage } from "./Components/Login";
+import { RegisterPage } from "./Components/Register";
 
 class AppRouter extends Component {
     // constructor() {
@@ -13,14 +13,6 @@ class AppRouter extends Component {
     // ];
     // }
 
-    Login = () => {
-        return (<Login />);
-    }
-
-    Register = () => {
-        return <Register />
-    }
-
     render() {
         return (
             <div>
@@ -29,8 +21,8 @@ class AppRouter extends Component {
                     <br />
                     <Link to="/Components/Register">New in Target ? Create an account !</Link>
                     <div>
-                        <Route path="/Components/Login" component={this.Login} />
-                        <Route path="/Components/Register" component={this.Register} />
+                        <Route path="/Components/Login" component={LoginPage} />
+                        <Route path="/Components/Register" component={RegisterPage} />
                     </div>
                 </Router>
             </div>
