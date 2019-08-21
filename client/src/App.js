@@ -8,8 +8,6 @@ import React from "react";
 // import ReactDOM from "react-dom";
 import  AppRouter  from "./MasterPage";
 
-console.log(window.fetch());
-
 
 const useStateWithLocalStorage = localStorageKey => {
     console.log(localStorage);
