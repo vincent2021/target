@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './style/Index.css';
 import App from './App';
+import Match from './Components/Match';
 // import axios from 'axios';
 
 // * recuperer un post du serveur
@@ -13,3 +14,4 @@ import App from './App';
 // makeGetRequest();
 
 ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<Match />, document.getElementById('match'));

@@ -55,10 +55,26 @@ function getAll() {
     export function authHeader() {
         // return authorization header with basic auth credentials
         let user = JSON.parse(localStorage.getItem('user'));
-
         if (user && user.authdata) {
             return { 'Authorization': 'Basic ' + user.authdata };
         } else {
             return {};
         }
     }
+}
+
+// creer une session à partir d un input
+export function Session() {
+    const [value, setValue] = useState(localStorage.getItem('session') || '');
+    const onChange = (e) => setValue(e.target.value);
+    useEffect(() => {
+        localStorage.setItem('session', value);
+    }, [value]);
+
+    return (
+        <div>
+            <input value={value} type="text" onChange={onChange} />
+            <p>{value}</p>
+        </div>
+    )
+}

@@ -1,4 +1,35 @@
+@font-face {
+    font-family: 'national';
+    src: url('./fonts/NationalPark-Regular.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: national;
+    margin: 0;
+}
+
 .test {
     font-size: 100px;
-    font-family: sans-serif; 
+    font-family: sans-serif;
+}
+
+.RouterLog {
+    font-size: 1.1em;
+    position: relative;
+    display: inline-block;
+    width: auto;
+    color: black;
+    display: block;
+    text-decoration: none;
+    padding: 1em;
+    border: solid black 1px;
+    border-radius: 1em;
+    background-color: #fcf
+}
+
+.RouterBloc{
+    display: block;
+    position: absolute;   
 }

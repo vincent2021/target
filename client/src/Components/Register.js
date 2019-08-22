@@ -55,28 +55,28 @@ class RegisterPage extends Component {
                         name="username"
                         placeholder="Username"
                         onChange={this.handleChange}
-                        autocomplete="off"
+                        autoComplete="off"
                     />
                     <input
                         type="text"
                         name="firstname"
                         placeholder="First Name"
                         onChange={this.handleChange}
-                        autocomplete="off"
+                        autoComplete="off"
                     />
                     <input
                         type="text"
                         name="lastname"
                         placeholder="Last Name"
                         onChange={this.handleChange}
-                        autocomplete="off"
+                        autoComplete="off"
                     />
                     <input
                         type="text"
                         name="email"
                         placeholder="Email"
                         onChange={this.handleChange}
-                        autocomplete="off"
+                        autoComplete="off"
                     />
                     <input
                         type={this.state.type}
@@ -84,14 +84,14 @@ class RegisterPage extends Component {
                         name="password"
                         placeholder="Password"
                         onChange={this.handleChange}
-                        autocomplete="off"
+                        autoComplete="off"
                     />
                     <input
                         type="text"
                         name="confPassword"
                         placeholder="Confirm Password"
                         onChange={this.handleChange}
-                        autocomplete="off"
+                        autoComplete="off"
                     />
                     <input
                         className="Submit"

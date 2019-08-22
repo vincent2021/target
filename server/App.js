@@ -42,8 +42,26 @@ whoisit().catch(err => console.log(err.message));
 
 // * Mise en place db + query + post serveur -> client
 
+async function createdb() {
+  //get info
+  const dgraphClientStub = db.newClientStub();
+  const dgraphClient = db.newClient(dgraphClientStub);
+  await db.dropAll(dgraphClient);
+  await db.setSchema(dgraphClient);
+  await db.createData(dgraphClient);
+  const json = await db.queryData(dgraphClient);
+  app.post('/login', (req, res) => {
+  async function makePostRequest() {
+    res.send(json);
+  }
+  makePostRequest();
+})
+  dgraphClientStub.close();
+}
+
+createdb();
+
 // app.post('/login', (req, res) => {
-//   console.log("test-backend")
 //   async function f() {
 //     //get info
 //     const dgraphClientStub = db.newClientStub();
@@ -55,7 +73,7 @@ whoisit().catch(err => console.log(err.message));
 //     res.send(json)
 //     dgraphClientStub.close();
 //   };
-//   f().then(() => {ß
+//   f().then(() => {
 //     console.log('YEAH');
 //   }).catch((e) => {
 //     console.log('NOOOO ! : ', e);
