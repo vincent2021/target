@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './style/Index.css';
+import './Assets/Index.css';
 import App from './App';
-import Match from './Components/Match';
+// import Match from './Components/Match';
 // import axios from 'axios';
 
 // * recuperer un post du serveur
@@ -14,4 +14,4 @@ import Match from './Components/Match';
 // makeGetRequest();
 
 ReactDOM.render(<App />, document.getElementById('root'));
-ReactDOM.render(<Match />, document.getElementById('match'));
+// ReactDOM.render(<Match />, document.getElementById('match'));

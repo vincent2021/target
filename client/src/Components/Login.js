@@ -1,7 +1,6 @@
 import React from 'react';
-import '../style/Connection.css';
-// import ReactDOM from 'react-dom';
-// https://jasonwatmore.com/post/2018/09/11/react-basic-http-authentication-tutorial-example
+import '../Assets/Connection.css';
+
 
 class LoginPage extends React.Component {
 
@@ -45,7 +44,7 @@ class LoginPage extends React.Component {
                         autoComplete="off"
                     />
                      <input
-                        className="Submit"
+                        className="SubmitRegistration"
                         type="submit"
                         value="Connection"
                     />

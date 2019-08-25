@@ -22,7 +22,6 @@ h1 {
 }
 
 div.Bloc {
-    margin-top: 20vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -30,6 +29,7 @@ div.Bloc {
 }
 
 div.Bloc>form {
+    margin-top: 20vh;
     display: flex;
     flex-direction: column;
     padding: 2em;
@@ -51,7 +51,12 @@ input:focus {
     outline: none;
 }
 
-input.Submit {
+input.SubmitRegistration {
     background-color: #0b3b;
     color: white;
+}
+
+input.SubmitRegistration:active{
+    background-color: white;
+    color: black;
 }

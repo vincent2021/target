@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import '../style/Connection.css';
+import '../Assets/Connection.css';
 // import ReactDOM from 'react-dom';
-import axios from 'axios';
+import axios from '../Services/client';
 
 class RegisterPage extends Component {
     state = {
@@ -16,8 +16,8 @@ class RegisterPage extends Component {
         confirm: false
     }
 
-    handleChange = event => {
-        const target = event.target;
+    handleChange = e => {
+        const target = e.target;
         const value = target.value;
         const name = target.name;
         this.setState({
@@ -25,24 +25,25 @@ class RegisterPage extends Component {
         });
     }
 
-    handleSubmit = event => {
-        event.preventDefault();
+    handleSubmit = e => {
+        e.preventDefault();
         const user = {
             username: this.state.username,
             firstname: this.state.firstname,
-            lastname: this.state.name,
+            lastname: this.state.lastname,
             email: this.state.email,
             password: this.state.password,
             confPassword: this.state.confPassword
         };
-        axios.post('http://localhost:8000/newuser', { user })
-            .then(res => {
-                console.log(res);
-                console.log(res.data);
-            })
-            .catch(err => {
-                console.log(err);
-            })
+        if (user) {
+            axios.post(`/registration`, { user })
+                .then(res => {
+                    console.log(res.data);
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        }
     }
 
     render() {
@@ -79,7 +80,7 @@ class RegisterPage extends Component {
                         autoComplete="off"
                     />
                     <input
-                        type={this.state.type}
+                        type="password"
                         className="password__input"
                         name="password"
                         placeholder="Password"
@@ -87,14 +88,14 @@ class RegisterPage extends Component {
                         autoComplete="off"
                     />
                     <input
-                        type="text"
+                        type="password"
                         name="confPassword"
                         placeholder="Confirm Password"
                         onChange={this.handleChange}
                         autoComplete="off"
                     />
                     <input
-                        className="Submit"
+                        className="SubmitRegistration"
                         type="submit"
                         value="Submit"
                     />

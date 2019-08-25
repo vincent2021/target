@@ -1,5 +1,6 @@
 //include db
-const db = require('./db.js');
+const db = require('./src/db.js');
+const Registration = require('./src/routes/Registration');
 
 // POST
 const express = require('express');
@@ -13,15 +14,15 @@ app.use(helmet());
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
+app.use('/registration', Registration);
 
 // recuperée un post client
-async function whoisit(){
-  await app.post('/newuser', (req, res, next) => {
-  return console.log(req.body);
-  })
-}
-whoisit().catch(err => console.log(err.message));
+// async function whoisit(){
+//   await app.post('/newuser', (req, res, next) => {
+//   return console.log(req.body);
+//   })
+// }
+// whoisit().catch(err => console.log(err.message));
 
 
 // * Post serveur->client
@@ -49,13 +50,13 @@ async function createdb() {
   await db.dropAll(dgraphClient);
   await db.setSchema(dgraphClient);
   await db.createData(dgraphClient);
-  const json = await db.queryData(dgraphClient);
-  app.post('/login', (req, res) => {
-  async function makePostRequest() {
-    res.send(json);
-  }
-  makePostRequest();
-})
+  // const json = await db.queryData(dgraphClient);
+  // app.post('/login', (req, res) => {
+  // async function makePostRequest() {
+  //   res.send(json);
+  // }
+  // makePostRequest();
+// })
   dgraphClientStub.close();
 }
 
