@@ -1,15 +1,15 @@
 const dgraph = require("dgraph-js");
 const grpc = require("grpc");
- 
-
-// Create a client stub.
-function newClientStub() {
-    return new dgraph.DgraphClientStub("server:9080", grpc.credentials.createInsecure());
-}
+const SERVER_ADDR = "server:9080";
+const SERVER_CREDENTIALS = grpc.credentials.createInsecure();
+const clientStub1 = new dgraph.DgraphClientStub(
+    SERVER_ADDR,
+    SERVER_CREDENTIALS
+    );
 
 // Create a client.
-function newClient(clientStub) {
-    return new dgraph.DgraphClient(clientStub);
+function newClient() {
+    return new dgraph.DgraphClient(clientStub1);
 }
 
 // Drop All - discard all data and start from a clean slate.
@@ -20,7 +20,7 @@ async function dropAll(dgraphClient) {
 }
 
 // Set schema.
-async function setSchema(dgraphClient) {
+async function setSchema(dgraphClient,) {
     const schema = `
         name: string @index(exact) .
         age: int .
@@ -34,40 +34,13 @@ async function setSchema(dgraphClient) {
 }
 
 // Create data using JSON.
-async function createData(dgraphClient) {
+async function createData(dgraphClient, data) {
     // Create a new transaction.
     const txn = dgraphClient.newTxn();
     try {
-        // Create data.
-        const p = {
-            name: "Alice",
-            age: 26,
-            married: true,
-            loc: {
-                type: "Point",
-                coordinates: [1.1, 2],
-            },
-            dob: new Date(1980, 1, 1, 23, 0, 0, 0),
-            friend: [
-                {
-                    name: "Bob",
-                    age: 24,
-                },
-                {
-                    name: "Charlie",
-                    age: 29,
-                }
-            ],
-            school: [
-                {
-                    name: "Crown Public School",
-                }
-            ]
-        };
-
         // Run mutation.
         const mu = new dgraph.Mutation();
-        mu.setSetJson(p);
+        mu.setSetJson(data);
         const assigned = await txn.mutate(mu);
 
         // Commit transaction.
@@ -114,11 +87,38 @@ async function queryData(dgraphClient) {
 
 }
 
+
+//Add a user
+async function addUser(user) {
+    return createData(newClient(), user);
+}
+
+
+
+// * Mise en place db + query + post serveur -> client
+
+async function createDb() {
+    //get info
+    const dgraphClientStub = db.newClientStub();
+    const dgraphClient = db.newClient(dgraphClientStub);
+    await db.dropAll(dgraphClient);
+    await db.setSchema(dgraphClient);
+    // const json = await db.queryData(dgraphClient);
+    // app.post('/login', (req, res) => {
+    // async function makePostRequest() {
+    //   res.send(json);
+    // }
+    // makePostRequest();
+  // })
+    dgraphClientStub.close();
+  }
+
 module.exports  = {
-    newClientStub: newClientStub,
     newClient: newClient,
     dropAll: dropAll,
     setSchema: setSchema,
     createData: createData,
-    queryData: queryData
+    queryData: queryData,
+    createDb: createDb,
+    addUser: addUser
 }
