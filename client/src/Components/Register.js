@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import '../Assets/Connection.css';
 // import ReactDOM from 'react-dom';
-import axios from '../Services/client';
+import axios from '../Services/Client';
 
 class RegisterPage extends Component {
     state = {

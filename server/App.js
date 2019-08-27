@@ -2,7 +2,7 @@
 
 const db = require('./src/db.js');
 const Registration = require('./src/routes/Registration');
-
+// const Login = require('./src/routes/Login');
 // const dgraph = require("dgraph-js");
 
 
@@ -19,6 +19,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use('/registration', Registration);
+// app.use('/login', Login);
 
 
 
