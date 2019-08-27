@@ -57,6 +57,7 @@ class RegisterPage extends Component {
                         placeholder="Username"
                         onChange={this.handleChange}
                         autoComplete="off"
+                        required
                     />
                     <input
                         type="text"
@@ -64,6 +65,7 @@ class RegisterPage extends Component {
                         placeholder="First Name"
                         onChange={this.handleChange}
                         autoComplete="off"
+                        required
                     />
                     <input
                         type="text"
@@ -71,6 +73,7 @@ class RegisterPage extends Component {
                         placeholder="Last Name"
                         onChange={this.handleChange}
                         autoComplete="off"
+                        required
                     />
                     <input
                         type="text"
@@ -78,6 +81,7 @@ class RegisterPage extends Component {
                         placeholder="Email"
                         onChange={this.handleChange}
                         autoComplete="off"
+                        required
                     />
                     <input
                         type="password"
@@ -86,6 +90,7 @@ class RegisterPage extends Component {
                         placeholder="Password"
                         onChange={this.handleChange}
                         autoComplete="off"
+                        required
                     />
                     <input
                         type="password"
@@ -93,9 +98,10 @@ class RegisterPage extends Component {
                         placeholder="Confirm Password"
                         onChange={this.handleChange}
                         autoComplete="off"
+                        required
                     />
                     <input
-                        className="SubmitRegistration"
+                        className="Submit"
                         type="submit"
                         value="Submit"
                     />
