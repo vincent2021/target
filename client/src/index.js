@@ -1,6 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+<<<<<<< HEAD
 import './Assets/Index.css';
+=======
+import './style/index.css';
+>>>>>>> 97a4dc80cfec81d6499f739f8ad0984482bb20dc
 import App from './App';
 // import Match from './Components/Match';
 // import axios from 'axios';
