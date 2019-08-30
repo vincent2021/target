@@ -1,14 +1,13 @@
-import './Assets/App.css';
 import React from "react";
-// import ReactDOM from "react-dom";
-import  AppRouter  from "./Services/MasterPage";
+import AppRouter from './Services/MasterPage'
+import './Assets/App.css';
 
-function App(){
-        return (
-            <div>
-                <AppRouter/>
-            </div>
-        );
+const App = () => {
+    const content = (
+        <AppRouter />
+    )
+    return content;
+
 }
 
 export default App;
