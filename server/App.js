@@ -1,19 +1,4 @@
-<<<<<<< HEAD
-const express = require('express')
-const app = express()
-const dgraph = require("dgraph-js");
-const grpc = require("grpc");
-
-const clientStub = new dgraph.DgraphClientStub(
-  // addr: optional, default: "localhost:9080"
-  "localhost:9080",
-  // credentials: optional, default: grpc.credentials.createInsecure()
-  grpc.credentials.createInsecure(),
-);
-const dgraphClient = new dgraph.DgraphClient(clientStub);
-=======
 //include db
->>>>>>> fefe
 
 const db = require('./src/db.js');
 const Registration = require('./src/routes/Registration');

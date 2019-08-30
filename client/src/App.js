@@ -4,11 +4,6 @@ import React from "react";
 import  AppRouter  from "./Services/MasterPage";
 
 function App(){
-<<<<<<< HEAD
-    return('Client side');
-  }
-  
-=======
         return (
             <div>
                 <AppRouter/>
@@ -16,7 +11,6 @@ function App(){
         );
 }
 
->>>>>>> fefe
 export default App;
 
 // const useStateWithLocalStorage = localStorageKey => {
