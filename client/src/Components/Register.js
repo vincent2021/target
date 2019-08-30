@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import '../Assets/Connection.css';
 // import ReactDOM from 'react-dom';
@@ -11,20 +12,69 @@ class RegisterPage extends Component {
             lastname: "",
             email: "",
             password: "",
-            confPassword: ""
+            confPassword: "",
+            error: {
+                username: false,
+                email: false,
+                password: false,
+            },
+            errorMsg: {
+                username: "",
+                email: "",
+                password: "",
+            },
+            confirm: false
         },
-        confirm: false
     }
 
+    // Assigne la variable input au component.
     handleChange = e => {
         const target = e.target;
         const value = target.value;
         const name = target.name;
+
         this.setState({
             [name]: value
-        });
+        }, () => { this.validateData(name, value) });
     }
 
+    // Vérifie les données saisies et affiche un msg d'erreur.
+    validateData = (name, value) => {
+        const error = this.state.user.error;
+        const msg = this.state.user.errorMsg;
+        let invalid = false;
+
+        switch (name) {
+            case "email":
+                error.email = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) !== null && true;
+                msg.email = !error.email ? "Email is invalid" : "";
+                break;
+            case "username":
+                error.username = value.length >= 4;
+                msg.username = !error.username ? "Username is invalid" : "";
+                break;
+            case "password":
+                error.password = value.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,})/) !== null && true;
+                msg.password = !error.password ? "Password is invalid" : "";
+                break;
+            default:
+                break;
+        }
+        invalid = (!error.email || !error.username || !error.password)
+            ? false : true;
+
+        // Supprimer la déclaration pour activer les erreurs
+        invalid = true;
+
+        this.setState({
+            error: error,
+            errorMsg: msg,
+            confirm: invalid
+        });
+
+    }
+
+    // Envoie les données au serveur si state.confirm est valide.
     handleSubmit = e => {
         e.preventDefault();
         const user = {
@@ -35,7 +85,10 @@ class RegisterPage extends Component {
             password: this.state.password,
             confPassword: this.state.confPassword
         };
-        if (user) {
+        if (user.confPassword !== user.password) {
+            alert("confirmation password doesn't match");
+        }
+        else if (user) {
             axios.post(`/registration`, { user })
                 .then(res => {
                     console.log(res.data);
@@ -59,6 +112,9 @@ class RegisterPage extends Component {
                         autoComplete="off"
                         required
                     />
+                    <div className={this.state.user.errorMsg.username === "" ? 'is-valid' : 'is-invalid'}>
+                        {this.state.user.errorMsg.username}
+                    </div>
                     <input
                         type="text"
                         name="firstname"
@@ -83,6 +139,9 @@ class RegisterPage extends Component {
                         autoComplete="off"
                         required
                     />
+                    <div className={this.state.user.errorMsg.email === "" ? 'is-valid' : 'is-invalid'}>
+                        {this.state.user.errorMsg.email}
+                    </div>
                     <input
                         type="password"
                         className="password__input"
@@ -92,6 +151,9 @@ class RegisterPage extends Component {
                         autoComplete="off"
                         required
                     />
+                    <div className={this.state.user.errorMsg.password === "" ? 'is-valid' : 'is-invalid'}>
+                        {this.state.user.errorMsg.password}
+                    </div>
                     <input
                         type="password"
                         name="confPassword"
@@ -101,9 +163,11 @@ class RegisterPage extends Component {
                         required
                     />
                     <input
-                        className="Submit"
+                        className={this.state.confirm === false ? 'Submit-invalid' : 'Submit'}
                         type="submit"
                         value="Submit"
+                        // impossible de cliquer sans envoyer un formulaire valide
+                        disabled={!this.state.confirm}
                     />
                 </form>
             </div >
@@ -112,5 +176,4 @@ class RegisterPage extends Component {
 }
 
 export { RegisterPage };
-
 

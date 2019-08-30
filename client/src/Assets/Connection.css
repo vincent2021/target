@@ -48,7 +48,7 @@ form>input {
 }
 
 input:focus {
-    outline: none;
+    outline: 1px;
 }
 
 input.Submit {
@@ -56,7 +56,23 @@ input.Submit {
     color: white;
 }
 
+input.Submit-invalid {
+    background-color: #cccc;
+    color: #5555;
+}
+
 input.Submit:active{
     background-color: white;
     color: black;
+}
+
+div.is-invalid{
+    text-align: center;
+    margin-bottom: 8px;
+    font-size: 12px;
+    color: #f99
+}
+
+div.is-valid{
+    margin: none;
 }

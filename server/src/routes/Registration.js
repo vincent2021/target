@@ -11,12 +11,17 @@ async function checkUser(username, password) {
     //...
 }
 
-router.route("/").post((req, res) => {
-    console.log(req.body);
-    // bcrypt.hash(myPlaintextPassword, saltRounds, function(err, hash) {
-    //     console.log(hash);
-    //   });
-    res.send('alright !');
-});
+function hashPassword() {
+        router.route("/").post(async (req, res) => {
+            await bcrypt.hash(req.body.user.password, saltRounds, function (err, hash) {
+                req.body.user.password = hash;
+                console.log(req.body.user);
+                //renvoyer la request ici 
+                console.log('Request posted !')
+            })
+        })
+}
+
+hashPassword();
 
 module.exports = router;
