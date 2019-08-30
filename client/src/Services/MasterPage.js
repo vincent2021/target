@@ -1,37 +1,52 @@
-import '../Assets/App.css';
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { LoginPage } from "../Components/Login";
 import { RegisterPage } from "../Components/Register";
+import '../Assets/App.css';
 
-function AppRouter() {
+const AppRouter = (props) => {
 
-    const [page, usePage] = useState('');
-
-    useEffect(() => {
-        if (window.location.pathname === '/Components/Register') {
-            usePage(
-                <div>
-                    <Router>
-                        <Link to='/Components/Login' className='RouterLog'>Alredy have an < br /> account ? <span style={{ color: 'red' }}>Sign in</span> !</Link>
-                        <Route path='/Components/Register' component={RegisterPage} />
-                    </Router>
-                </div>
-            )
-        }
-        else {
-            usePage(
-                <div>
-                    <Router>
-                        <Link to='/Components/Register' className='RouterLog'>New in Target ? <br /> <span style={{ color: 'green' }}>Create an account</span> !</Link>
-                        <Route path='/Components/Login' component={LoginPage} />
-                    </Router>
-                </div>
-            )
-        }
+    const login = {
+        CurrentPath: '/Components/Login',
+        path: '/Components/Register',
+        text: <div>New in Target ? <br /> <span style={{ color: 'green' }}>Create an account</span> !</div>,
+        content: LoginPage
     }
 
-    return (page);
+    const register = {
+        CurrentPath: '/Components/Register',
+        path: '/Components/Login',
+        text: <div>Already have an < br /> account ? <span style={{ color: 'red' }}>Sign in</span> !</div>,
+        content: RegisterPage
+    }
+
+    // Set la page par défaut sur login  (petite err à gérer si tu refresh sur '/register')
+    const [page, setPage] = useState({ ...login, CurrentPath: window.location.pathname })
+
+    // Set la page en fonction de l'event
+    const handlePage = () => {
+        page.path === login.path ? setPage({ ...register }) : setPage({ ...login });
+    }
+
+    const Content = (
+        <Router>
+            <div className='RouterBloc'>
+                <Link
+                    className='RouterLog'
+                    onClick={handlePage}
+                    to={page.path}
+                >
+                    {page.text}
+                </Link>
+            </div>
+            <Route
+                path={page.CurrentPath}
+                component={page.content}
+            />
+        </Router>
+    )
+
+    return Content;
 }
 
 export default AppRouter;
