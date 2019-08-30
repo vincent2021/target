@@ -93,8 +93,6 @@ async function addUser(user) {
     return createData(newClient(), user);
 }
 
-
-
 // * Mise en place db + query + post serveur -> client
 
 async function createDb() {
