@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const express = require('express')
 const app = express()
 const dgraph = require("dgraph-js");
@@ -10,19 +11,31 @@ const clientStub = new dgraph.DgraphClientStub(
   grpc.credentials.createInsecure(),
 );
 const dgraphClient = new dgraph.DgraphClient(clientStub);
+=======
+//include db
+>>>>>>> fefe
+
+const db = require('./src/db.js');
+const Registration = require('./src/routes/Registration');
+const Login = require('./src/routes/Login');
+// const Login = require('./src/routes/Login');
+// const dgraph = require("dgraph-js");
 
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+// POST
+const express = require('express');
+const cors = require('cors'); // plus de msg d erreur cors
+const helmet = require('helmet'); // securise Express
+const axios = require('axios'); // pour les requêtes http
+const bodyParser = require('body-parser'); // permet d'afficher le req.body apres une requête
 
-app.post('/login', (req, res) => {
-  console.log("test-backend")  
-  var test = JSON.stringify({test : "AHHAHAHAHA"})
-  res.send(test)
-  console.log(res);
-});
+const app = express();
+app.use(helmet());
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use('/registration', Registration);
+app.use('/login', Login);
+
 
 app.listen(8000, () => console.log('Example app listening on port 8000!'));
