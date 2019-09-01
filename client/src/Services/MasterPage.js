@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { LoginPage } from "../Components/Login";
-import { RegisterPage } from "../Components/Register";
+//import { RegisterPage } from "../Components/Register";
+import  { ProfilMatch } from "../Components/ProfilMatch";
 import '../Assets/App.css';
 
 const AppRouter = (props) => {
@@ -13,19 +14,26 @@ const AppRouter = (props) => {
         content: LoginPage
     }
 
-    const register = {
-        CurrentPath: '/Components/Register',
-        path: '/Components/Login',
-        text: <div>Already have an < br /> account ? <span style={{ color: 'red' }}>Sign in</span> !</div>,
-        content: RegisterPage
+    //const register = {
+    //    CurrentPath: '/Components/Register',
+    //    path: '/Components/Login',
+    //    text: <div>Already have an < br /> account ? <span style={{ color: 'red' }}>Sign in</span> !</div>,
+    //    content: RegisterPage
+    //}
+
+    const match = {
+        CurrentPath: '/Components/Profil_Match',
+        path: '/Components/Profil_Match',
+        text: <div>See a first profile</div>,
+        content: ProfilMatch
     }
 
     // Set la page par défaut sur login  (petite err à gérer si tu refresh sur '/register')
-    const [page, setPage] = useState({ ...login, CurrentPath: window.location.pathname })
+    const [page, setPage] = useState({ ...match, CurrentPath: window.location.pathname })
 
     // Set la page en fonction de l'event
     const handlePage = () => {
-        page.path === login.path ? setPage({ ...register }) : setPage({ ...login });
+        page.path === match.path ? setPage({ ...match }) : setPage({ ...login });
     }
 
     const Content = (

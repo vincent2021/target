@@ -3,6 +3,7 @@
 const db = require('./src/db.js');
 const Registration = require('./src/routes/Registration');
 const Login = require('./src/routes/Login');
+const getUser = require('./src/routes/getUser');
 // const Login = require('./src/routes/Login');
 // const dgraph = require("dgraph-js");
 
@@ -21,6 +22,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use('/registration', Registration);
 app.use('/login', Login);
+app.use('/getUser', getUser);
 
-
-app.listen(8000, () => console.log('Example app listening on port 8000!'));
+app.listen(8000, () => console.log('Server listening on port 8000!'));

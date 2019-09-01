@@ -58,35 +58,19 @@ async function createData(dgraphClient, data) {
     }
 }
 
-// Query for data.
-async function queryData(dgraphClient) {
-    // Run query.    
-    const query = `query all($a: string) {
-        all(func: eq(name, $a)) {
-            uid
-            name
-            age
-            married
-            loc
-            dob
-            friend {
-                name
-                age
-            }
-            school {
-                name
-            }
+async function getUser() {
+    dgraphClient = newClient();   
+    const query = `{
+        all(func: has(username)) {
+            username
         }
     }`;
     const vars = { $a: "Alice" };
-    const res = await dgraphClient.newTxn().queryWithVars(query, vars);
+    const res = await dgraphClient.newTxn().query(query);
     const ppl = res.getJson();
     // ppl.all.forEach((person) => console.log(person));
     return ppl.all[0];
-    // send result
-
 }
-
 
 //Add a user
 async function addUser(user) {
@@ -116,7 +100,7 @@ module.exports  = {
     dropAll: dropAll,
     setSchema: setSchema,
     createData: createData,
-    queryData: queryData,
     createDb: createDb,
-    addUser: addUser
+    addUser: addUser,
+    getUser: getUser
 }
