@@ -8,7 +8,6 @@ const getUser = require('./src/routes/getUser');
 // const dgraph = require("dgraph-js");
 
 
-// POST
 const express = require('express');
 const cors = require('cors'); // plus de msg d erreur cors
 const helmet = require('helmet'); // securise Express

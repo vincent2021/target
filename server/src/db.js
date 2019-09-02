@@ -62,14 +62,16 @@ async function getUser() {
     dgraphClient = newClient();   
     const query = `{
         all(func: has(username)) {
-            username
+            username,
+            firstname,
+            lastname,
+            user_pic
         }
     }`;
-    const vars = { $a: "Alice" };
     const res = await dgraphClient.newTxn().query(query);
-    const ppl = res.getJson();
-    // ppl.all.forEach((person) => console.log(person));
-    return ppl.all[0];
+    const data = res.getJson();
+    //data.all.forEach((person) => console.log(person));
+    return (data);
 }
 
 //Add a user
