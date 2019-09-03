@@ -1,6 +1,6 @@
 const dgraph = require("dgraph-js");
 const grpc = require("grpc");
-const SERVER_ADDR = "server:9080";
+const SERVER_ADDR = "54.194.192.127:9080";
 const SERVER_CREDENTIALS = grpc.credentials.createInsecure();
 const clientStub1 = new dgraph.DgraphClientStub(
     SERVER_ADDR,
