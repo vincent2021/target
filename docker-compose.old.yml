@@ -1,0 +1,75 @@
+version: '3.2'
+services:
+  back:
+    container_name: server
+    image: node
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./server:/usr/src/app
+    working_dir: /usr/src/app
+    entrypoint: sh start.sh
+    networks:
+      - default
+
+  zero:
+    container_name: dgraph-zero
+    image: dgraph/dgraph:latest
+    volumes:
+      - type: volume
+        source: dgraph
+        target: /dgraph
+        volume:
+          nocopy: true
+    ports:
+      - 5080:5080
+      - 6080:6080
+    restart: on-failure
+    command: dgraph zero --my=zero:5080
+  server:
+    container_name: dgraph
+    image: dgraph/dgraph:latest
+    volumes:
+      - type: volume
+        source: dgraph
+        target: /dgraph
+        volume:
+          nocopy: true
+    ports:
+      - 8080:8080
+      - 9080:9080
+    restart: on-failure
+    command: dgraph alpha --my=server:7080 --lru_mb=2048 --zero=zero:5080
+  ratel:
+    container_name: dgraph-browser
+    image: dgraph/dgraph:latest
+    volumes:
+      - type: volume
+        source: dgraph
+        target: /dgraph
+        volume:
+          nocopy: true
+    ports:
+      - 8100:8000
+    command: dgraph-ratel
+
+  front:
+    container_name: react
+    image: node
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./client:/usr/src/app
+    depends_on:
+      - back
+    working_dir: /usr/src/app
+    entrypoint: sh start.sh
+    networks:
+      - default
+
+networks:
+  default:
+    driver: bridge
+    
+volumes:
+  dgraph:
