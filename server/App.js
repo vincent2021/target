@@ -1,9 +1,6 @@
-//include db
 
-const db = require('./src/db.js');
-const Registration = require('./src/routes/Registration');
 const Login = require('./src/routes/Login');
-const getUser = require('./src/routes/getUser');
+const User = require('./src/routes/User');
 // const Login = require('./src/routes/Login');
 // const dgraph = require("dgraph-js");
 
@@ -19,8 +16,7 @@ app.use(helmet());
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use('/registration', Registration);
 app.use('/login', Login);
-app.use('/getUser', getUser);
+app.use('/user', User);
 
 app.listen(8000, () => console.log('Server listening on port 8000!'));
