@@ -6,17 +6,18 @@ class ProfilMatch extends React.Component {
     state = {
         username: '',
         firstname: '',
-        user_pic: ''
+        user_pic: '',
+        age: ''
     };
 
     newUser = axios.post('/user/getUser').then((res) => {
-        this.setState({username:res.data.username, firstname:res.data.firstname, user_pic:res.data.user_pic});
+        this.setState({username:res.data.username, firstname:res.data.firstname, user_pic:res.data.user_pic, age:res.data.dob});
     });
 
     handleUser = async (event) => {
         event.preventDefault();
         await axios.post('/user/getUser').then((res) => {
-            this.setState({username:res.data.username, firstname:res.data.firstname, user_pic:res.data.user_pic});
+        this.setState({username:res.data.username, firstname:res.data.firstname, user_pic:res.data.user_pic, age:res.data.dob});
         });
     };
 
@@ -26,7 +27,7 @@ class ProfilMatch extends React.Component {
                <form onSubmit = {this.handleUser}>
                     {this.state.username}
                     <img height="250px" alt="user-pic" src={this.state.user_pic}></img>
-                    <p>Say Hello to {this.state.firstname,}</p>
+                    <p>Say Hello to {this.state.firstname}, {this.state.age}</p>
                     <input type="submit" value="Match"></input>
                     <input type="submit" value="New Profile"></input>
                 </form>
