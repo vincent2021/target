@@ -38,12 +38,9 @@ async function createData(dgraphClient, data) {
     // Create a new transaction.
     const txn = dgraphClient.newTxn();
     try {
-        // Run mutation.
         const mu = new dgraph.Mutation();
         mu.setSetJson(data);
         const assigned = await txn.mutate(mu);
-
-        // Commit transaction.
         await txn.commit();
 
         // Get uid of the outermost object (person named "Alice").
@@ -52,8 +49,6 @@ async function createData(dgraphClient, data) {
         // for all the created nodes.
         
     } finally {
-        // Clean up. Calling this after txn.commit() is a no-op
-        // and hence safe.
         await txn.discard();
     }
 }
@@ -65,6 +60,9 @@ async function getUser() {
             username,
             firstname,
             lastname,
+            dob,
+            city,
+            gender,
             user_pic
         }
     }`;
