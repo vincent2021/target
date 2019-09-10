@@ -20,7 +20,7 @@ async function dropAll(dgraphClient) {
 }
 
 // Set schema.
-async function setSchema(dgraphClient,) {
+async function setSchema(dgraphClient) {
     const schema = `
         name: string @index(exact) .
         age: int .
@@ -56,7 +56,8 @@ async function createData(dgraphClient, data) {
 async function getUser() {
     dgraphClient = newClient();   
     const query = `{
-        all(func: has(username)) {
+        random(func: has(username)) {
+            uid
             username,
             firstname,
             lastname,
@@ -69,12 +70,50 @@ async function getUser() {
     const res = await dgraphClient.newTxn().query(query);
     const data = res.getJson();
     //data.all.forEach((person) => console.log(person));
-    return (data);
+    return (data.random);
 }
+
+async function getUserProfile(userID) {
+    dgraphClient = newClient();   
+    const query = `{ userProfile(func: uid(${userID})) {
+            uid,
+            username,
+            firstname,
+            lastname,
+            dob,
+            city,
+            gender,
+            user_pic
+        }
+    }`;
+    const res = await dgraphClient.newTxn().query(query);
+    const data = res.getJson();
+    return (data.userProfile[0]);
+}
+
 
 //Add a user
 async function addUser(user) {
     return createData(newClient(), user);
+}
+
+//Match 2 users
+async function newMatch(uid1, uid2) {
+    dgraphClient = newClient(); 
+    const txn = dgraphClient.newTxn();
+    try {
+        const mu = new dgraph.Mutation();
+        matchQuery = `set {
+              <${uid1}> <match> <${uid2}> .
+            }
+          }`;
+        //mu.setSetJson(matchQuery);
+        const res = await txn.mutate({matchQuery, commitNow: true});
+        console.log(res);
+        //await txn.commit();
+    } finally {
+        await txn.discard();
+    }
 }
 
 // * Mise en place db + query + post serveur -> client
@@ -102,5 +141,7 @@ module.exports  = {
     createData: createData,
     createDb: createDb,
     addUser: addUser,
-    getUser: getUser
+    getUser: getUser,
+    getUserProfile: getUserProfile,
+    newMatch : newMatch 
 }

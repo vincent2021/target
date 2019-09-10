@@ -1,8 +1,7 @@
 
 const Login = require('./src/routes/Login');
 const User = require('./src/routes/User');
-// const Login = require('./src/routes/Login');
-// const dgraph = require("dgraph-js");
+const Match = require('./src/routes/Match');
 
 
 const express = require('express');
@@ -18,5 +17,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use('/login', Login);
 app.use('/user', User);
+app.use('/match', Match);
 
 app.listen(8000, () => console.log('Server listening on port 8000!'));
