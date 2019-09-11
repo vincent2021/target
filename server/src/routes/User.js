@@ -8,12 +8,17 @@ router.route('/getUser').post((req, res) => {
     });
 });
 
-
 router.route('/profile').post((req, res) => {
-    console.log(req.query['uid']);
     db.getUserProfile(req.query['uid']).then(function (ret) {
         res.send(ret);
     });
 });
+
+router.route('/userid').post((req, res) => {
+    db.getUserProfile(req.query['email']).then(function (ret) {
+        res.send(ret);
+    });
+});
+
 
 module.exports = router;

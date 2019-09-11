@@ -8,4 +8,11 @@ router.route('/new').post((req, res) => {
     }, (err) => {console.log(err)});
 });
 
+router.route('/user').post((req, res) => {
+    console.log('Get match for ' + req.query['uid']);
+    db.getUserMatch(req.query['uid']).then(function (ret) {
+        res.send(ret);
+    }, (err) => {console.log(err)});
+});
+
 module.exports = router;
