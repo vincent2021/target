@@ -48,7 +48,7 @@ async function getUser() {
 async function getUserProfile(userID) {
     dgraphClient = newClient();   
     const query = `{ userProfile(func: uid(${userID})) {
-            ${ProfilData}
+            ${ProfilData},
         }
     }`;
     const res = await dgraphClient.newTxn().query(query);
@@ -61,6 +61,7 @@ async function addUser(user) {
     return createData(newClient(), user);
 }
 
+//Get an ID from email
 async function getUserID(email) {
     dgraphClient = newClient();   
     const query = `{
@@ -93,7 +94,7 @@ async function newMatch(uid1, uid2) {
 //Return all match for a user
 async function getUserMatch(uid) {
     dgraphClient = newClient();   
-    const query = `{ getUserMatch(func: uid(${uid})) {
+    const query = `{ getUserLike(func: uid(${uid})) {
             match {
                 ${ProfilData}
             }
@@ -101,8 +102,22 @@ async function getUserMatch(uid) {
     }`;
     const res = await dgraphClient.newTxn().query(query);
     const data = res.getJson();
-    return (data.getUserMatch[0]);
+    return (data.getUserLike[0]);
 }
+
+async function getFullMatch(uid) {
+    dgraphClient = newClient();   
+    const query = `{ userMatch(func: uid(${uid})) {
+            match @filter(uid_in(match, ${uid})) {
+            ${ProfilData}
+            }
+        }
+    }`;
+    const res = await dgraphClient.newTxn().query(query);
+    const data = res.getJson();
+    return (data.userMatch[0]);
+}
+
 
 // Drop All - discard all data and start from a clean slate.
 async function dropAll(dgraphClient) {
@@ -151,6 +166,7 @@ module.exports  = {
     getUser: getUser,
     getUserID: getUserID,
     getUserProfile: getUserProfile,
-    getUserMatch: getUserMatch,
+    getUserLike: getUserMatch,
+    getFullMatch: getFullMatch,
     newMatch : newMatch 
 }
