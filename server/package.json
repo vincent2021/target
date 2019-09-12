@@ -13,6 +13,7 @@
     "fetch": "^1.1.0",
     "grpc": "^1.23.3",
     "helmet": "^3.20.0",
+    "jsonwebtoken": "^8.5.1",
     "node-fetch": "^2.6.0",
     "nodemon": "^1.19.1",
     "npm": "^6.10.3",

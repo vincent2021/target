@@ -102,7 +102,11 @@ async function getUserMatch(uid) {
     }`;
     const res = await dgraphClient.newTxn().query(query);
     const data = res.getJson();
-    return (data.getUserLike[0].match);
+    if (data.getUserLike[0]) {
+        return data.getUserLike[0].match;
+    } else {
+        return null;
+    }
 }
 
 async function getFullMatch(uid) {
@@ -115,7 +119,11 @@ async function getFullMatch(uid) {
     }`;
     const res = await dgraphClient.newTxn().query(query);
     const data = res.getJson();
-    return (data.userMatch[0].match);
+    if (data.userMatch[0]) {
+        return data.userMatch[0].match;
+    } else {
+        return null;
+    }
 }
 
 
