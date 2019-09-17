@@ -16,8 +16,6 @@ const getAge = (date) => {
     return age_now;
 }
 
-
-
 const ProfilMatch = ({ match }) => {
     const [Age, setAge] = useState([20, 37]);
     const [Score, setScore] = useState([0, 100]);
