@@ -1,12 +1,16 @@
 const router = require("express").Router();
 const db = require("../db.js");
+const auth = require("../auth.js");
 
 router.route('/getUser').post((req, res) => {
-    let user_nb = Math.round(Math.random() * 150);
-    console.log(req);
-    db.getUser().then(function (users) {
-        res.send(users[user_nb]);
-    });
+    if (auth.verify(req.headers.authorization)) {
+        let user_nb = Math.round(Math.random() * 150);
+        db.getUser().then(function (users) {
+            res.send(users[user_nb]);
+        });
+    } else {
+        res.statusCode(403);
+    }
 });
 
 router.route('/profile').post((req, res) => {

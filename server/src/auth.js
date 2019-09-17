@@ -24,6 +24,7 @@ async function login(username, password) {
         const data = res.getJson();
         if (data.login[0].password == password) {
             const uid = data.login[0].uid;
+            token = sign(uid, username);
             return (sign(uid, username));
         } else {
             return ("Wrong Password");
@@ -36,12 +37,13 @@ async function login(username, password) {
 const privateKEY  = fs.readFileSync('./src/private.key', 'utf8');
 const publicKEY  = fs.readFileSync('./src/public.key', 'utf8');
 
-const signOptions = {
-    expiresIn:  "12h",
-    algorithm:  "RS256"
-   };
 
 const sign = (uid, username) => {
+    const signOptions = {
+        expiresIn:  "12h",
+        algorithm:  "RS256"
+       };
+    
     let payload = {
         uid: uid,
         username: username
@@ -50,7 +52,11 @@ const sign = (uid, username) => {
     return (jwt.sign(payload, privateKEY, signOptions));
 }
 
-const verify = (token, signOptions) => {
+async function verify(token) {
+    const signOptions = {
+        expiresIn:  "12h",
+        algorithm:  "RS256"
+       };
     try {
         return jwt.verify(token, publicKEY, signOptions);
     } catch (err) {
