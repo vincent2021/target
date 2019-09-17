@@ -1,5 +1,20 @@
 const fs   = require('fs');
 const jwt  = require('jsonwebtoken');
+const dgraph = require("dgraph-js");
+const grpc = require("grpc");
+const SERVER_ADDR = "54.194.192.127:9080";
+const SERVER_CREDENTIALS = grpc.credentials.createInsecure();
+const clientStub1 = new dgraph.DgraphClientStub(SERVER_ADDR, SERVER_CREDENTIALS);
+    
+// Create a client.
+function newClient() {
+    return new dgraph.DgraphClient(clientStub1);
+}
+
+function checkUser(login, password) {
+    
+}
+
 
 const privateKEY  = fs.readFileSync('./src/private.key', 'utf8');
 const publicKEY  = fs.readFileSync('./src/public.key', 'utf8');
@@ -34,5 +49,6 @@ const decode = (token) => {
 module.exports = {
     sign: sign,
     verify: verify,
-    decode: decode
+    decode: decode,
+    checkUser: checkUser
 };

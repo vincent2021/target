@@ -47,7 +47,7 @@ const ProfilMatch = ({ match }) => {
     };
 
     const handleUser = async () => {
-        await axios.post('/profil').then((res, req) => {
+        await axios.post('/user/getUser').then((res, req) => {
             // faire une requete en fonction de l'age directement
             const ageUser = getAge(res.data.dob);
             setState({ ...res.data, age: ageUser });
