@@ -1,44 +1,69 @@
 import React from "react";
-import AppRouter from './Services/MasterPage'
-import './Assets/App.css';
+import { Route, Link, Switch, Redirect } from "react-router-dom";
+import { LoginPage } from "./Components/Login";
+import { RegisterPage } from "./Components/Register";
+import ProfilClient from "./Components/Profil_Client";
+import ProfilUser from "./Components/Profil_User";
+import ProfilMatch from "./Components/MatchPage/Match_Profil";
+
+import './Assets/Styles/App.css';
+import './Assets/Styles/Connection.css';
+import './Assets/Styles/Profil_Match.css';
+import './Assets/Styles/Profil_Client.css';
 
 const App = () => {
-    const content = (
-        <AppRouter />
-    )
-    return content;
 
+    const loggedIn = false;
+
+    return (
+        <div>
+            <div className='RouterBloc'>
+                <Link
+                    id='login'
+                    className='RouterLog'
+                    to='register'
+                >
+                    New in Target ? <br /> Create an account !
+                    </Link>
+                <Link
+                    id='register'
+                    className='Hide'
+                    to='login'
+                >
+                    Already have an < br /> account ? Sign in !
+                    </Link>
+                <Link
+                    id='match'
+                    className='RouterMatch'
+                    to='match'
+                >
+                    Target people !
+                    </Link>
+                <Link
+                    id='profilClient'
+                    className='RouterProfil'
+                    to='profil'
+                >
+                    My Profil
+                    </Link>
+            </div>
+            <Switch>
+                <Route exact path="/" render={() => (
+                    loggedIn ? (
+                        <Redirect to="/match" />
+                    ) : (
+                            <LoginPage />
+                        )
+                )} />
+                <Route exact path='/login' component={LoginPage} />
+                <Route exact path='/register' component={RegisterPage} />
+                <Route exact path='/profil' component={ProfilClient} />
+                <Route exact path='/match' component={ProfilMatch} />
+                <Route exact path="/user/:usernameId" component={ProfilUser} />
+                <Route component={LoginPage} />
+            </Switch>
+        </div>
+    )
 }
 
 export default App;
-
-// const useStateWithLocalStorage = localStorageKey => {
-//     console.log(localStorage);
-//   const [value, setValue] = React.useState(
-//     localStorage.getItem(localStorageKey) || ''
-//   );
-
-//   React.useEffect(() => {
-//     localStorage.setItem(localStorageKey, value);
-//   }, [value]);
-
-//   return [value, setValue];
-// };
-
-// const App = () => {
-//   const [value, setValue] = useStateWithLocalStorage(
-//     'myValueInLocalStorage'
-//   );
-
-//   const onChange = event => setValue(event.target.value);
-
-//   return (
-//     <div>
-//       <h1>Hello React with Local Storage!</h1>
-
-//       <input value={value} type="text" onChange={onChange} />
-
-//       <p>{value}</p>
-//     </div>
-//   );
-// };

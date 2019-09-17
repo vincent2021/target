@@ -1,0 +1,95 @@
+.st0 {
+    fill: none;
+}
+
+.st1 {
+    fill: #FFFD38;
+    stroke: #000000;
+    stroke-miterlimit: 10;
+    stroke-width: 1px;
+}
+
+.st2 {
+    transition: all 2s ease-in-out;
+    font-family: 'NationalPark-Heavy';
+}
+
+.st3 {
+    font-size: 134px;
+}
+
+.st4 {
+    fill: #35D467;
+    stroke: #000000;
+    stroke-miterlimit: 10;
+    stroke-width: 1px;
+}
+
+.st5 {
+    fill: #FDA5EB;
+    stroke: #000000;
+    stroke-miterlimit: 10;
+    stroke-width: 1px;
+}
+
+.sst0 {
+    fill: none;
+}
+
+.sst1 {
+    fill: #FFFD38;
+    stroke: #000000;
+    stroke-width: 0.6px;
+}
+
+.sst2 {
+    font-family: 'NationalPark-Heavy';
+}
+
+.sst3 {
+    font-size: 70px;
+}
+
+.sst4 {
+    fill: #35D467;
+    stroke: #000000;
+    stroke-width: 0.6px;
+}
+
+.sst5 {
+    fill: #FDA5EB;
+    stroke: #000000;
+    stroke-width: 0.6px;
+}
+
+svg.logo {
+    z-index: 2;
+    position: absolute;
+    width: 100px;
+    right: 10px;
+}
+
+
+svg.titre {
+    z-index: 2;
+    left: 50%;
+    transform: translate(-50%);
+    position: absolute;
+    width: 500px;
+}
+
+@media screen and (mAX-width: 750px) {
+    svg {
+        width: 300px;
+    }
+}
+
+svg:hover>.st2 {
+    transform: matrix(1, 0, 0, 1, 1.3711, 113.645);
+}
+
+.rectangle {
+    transition: all 2s ease-in-out;
+    fill: aqua;
+    z-index: 3;
+}

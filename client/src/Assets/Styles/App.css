@@ -1,0 +1,65 @@
+@font-face {
+    font-family: 'national';
+    src: url('../Fonts/NationalPark-Regular.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: national;
+    margin: 0;
+}
+
+div.RouterBloc {
+    display: block;
+    position: absolute;
+}
+
+a.Hide {
+    display: none;
+}
+
+a.RouterLog {
+    position: relative;
+    display: inline-block;
+    width: auto;
+    display: block;
+    text-decoration: none;
+    border: solid black 1px;
+    color: black;
+    background-color: #fcf;
+    border-radius: 15px;
+    padding: 12px;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+a.RouterMatch {
+    position: relative;
+    display: inline-block;
+    width: auto;
+    display: block;
+    text-decoration: none;
+    border: solid black 1px;
+    color: black;
+    background-color: #ff3f;
+    border-radius: 15px;
+    padding: 12px;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+a.RouterProfil {
+    position: relative;
+    display: inline-block;
+    width: auto;
+    display: block;
+    text-decoration: none;
+    border: solid black 1px;
+    color: black;
+    background-color: #ff3f;
+    border-radius: 15px;
+    padding: 12px;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
