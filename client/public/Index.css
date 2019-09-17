@@ -10,8 +10,8 @@
 }
 
 .st2 {
+    font-family: 'nationalH';
     transition: all 2s ease-in-out;
-    font-family: 'NationalPark-Heavy';
 }
 
 .st3 {
@@ -43,7 +43,7 @@
 }
 
 .sst2 {
-    font-family: 'NationalPark-Heavy';
+    font-family: 'nationalH';
 }
 
 .sst3 {
