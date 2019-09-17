@@ -4,23 +4,20 @@ import axios from '../Services/Client';
 class LoginPage extends React.Component {
 
     state = {
-        user: {
-            username: "",
-            password: ""
-        },
+        username: "",
+        password: "",
         confirm: false
     }
 
     handleSubmit = e => {
         e.preventDefault();
-        const user = {
-            username: this.state.username,
-            password: this.state.password
-        };
-        if (user) {
-            axios.post(`/login`, { user })
+        const username = this.state.username;
+        const password = this.state.password;
+        if (username && password) {
+            axios.post(`/login/connect`, { username, password })
                 .then(res => {
-                    console.log('yeah')
+                    console.log(res);
+                    localStorage.setItem('token', res.data)
                 })
                 .catch(err => {
                     console.log(err);

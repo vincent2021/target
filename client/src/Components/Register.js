@@ -86,7 +86,7 @@ class RegisterPage extends Component {
             alert("confirmation password doesn't match");
         }
         else if (user) {
-            axios.post(`/registration`, { user })
+            axios.post(`/login/register`, { user })
                 .then(res => {
                     console.log(res.data);
                 })

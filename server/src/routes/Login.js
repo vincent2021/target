@@ -3,10 +3,12 @@ const db = require("../db.js");
 const auth = require("../auth.js");
 
 router.route("/connect").post((req, res) => {
-    console.log(req.body);
-    auth.checkUser(req.body);
-    //fonction pour verifier les nvx
-    res.send('Login done');
+    username = req.body.username;
+    passwd = req.body.password;
+    console.log("Check auth for " + username + ":" + passwd);
+    auth.login(username, passwd).then(function (ret) {
+        res.send(ret);
+    }, (err) => {console.log(err)});
 });
 
 router.route("/register").post((req, res) => {

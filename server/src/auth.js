@@ -11,26 +11,42 @@ function newClient() {
     return new dgraph.DgraphClient(clientStub1);
 }
 
-function checkUser(login, password) {
-    
+async function login(username, password) {
+    try {
+        dgraphClient = newClient();
+        const query = `{
+            login(func: eq(username, "${username}")) {
+                uid,
+                password
+                }
+            }`;
+        const res = await dgraphClient.newTxn().query(query);
+        const data = res.getJson();
+        if (data.login[0].password == password) {
+            const uid = data.login[0].uid;
+            return (sign(uid, username));
+        } else {
+            return ("Wrong Password");
+        }
+    } catch (err) {
+        return "Wrong Username";
+    }
 }
-
 
 const privateKEY  = fs.readFileSync('./src/private.key', 'utf8');
 const publicKEY  = fs.readFileSync('./src/public.key', 'utf8');
-
-// data sent within the jwt
-let payload = {
-    uid: "<0x2>",
-    username: "vincent2021"
-   };
 
 const signOptions = {
     expiresIn:  "12h",
     algorithm:  "RS256"
    };
 
-const sign = (payload, signOptions) => {
+const sign = (uid, username) => {
+    let payload = {
+        uid: uid,
+        username: username
+       };
+    
     return (jwt.sign(payload, privateKEY, signOptions));
 }
 
@@ -50,5 +66,5 @@ module.exports = {
     sign: sign,
     verify: verify,
     decode: decode,
-    checkUser: checkUser
+    login: login
 };
