@@ -3,6 +3,7 @@ const db = require("../db.js");
 
 router.route('/getUser').post((req, res) => {
     let user_nb = Math.round(Math.random() * 150);
+    console.log(req);
     db.getUser().then(function (users) {
         res.send(users[user_nb]);
     });
@@ -19,6 +20,5 @@ router.route('/userid').post((req, res) => {
         res.send(ret);
     });
 });
-
 
 module.exports = router;

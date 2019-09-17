@@ -16,6 +16,8 @@ const getAge = (date) => {
     return age_now;
 }
 
+
+
 const ProfilMatch = ({ match }) => {
     const [Age, setAge] = useState([20, 37]);
     const [Score, setScore] = useState([0, 100]);
@@ -47,7 +49,12 @@ const ProfilMatch = ({ match }) => {
     };
 
     const handleUser = async () => {
-        await axios.post('/user/getUser').then((res, req) => {
+        const authtoken = {
+            headers: {
+              'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        }
+        await axios.post('/user/getUser', authtoken).then((res, req) => {
             // faire une requete en fonction de l'age directement
             const ageUser = getAge(res.data.dob);
             setState({ ...res.data, age: ageUser });
