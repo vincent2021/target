@@ -1,5 +1,4 @@
 import React from 'react';
-import '../Assets/Connection.css';
 import axios from '../Services/Client';
 
 class LoginPage extends React.Component {
@@ -59,7 +58,7 @@ class LoginPage extends React.Component {
                         autoComplete="off"
                         required
                     />
-                   <input
+                    <input
                         className="Submit"
                         type="submit"
                         value="Submit"

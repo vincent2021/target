@@ -1,6 +1,10 @@
+.Hide {
+    display: none;
+}
+
 @font-face {
     font-family: 'national';
-    src: url('./fonts/NationalPark-Regular.otf') format('truetype');
+    src: url('../Fonts/NationalPark-Regular.otf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
@@ -61,18 +65,18 @@ input.Submit-invalid {
     color: #5555;
 }
 
-input.Submit:active{
+input.Submit:active {
     background-color: white;
     color: black;
 }
 
-div.is-invalid{
+div.is-invalid {
     text-align: center;
     margin-bottom: 8px;
     font-size: 12px;
     color: #f99
 }
 
-div.is-valid{
+div.is-valid {
     margin: none;
 }
