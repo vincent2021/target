@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, Route } from "react-router-dom";
-import axios from '../../Services/Client.js';
+import axios from '../../Services/Client';
 import MatchSearch from './Match_Search';
 import ProfilUser from '../Profil_User';
 
