@@ -3,14 +3,17 @@ const db = require("../db.js");
 const auth = require("../auth.js");
 
 router.route('/getUser').post((req, res) => {
-    if (auth.verify(req.headers.authorization)) {
-        let user_nb = Math.round(Math.random() * 150);
-        db.getUser().then(function (users) {
-            res.send(users[user_nb]);
-        });
-    } else {
-        res.statusCode(403);
-    }
+    console.log(req.headers.authorization);
+    auth.verify(req.headers.authorization).then(function (ret) {
+        if (ret == false) {
+            res.status(403).send;
+        } else {
+            let user_nb = Math.round(Math.random() * 150);
+            db.getUser().then(function (users) {
+                res.send(users[user_nb]);
+            });
+        }
+    });
 });
 
 router.route('/profile').post((req, res) => {

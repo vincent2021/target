@@ -17,6 +17,7 @@
     "node-fetch": "^2.6.0",
     "nodemon": "^1.19.1",
     "npm": "^6.10.3",
+    "socket.io": "^2.2.0",
     "start": "^5.1.0"
   },
   "devDependencies": {
