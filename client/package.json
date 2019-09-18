@@ -12,7 +12,8 @@
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
     "start": "^5.1.0",
-    "zxcvbn": "^4.4.2"
+    "zxcvbn": "^4.4.2",
+    "socket.io-client": "^2.2.0"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -1,4 +1,5 @@
 import React from "react";
+import io from "socket.io-client";
 import { Route, Link, Switch, Redirect } from "react-router-dom";
 import { LoginPage } from "./Components/Login";
 import { RegisterPage } from "./Components/Register";
@@ -65,5 +66,11 @@ const App = () => {
         </div>
     )
 }
+
+const socket = io.connect('http://localhost:8000');
+socket.on('news', function (data) {
+    console.log(data);
+    socket.emit('my other event', { my: 'data' });
+});
 
 export default App;
