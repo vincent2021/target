@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from '../Services/Client';
+import axios from '../Services/Axios';
 
 class LoginPage extends React.Component {
 

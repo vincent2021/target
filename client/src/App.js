@@ -6,44 +6,50 @@ import { RegisterPage } from "./Components/Register";
 import ProfilClient from "./Components/Profil_Client";
 import ProfilUser from "./Components/Profil_User";
 import ProfilMatch from "./Components/MatchPage/Match_Profil";
+import BigLogo from "./Assets/Svg/BigLogo";
+import SmallLogo from "./Assets/Svg/SmallLogo";
 
 import './Assets/Styles/App.css';
 import './Assets/Styles/Connection.css';
 import './Assets/Styles/Profil_Match.css';
 import './Assets/Styles/Profil_Client.css';
+import './Assets/Styles/Profil_User.css';
+import './Assets/Styles/Svg.css';
 
 const App = () => {
-
     const loggedIn = false;
 
     return (
         <div>
+            <Link to='/' >
+                <BigLogo />
+            </Link>
             <div className='RouterBloc'>
                 <Link
                     id='login'
                     className='RouterLog'
-                    to='register'
+                    to='/register'
                 >
                     New in Target ? <br /> Create an account !
                     </Link>
                 <Link
                     id='register'
                     className='Hide'
-                    to='login'
+                    to='/login'
                 >
                     Already have an < br /> account ? Sign in !
                     </Link>
                 <Link
                     id='match'
                     className='RouterMatch'
-                    to='match'
+                    to='/match'
                 >
                     Target people !
                     </Link>
                 <Link
                     id='profilClient'
                     className='RouterProfil'
-                    to='profil'
+                    to='/profil'
                 >
                     My Profil
                     </Link>
@@ -60,17 +66,17 @@ const App = () => {
                 <Route exact path='/register' component={RegisterPage} />
                 <Route exact path='/profil' component={ProfilClient} />
                 <Route exact path='/match' component={ProfilMatch} />
-                <Route exact path="/user/:usernameId" component={ProfilUser} />
+                <Route exact path="/user/:uid" component={ProfilUser} />
                 <Route component={LoginPage} />
             </Switch>
         </div>
     )
 }
 
-const socket = io.connect('http://localhost:8000');
-socket.on('news', function (data) {
-    console.log(data);
-    socket.emit('my other event', { my: 'data' });
-});
+// const socket = io.connect('http://localhost:8000');
+// socket.on('news', function (data) {
+//     console.log(data);
+//     socket.emit('my other event', { my: 'data' });
+// });
 
 export default App;

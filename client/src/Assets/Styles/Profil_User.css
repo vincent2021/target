@@ -1,0 +1,9 @@
+.BlocUser {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    font-size: 90px;
+    background-color: #cccc;
+}

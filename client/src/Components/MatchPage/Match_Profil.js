@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Link, Route } from "react-router-dom";
-import axios from '../../Services/Client';
+import axios from '../../Services/Axios';
 import MatchSearch from './Match_Search';
-import ProfilUser from '../Profil_User';
 
 
 // deplacer à l'inscription (calcul de l'age)
@@ -50,6 +49,7 @@ const ProfilMatch = ({ match }) => {
         await axios.post('/user/getUser').then((res, req) => {
             // faire une requete en fonction de l'age directement
             const ageUser = getAge(res.data.dob);
+            // console.log(res.data);
             setState({ ...res.data, age: ageUser });
         });
         // recuperer le match
@@ -83,7 +83,7 @@ const ProfilMatch = ({ match }) => {
 
             <div className="CenterMatch">
 
-                <Link to={`/user/${state.username}`}>
+                <Link to={`/user/${state.uid}`}>
                     <img alt="" src={state.user_pic} className="MatchProfil"></img>
                 </Link>
 

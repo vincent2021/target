@@ -17,9 +17,10 @@ router.route('/getUser').post((req, res) => {
 });
 
 router.route('/profile').post((req, res) => {
-    db.getUserProfile(req.query['uid']).then(function (ret) {
-        res.send(ret);
-    });
+    db.getUserProfile(req.query['uid'])
+        .then(function (ret) {
+            res.send(ret);
+        })
 });
 
 router.route('/userid').post((req, res) => {
@@ -27,5 +28,7 @@ router.route('/userid').post((req, res) => {
         res.send(ret);
     });
 });
+
+
 
 module.exports = router;

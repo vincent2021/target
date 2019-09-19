@@ -1,19 +1,29 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
+import axios from '../Services/Axios';
+
 
 const ProfilUser = ({ match }) => {
-    // const [state, setState] = useState('');
 
-    // useEffect(() => {
-    //     fetch('http://localhost:3000/match')
-    //         .then(rep => rep.json())
-    //         .then(data => setState({ data }))
-    // }, [])
+    const [user, setUser] = useState('');
+
+    if (user === '') {
+        axios.post(`/user/profile?uid=${match.params.uid}`)
+            .then(res => {
+                console.log(res.data);
+                setUser(res.data);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
 
 
     return (
-        <div>
-            mmh
-        </div>
+        <div className="BlocUser">
+            {user.city}
+            <br />
+            {user.email}
+        </div >
     )
 }
 

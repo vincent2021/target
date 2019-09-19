@@ -20,7 +20,8 @@ function login(e) {
             if (user) {
                 user.authdata = window.btoa(username + ':' + password);
                 localStorage.setItem('user', JSON.stringify({ user }));
-            }});
+            }
+        });
 };
 
 function handleResponse(response) {
