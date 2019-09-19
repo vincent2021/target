@@ -1,9 +1,77 @@
+.BlocBase {
+    position: absolute;
+    display: flex;
+    flex-direction: wrap;
+    justify-content: center;
+    /* align-items: center; */
+    width: 100vw;
+    /* height: 200vh; */
+    top: 20vh;
+}
+
 .BlocUser {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    width: 100vw;
-    height: 100vh;
-    font-size: 90px;
+    flex-direction: column;
+    background-color: #eeef;
+    width: 300px;
+    height: calc(80vh - 20px);
+    margin: 10px;
+}
+
+.Titre {
+    font-size: 20px;
+    text-transform: uppercase;
+    margin: 0;
+    padding-bottom: 5px;
+}
+
+
+/* Image */
+.BlocUser>span {
+    display: block;
+    max-width: 300px;
+    max-height: 300px;
+    overflow: hidden;
+    padding-bottom: 10px;
+}
+
+div.BlocImage {
+    display: flex;
+    align-content: space-between;
     background-color: #cccc;
+    height: 50px;
+    margin-bottom: 10px;
+}
+
+.image {
+    height: 300px;
+}
+
+/* Input */
+div.BlocImport {
+    margin-bottom: 10px;
+}
+
+input.modify {
+    text-decoration: none;
+    border: solid black 1px;
+    background-color: #f33f;
+    border-radius: 15px;
+    padding: 12px;
+    font-size: 14px;
+}
+
+
+/* Informations */
+div.BlocInformations {
+    background-color: white;
+    border: black solid 1px;
+    height: 40px;
+    border-radius: 10px;
+    padding-bottom: 10px;
+}
+
+p.BlocTexte {
+    font-size: 10px;
+    padding-left: 10px;
 }

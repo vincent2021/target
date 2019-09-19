@@ -2,18 +2,7 @@ import React, { useState } from 'react';
 import { Link, Route } from "react-router-dom";
 import axios from '../../Services/Axios';
 import MatchSearch from './Match_Search';
-
-
-// deplacer à l'inscription (calcul de l'age)
-const getAge = (date) => {
-    const dn = new Date(date)
-    const auj = new Date();
-    let age_now = (auj.getFullYear() - dn.getFullYear());
-    var m = auj.getMonth() - dn.getMonth();
-    if (m < 0 || (m === 0 && auj.getDate() < dn.getDate()))
-        age_now--;
-    return age_now;
-}
+import { getAge } from '../../Services/Fct';
 
 const ProfilMatch = ({ match }) => {
     const [Age, setAge] = useState([20, 37]);
@@ -49,7 +38,6 @@ const ProfilMatch = ({ match }) => {
         await axios.post('/user/getUser').then((res, req) => {
             // faire une requete en fonction de l'age directement
             const ageUser = getAge(res.data.dob);
-            // console.log(res.data);
             setState({ ...res.data, age: ageUser });
         });
         // recuperer le match
