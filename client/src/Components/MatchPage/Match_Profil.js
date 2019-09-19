@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
+// eslint-disable-next-line
 import { Link, Route } from "react-router-dom";
 import axios from '../../Services/Client';
 import MatchSearch from './Match_Search';
-import ProfilUser from '../Profil_User';
-
 
 // deplacer à l'inscription (calcul de l'age)
 const getAge = (date) => {

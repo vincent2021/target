@@ -12,6 +12,11 @@ import './Assets/Styles/Connection.css';
 import './Assets/Styles/Profil_Match.css';
 import './Assets/Styles/Profil_Client.css';
 
+const socket = io.connect('http://localhost:8000');
+    socket.on('info', function (data) {
+        console.log(data);
+});
+
 const App = () => {
 
     const loggedIn = false;
@@ -66,11 +71,5 @@ const App = () => {
         </div>
     )
 }
-
-const socket = io.connect('http://localhost:8000');
-socket.on('news', function (data) {
-    console.log(data);
-    socket.emit('my other event', { my: 'data' });
-});
 
 export default App;
