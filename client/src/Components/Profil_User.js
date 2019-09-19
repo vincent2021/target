@@ -24,7 +24,6 @@ const ProfilUser = ({ match }) => {
         let bloc = document.getElementById('BlocImage');
         const img = document.createElement("img");
         console.log(image.pictures[0]);
-        console.log(user.user_pic);
         img.src = image.pictures[0];
         bloc.appendChild(img)
     }, [image])

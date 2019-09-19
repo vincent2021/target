@@ -7,6 +7,7 @@ import ProfilClient from "./Components/Profil_Client";
 import ProfilUser from "./Components/Profil_User";
 import ProfilMatch from "./Components/MatchPage/Match_Profil";
 import BigLogo from "./Assets/Svg/BigLogo";
+// eslint-disable-next-line
 import SmallLogo from "./Assets/Svg/SmallLogo";
 
 import './Assets/Styles/App.css';
