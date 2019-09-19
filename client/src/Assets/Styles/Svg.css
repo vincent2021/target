@@ -1,68 +1,68 @@
-.st0 {
+.prefix__st0 {
     fill: none;
 }
 
-.st1 {
+.prefix__st1 {
     fill: #FFFD38;
     stroke: #000000;
     stroke-miterlimit: 10;
     stroke-width: 1px;
 }
 
-.st2 {
+.prefix__st2 {
     font-family: 'nationalH';
     transition: all 2s ease-in-out;
 }
 
-.st3 {
+.prefix__st3 {
     font-size: 134px;
 }
 
-.st4 {
+.prefix__st4 {
     fill: #35D467;
     stroke: #000000;
     stroke-miterlimit: 10;
     stroke-width: 1px;
 }
 
-.st5 {
+.prefix__st5 {
     fill: #FDA5EB;
     stroke: #000000;
     stroke-miterlimit: 10;
     stroke-width: 1px;
 }
 
-.sst0 {
+.prefix__sst0 {
     fill: none;
 }
 
-.sst1 {
+.prefix__sst1 {
     fill: #FFFD38;
     stroke: #000000;
     stroke-width: 0.6px;
 }
 
-.sst2 {
+.prefix__sst2 {
     font-family: 'nationalH';
 }
 
-.sst3 {
+.prefix__sst3 {
     font-size: 70px;
 }
 
-.sst4 {
+.prefix__sst4 {
     fill: #35D467;
     stroke: #000000;
     stroke-width: 0.6px;
 }
 
-.sst5 {
+.prefix__sst5 {
     fill: #FDA5EB;
     stroke: #000000;
     stroke-width: 0.6px;
 }
 
-svg.logo {
+svg.prefix__logo {
     z-index: 2;
     position: absolute;
     width: 100px;
@@ -70,7 +70,7 @@ svg.logo {
 }
 
 
-svg.titre {
+svg.prefix__titre {
     z-index: 2;
     left: 50%;
     transform: translate(-50%);
@@ -84,11 +84,11 @@ svg.titre {
     }
 }
 
-svg:hover>.st2 {
+svg:hover>.prefix__st2 {
     transform: matrix(1, 0, 0, 1, 1.3711, 113.645);
 }
 
-.rectangle {
+.prefix__rectangle {
     transition: all 2s ease-in-out;
     fill: aqua;
     z-index: 3;
