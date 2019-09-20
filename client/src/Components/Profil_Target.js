@@ -73,7 +73,7 @@ const ProfilUser = ({ match }) => {
             <div className="BlocUser">
                 <div className="BlocChat"></div >
                 <div className="BlocWrite">
-                    <textarea></textarea >
+                    <textarea value="<3"></textarea >
                     <input className="send" onClick={PostComment} type="submit" value="Post" style={{ backgroundColor: '#0b3b' }}></input>
                 </div>
             </div >

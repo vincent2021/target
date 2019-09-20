@@ -30,7 +30,6 @@ const resizeImage = async (e) => {
         img.style.width = '300px';
         img.style.bottom = (img.height - 300) / 2 + 'px';
     }
-    console.log(img.width);
 }
 
 export { getAge, resizeImage }
