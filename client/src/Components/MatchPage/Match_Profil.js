@@ -1,20 +1,9 @@
 import React, { useState } from 'react';
+// eslint-disable-next-line
 import { Link, Route } from "react-router-dom";
-import axios from '../../Services/Client';
+import axios from '../../Services/Axios';
 import MatchSearch from './Match_Search';
-import ProfilUser from '../Profil_User';
-
-
-// deplacer à l'inscription (calcul de l'age)
-const getAge = (date) => {
-    const dn = new Date(date)
-    const auj = new Date();
-    let age_now = (auj.getFullYear() - dn.getFullYear());
-    var m = auj.getMonth() - dn.getMonth();
-    if (m < 0 || (m === 0 && auj.getDate() < dn.getDate()))
-        age_now--;
-    return age_now;
-}
+import { getAge } from '../../Services/Fct';
 
 const ProfilMatch = ({ match }) => {
     const [Age, setAge] = useState([20, 37]);
@@ -83,7 +72,7 @@ const ProfilMatch = ({ match }) => {
 
             <div className="CenterMatch">
 
-                <Link to={`/user/${state.username}`}>
+                <Link to={`/user/${state.uid}`}>
                     <img alt="" src={state.user_pic} className="MatchProfil"></img>
                 </Link>
 

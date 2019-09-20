@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import React, { useState } from "react";
 import Slider from '@material-ui/core/Slider';
 import { withStyles } from '@material-ui/styles';
