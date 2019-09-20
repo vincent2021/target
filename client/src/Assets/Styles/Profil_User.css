@@ -1,3 +1,6 @@
+/* ---- BLOC DE GAUCHE ---- */
+
+/* Structure */
 .BlocBase {
     position: absolute;
     display: flex;
@@ -12,14 +15,16 @@
 .BlocUser {
     display: flex;
     flex-direction: column;
-    background-color: #eeef;
+    background-color: #fff;
     width: 300px;
     height: calc(80vh - 20px);
     margin: 10px;
 }
 
+
+/* Titre */
 .Titre {
-    font-size: 20px;
+    font-size: 16px;
     text-transform: uppercase;
     margin: 0;
     padding-bottom: 5px;
@@ -29,49 +34,108 @@
 /* Image */
 .BlocUser>span {
     display: block;
-    max-width: 300px;
-    max-height: 300px;
     overflow: hidden;
-    padding-bottom: 10px;
+    border: black 1px solid;
+    width: 300px;
+    height: 300px;
+    margin-bottom: -1px;
 }
 
 div.BlocImage {
     display: flex;
     align-content: space-between;
-    background-color: #cccc;
+    border: black 1px solid;
+    width: 300px;
     height: 50px;
     margin-bottom: 10px;
 }
 
 .image {
+    /* régler la dimension en js */
     height: 300px;
 }
 
-/* Input */
-div.BlocImport {
-    margin-bottom: 10px;
+/* Input Top */
+
+div.HeaderProfil {
+    display: flex;
+    flex-direction: wrap;
+    justify-content: space-between;
+    width: 300px;
+    margin-bottom: 5px;
 }
 
-input.modify {
+div.HeaderProfil>input {
     text-decoration: none;
     border: solid black 1px;
-    background-color: #f33f;
-    border-radius: 15px;
-    padding: 12px;
-    font-size: 14px;
+    border-radius: 5px;
+    padding: 3px;
+    font-size: 8px;
+    margin-left: 2px;
 }
 
+/* Input Bottom */
+
+div.UserButton {
+    display: flex;
+    justify-content: space-between;
+}
+
+div.UserButton>input {
+    text-decoration: none;
+    border: solid black 1px;
+    border-radius: 5px;
+    padding: 15px;
+    font-size: 15px;
+}
 
 /* Informations */
+
 div.BlocInformations {
+    display: inline-block;
     background-color: white;
     border: black solid 1px;
-    height: 40px;
-    border-radius: 10px;
-    padding-bottom: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
 }
 
 p.BlocTexte {
     font-size: 10px;
     padding-left: 10px;
+}
+
+/* ---- BLOC DE DROITE ---- */
+
+/* Bloc Chat */
+
+div.BlocChat {
+    background-color: white;
+    height: 200px;
+    border: 1px black solid;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+div.BlocWrite {}
+
+div.BlocWrite>div {
+    background-color: #eee;
+    height: 50px;
+    border: 1px black solid;
+    padding-left: 5px;
+    font-size: 12px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+/* Input Send */
+
+input.send {
+    position: absolute;
+    display: inline-block;
+    text-decoration: none;
+    border: solid black 1px;
+    border-radius: 5px;
+    padding: 15px;
+    font-size: 15px;
 }

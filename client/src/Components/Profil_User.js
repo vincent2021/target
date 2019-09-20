@@ -20,47 +20,59 @@ const ProfilUser = ({ match }) => {
             })
     }
 
-    useEffect(() => {
-        let bloc = document.getElementById('BlocImage');
-        const img = document.createElement("img");
-        console.log(image.pictures[0]);
-        img.src = image.pictures[0];
-        bloc.appendChild(img)
-    }, [image])
-
-    const ImportPicture = e => {
-        const fd = new FormData();
-        fd.append('image', e.target.files[0]);
-        setImage({ pictures: e.target.files });
+    const BlockUser = e => {
+        console.log(e.target.value);
     }
-    const ModifyPicture = e => {
-        console.log(e);
+    const ReportUser = e => {
+        console.log(e.target.value);
     }
-    const ModifyInformation = e => {
-        console.log(e);
+    const UnlikeUser = e => {
+        console.log(e.target.value);
+    }
+    const LikeUser = e => {
+        console.log(e.target.value);
+    }
+    const ActiveChat = e => {
+        console.log(e.target.value);
     }
 
     return (
         <div className="BlocBase">
 
             <div className="BlocUser">
-                <p className="Titre">LIKED / VISITS</p>
-            </div >
-
-            <div className="BlocUser">
-                <p className="Titre">{user.username} / {Age}</p>
+                <div className="HeaderProfil">
+                    <p className="Titre">{user.username} / {Age}</p>
+                    <input id="BlockThisUser" onClick={BlockUser} type="submit" value="Block This User" style={{ backgroundColor: '#f55' }}></input>
+                    <input id="Report" onClick={ReportUser} type="submit" value="Report" style={{ backgroundColor: '#fb5' }}></input>
+                </div>
+                <div id="MatchBarre" className="MatchBarre"></div>
                 <span>
                     <img alt="profil" src={user.user_pic} className="image"></img>
                 </span>
                 <div id="BlocImage" className="BlocImage"></div>
-                <div className="BlocImport">
-                    <input onClick={ModifyPicture} className="modify" type="submit" value="Modify Pics"></input>
-                    <input onChange={ImportPicture} className="modify" type="file" value=""></input>
-                </div>
                 <div className="BlocInformations">
-                    <p className="BlocTexte">blablabla</p>
+                    <p className="BlocTexte">
+                        Genre : Male / Female
+                        Interest in : Female / Male
+                        Both Bio : ...
+                        Interest : #blabla
+                        localistation: Moscou / Russia
+                    </p >
+                </div >
+                <div className="UserButton">
+                    <input id="Unlike" onClick={UnlikeUser} type="submit" value="Unlike" style={{ backgroundColor: '#fcf' }}></input>
+                    <input id="Like" onClick={LikeUser} type="submit" value="Like" style={{ backgroundColor: '#ccf' }}></input>
+                    <input id="Chat" onClick={ActiveChat} type="submit" value="Chat" style={{ backgroundColor: '#0b3b' }}></input>
+                </div >
+            </div >
+
+
+            <div className="BlocUser">
+                <div className="BlocChat"></div >
+                <div className="BlocWrite">
+                    <div>text here...</div >
+                    <input className="send" type="submit" value="Post" style={{ backgroundColor: '#0b3b' }}></input>
                 </div>
-                <input onClick={ModifyInformation} className="modify" type="submit" value="Modify Informations"></input>
             </div >
 
         </div >
