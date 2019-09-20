@@ -36,10 +36,16 @@ div.CenterMatch {
 
 /* children */
 
-img.MatchProfil {
+.CenterMatch>span {
+    display: block;
+    overflow: hidden;
     border: black solid 1px;
-    width: 350px;
+    width: 850px;
     height: 350px;
+}
+
+img.MatchProfil {
+    position: relative;
 }
 
 /* bouttons rouge vert */

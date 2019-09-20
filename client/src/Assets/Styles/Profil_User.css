@@ -21,8 +21,7 @@ div.BlocImage {
 }
 
 .image {
-    /* régler la dimension en js */
-    height: 300px;
+    position: relative;
 }
 
 /* Input */

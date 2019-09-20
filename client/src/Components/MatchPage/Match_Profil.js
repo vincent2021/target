@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Link, Route } from "react-router-dom";
 import axios from '../../Services/Axios';
 import MatchSearch from './Match_Search';
-import { getAge } from '../../Services/Fct';
+import { getAge, resizeImage } from '../../Services/Fct';
 
 const ProfilMatch = ({ match }) => {
     const [Age, setAge] = useState([20, 37]);
@@ -54,9 +54,8 @@ const ProfilMatch = ({ match }) => {
         });
     };
 
-
     if (state.id === '') {
-        handleUser();
+        handleUser()
     }
 
     const handleMatch = (e) => {
@@ -78,7 +77,9 @@ const ProfilMatch = ({ match }) => {
             <div className="CenterMatch">
 
                 <Link to={`/user/${state.uid}`}>
-                    <img alt="" src={state.user_pic} className="MatchProfil"></img>
+                    <span>
+                        <img onLoad={resizeImage} id="imageTarget" alt="" src={state.user_pic} className="MatchProfil"></img>
+                    </span>
                 </Link>
 
                 <p>{state.username}</p>

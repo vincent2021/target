@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from '../Services/Axios';
-import { getAge } from '../Services/Fct';
+import { getAge, resizeImage } from '../Services/Fct';
 
 const ProfilClient = () => {
 
@@ -63,7 +63,7 @@ const ProfilClient = () => {
             <div className="BlocUser">
                 <p className="Titre">{user.username}</p>
                 <span>
-                    <img alt="profil" src={user.user_pic[0]} className="image"></img>
+                    <img onLoad={resizeImage} id="ImageUser" alt="profil" src={user.user_pic[0]} className="image"></img>
                 </span>
                 <div id="BlocImage" className="BlocImage"></div>
                 <div className="BlocImport">

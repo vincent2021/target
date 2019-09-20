@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from '../Services/Axios';
-import { getAge } from '../Services/Fct';
+import { getAge, resizeImage } from '../Services/Fct';
 
 const ProfilUser = ({ match }) => {
 
@@ -50,7 +50,7 @@ const ProfilUser = ({ match }) => {
                 </div>
                 <div id="MatchBarre" className="MatchBarre"></div>
                 <span>
-                    <img alt="profil" src={user.user_pic} className="image"></img>
+                    <img onLoad={resizeImage} id="ImageTarget" alt="profil" src={user.user_pic} className="image"></img>
                 </span>
                 <div id="BlocImage" className="BlocImage"></div>
                 <div className="BlocInformations">
