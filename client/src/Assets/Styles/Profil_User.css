@@ -1,37 +1,7 @@
-/* ---- BLOC DE GAUCHE ---- */
-
-/* Structure */
-.BlocBase {
-    position: absolute;
-    display: flex;
-    flex-direction: wrap;
-    justify-content: center;
-    /* align-items: center; */
-    width: 100vw;
-    /* height: 200vh; */
-    top: 20vh;
-}
-
-.BlocUser {
-    display: flex;
-    flex-direction: column;
-    background-color: #fff;
-    width: 300px;
-    height: calc(80vh - 20px);
-    margin: 10px;
-}
-
-
-/* Titre */
-.Titre {
-    font-size: 16px;
-    text-transform: uppercase;
-    margin: 0;
-    padding-bottom: 5px;
-}
-
+/* Même structure que Profil_User */
 
 /* Image */
+
 .BlocUser>span {
     display: block;
     overflow: hidden;
@@ -55,87 +25,50 @@ div.BlocImage {
     height: 300px;
 }
 
-/* Input Top */
+/* Input */
 
-div.HeaderProfil {
+div.BlocImport {
     display: flex;
     flex-direction: wrap;
     justify-content: space-between;
-    width: 300px;
-    margin-bottom: 5px;
-}
-
-div.HeaderProfil>input {
-    text-decoration: none;
-    border: solid black 1px;
-    border-radius: 5px;
-    padding: 3px;
-    font-size: 8px;
-    margin-left: 2px;
-}
-
-/* Input Bottom */
-
-div.UserButton {
-    display: flex;
-    justify-content: space-between;
-}
-
-div.UserButton>input {
-    text-decoration: none;
-    border: solid black 1px;
-    border-radius: 5px;
-    padding: 15px;
-    font-size: 15px;
-}
-
-/* Informations */
-
-div.BlocInformations {
-    display: inline-block;
-    background-color: white;
-    border: black solid 1px;
-    border-radius: 5px;
     margin-bottom: 10px;
 }
 
-p.BlocTexte {
-    font-size: 10px;
-    padding-left: 10px;
-}
-
-/* ---- BLOC DE DROITE ---- */
-
-/* Bloc Chat */
-
-div.BlocChat {
-    background-color: white;
-    height: 200px;
-    border: 1px black solid;
-    border-radius: 5px;
-    margin-bottom: 5px;
-}
-
-div.BlocWrite {}
-
-div.BlocWrite>div {
-    background-color: #eee;
-    height: 50px;
-    border: 1px black solid;
-    padding-left: 5px;
-    font-size: 12px;
-    border-radius: 5px;
-    margin-bottom: 5px;
-}
-
-/* Input Send */
-
-input.send {
-    position: absolute;
+.modify {
+    position: relative;
     display: inline-block;
     text-decoration: none;
+    text-align: center;
     border: solid black 1px;
     border-radius: 5px;
-    padding: 15px;
-    font-size: 15px;
+    padding: 12px;
+    font-size: 14px;
+}
+
+.ImportPicture+label {
+    cursor: pointer;
+}
+
+input.ImportPicture {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+
+/* Informations */
+div.BlocInformations {
+    background-color: white;
+    border: black solid 1px;
+    height: 40px;
+    border-radius: 10px;
+    padding-bottom: 10px;
+}
+
+div.BlocInformations>p.BlocTexte {
+    font-size: 10px;
+    padding-left: 10px;
 }

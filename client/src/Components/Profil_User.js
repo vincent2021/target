@@ -2,54 +2,75 @@ import React, { useState, useEffect } from 'react';
 import axios from '../Services/Axios';
 import { getAge } from '../Services/Fct';
 
-const ProfilUser = ({ match }) => {
+const ProfilClient = () => {
 
-    const [user, setUser] = useState('');
-    const [Age, setAge] = useState('')
+    const [user, setUser] = useState({
+        username: "",
+        fistname: "",
+        lastname: "",
+        email: "",
+        password: "",
+        age: "",
+        user_pic: []
+    });
+
     const [image, setImage] = useState({ pictures: [] });
 
-    if (user === '') {
-        axios.post(`/user/profile?uid=${match.params.uid}`)
+    if (user.username === '') {
+        axios.post(`/login/tokeninfo`)
             .then(res => {
-                console.log(res.data);
-                setUser(res.data);
-                setAge(getAge(res.data.dob));
+                const DefaultPicture = 'https://savoirs.rfi.fr/sites/all/themes/custom/rfi/images/public/default-profile.png'
+                setUser({
+                    ...res.data,
+                    age: getAge(res.data.dob),
+                    user_pic: [DefaultPicture]
+                })
             })
             .catch(err => {
                 console.log(err);
             })
     }
 
-    const BlockUser = e => {
+    useEffect(() => {
+        let bloc = document.getElementById('BlocImage');
+        const img = document.createElement("img");
+        console.log(image.pictures[0]);
+        img.src = image.pictures[0];
+        bloc.appendChild(img)
+    }, [image])
+
+    const ImportPicture = e => {
+        const fd = new FormData();
+        fd.append('image', e.target.files[0]);
+        setImage({ pictures: e.target.files });
+    }
+    const ModifyPicture = e => {
         console.log(e.target.value);
     }
-    const ReportUser = e => {
+    const ModifyInformation = e => {
         console.log(e.target.value);
     }
-    const UnlikeUser = e => {
-        console.log(e.target.value);
-    }
-    const LikeUser = e => {
-        console.log(e.target.value);
-    }
-    const ActiveChat = e => {
-        console.log(e.target.value);
-    }
+
 
     return (
         <div className="BlocBase">
 
             <div className="BlocUser">
-                <div className="HeaderProfil">
-                    <p className="Titre">{user.username} / {Age}</p>
-                    <input id="BlockThisUser" onClick={BlockUser} type="submit" value="Block This User" style={{ backgroundColor: '#f55' }}></input>
-                    <input id="Report" onClick={ReportUser} type="submit" value="Report" style={{ backgroundColor: '#fb5' }}></input>
-                </div>
-                <div id="MatchBarre" className="MatchBarre"></div>
+                <p className="Titre">LIKED / VISITS</p>
+                <div id="BlocVisits" className="BlocVisits"></div>
+            </div >
+
+            <div className="BlocUser">
+                <p className="Titre">{user.username}</p>
                 <span>
-                    <img alt="profil" src={user.user_pic} className="image"></img>
+                    <img alt="profil" src={user.user_pic[0]} className="image"></img>
                 </span>
                 <div id="BlocImage" className="BlocImage"></div>
+                <div className="BlocImport">
+                    <input className="modify" onClick={ModifyPicture} type="submit" value="Modify Pics" style={{ backgroundColor: '#f99' }}></input>
+                    <input id="ImportPicture" className="ImportPicture" onChange={ImportPicture} type="file" value=""></input>
+                    <label className="modify" htmlFor="ImportPicture" style={{ backgroundColor: '#ff3f' }} >Import Picture</label>
+                </div>
                 <div className="BlocInformations">
                     <p className="BlocTexte">
                         Genre : Male / Female
@@ -58,25 +79,14 @@ const ProfilUser = ({ match }) => {
                         Interest : #blabla
                         localistation: Moscou / Russia
                     </p >
-                </div >
-                <div className="UserButton">
-                    <input id="Unlike" onClick={UnlikeUser} type="submit" value="Unlike" style={{ backgroundColor: '#fcf' }}></input>
-                    <input id="Like" onClick={LikeUser} type="submit" value="Like" style={{ backgroundColor: '#ccf' }}></input>
-                    <input id="Chat" onClick={ActiveChat} type="submit" value="Chat" style={{ backgroundColor: '#0b3b' }}></input>
-                </div >
-            </div >
-
-
-            <div className="BlocUser">
-                <div className="BlocChat"></div >
-                <div className="BlocWrite">
-                    <div>text here...</div >
-                    <input className="send" type="submit" value="Post" style={{ backgroundColor: '#0b3b' }}></input>
+                </div>
+                <div>
+                    <input className="modify" onClick={ModifyInformation} type="submit" value="Modify Informations" style={{ backgroundColor: '#0b3b' }}></input>
                 </div>
             </div >
 
         </div >
-    )
+    );
 }
 
-export default ProfilUser 
+export default ProfilClient
