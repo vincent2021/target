@@ -54,6 +54,11 @@ const ProfilMatch = ({ match }) => {
         });
     };
 
+
+    if (state.id === '') {
+        handleUser();
+    }
+
     const handleMatch = (e) => {
         e.preventDefault();
         if (e.target.value === "Yes")
