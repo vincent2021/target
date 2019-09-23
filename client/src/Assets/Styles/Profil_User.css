@@ -1,64 +1,60 @@
-.BlocBase {
-    position: absolute;
-    display: flex;
-    flex-direction: wrap;
-    justify-content: center;
-    /* align-items: center; */
-    width: 100vw;
-    /* height: 200vh; */
-    top: 20vh;
-}
-
-.BlocUser {
-    display: flex;
-    flex-direction: column;
-    background-color: #eeef;
-    width: 300px;
-    height: calc(80vh - 20px);
-    margin: 10px;
-}
-
-.Titre {
-    font-size: 20px;
-    text-transform: uppercase;
-    margin: 0;
-    padding-bottom: 5px;
-}
-
+/* Même structure que Profil_User */
 
 /* Image */
+
 .BlocUser>span {
     display: block;
-    max-width: 300px;
-    max-height: 300px;
     overflow: hidden;
-    padding-bottom: 10px;
+    border: black 1px solid;
+    width: 300px;
+    height: 300px;
+    margin-bottom: -1px;
 }
 
 div.BlocImage {
     display: flex;
     align-content: space-between;
-    background-color: #cccc;
+    border: black 1px solid;
+    width: 300px;
     height: 50px;
     margin-bottom: 10px;
 }
 
 .image {
-    height: 300px;
+    position: relative;
 }
 
 /* Input */
+
 div.BlocImport {
+    display: flex;
+    flex-direction: wrap;
+    justify-content: space-between;
     margin-bottom: 10px;
 }
 
-input.modify {
+.modify {
+    position: relative;
+    display: inline-block;
     text-decoration: none;
+    text-align: center;
     border: solid black 1px;
-    background-color: #f33f;
-    border-radius: 15px;
+    border-radius: 5px;
     padding: 12px;
     font-size: 14px;
+}
+
+.ImportPicture+label {
+    cursor: pointer;
+}
+
+input.ImportPicture {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
 }
 
 
@@ -71,7 +67,7 @@ div.BlocInformations {
     padding-bottom: 10px;
 }
 
-p.BlocTexte {
+div.BlocInformations>p.BlocTexte {
     font-size: 10px;
     padding-left: 10px;
 }

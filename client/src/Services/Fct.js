@@ -15,6 +15,23 @@ const getAge = (date) => {
     return age_now;
 }
 
-export { getAge }
+const resizeImage = async (e) => {
+    const img = await document.getElementById(e.target.id);
+    img.style.width = 'auto';
+    img.style.height = 'auto';
+    img.style.right = '0px';
+    img.style.bottom = '0px';
+
+    if (img.width >= img.height) {
+        img.style.height = '300px';
+        img.style.right = (img.width - 300) / 2 + 'px';
+    }
+    else {
+        img.style.width = '300px';
+        img.style.bottom = (img.height - 300) / 2 + 'px';
+    }
+}
+
+export { getAge, resizeImage }
 
 
