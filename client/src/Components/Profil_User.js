@@ -5,6 +5,7 @@ import { getAge, resizeImage } from '../Services/Fct';
 const ProfilClient = () => {
 
     const [user, setUser] = useState({
+        uid: "",
         username: "",
         fistname: "",
         lastname: "",
@@ -59,21 +60,23 @@ const ProfilClient = () => {
             e.target.files[0].type === "image/jpeg" ||
             e.target.files[0].type === "image/png"
         ) {
-            const img = await convertPic(e.target.files[0])
-
-            setImage([...images, img]);
-            setUser({ ...user, user_pic: images });
-
-            console.log(images, user)
-            const fd = new FormData();
-            fd.append('image', images);
-            axios.post(`/user/image`, fd)
-                .then(res => {
-                    console.log('reponses : ' + res.data);
-                })
-                .catch(err => {
-                    console.log('?' + err);
-                })
+            await convertPic(e.target.files[0]).then((img) => {
+                const imgFormData = new FormData();
+                imgFormData.append('image', img);
+                axios({
+                    method: 'post',
+                    url: 'upload',
+                    data: imgFormData,
+                    config: { headers: {'Content-Type': 'multipart/form-data' }}
+                    })
+                    .then(res => {
+                        console.log('img_url = : ' + res.data);
+                        setUser({ user_pic: [res.data] });
+                    })
+                    .catch(err => {
+                        console.log('?' + err);
+                    })
+            })
 
         }
     }
