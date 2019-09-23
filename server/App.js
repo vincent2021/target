@@ -28,5 +28,5 @@ const io = require('socket.io')(server);
 io.on('connection', function (socket) {
   socket.on('disconnect', function() {
   });
-  socket.emit('info', "Hello socket");
+  socket.emit('info', "Hello socket is on baby !");
 });

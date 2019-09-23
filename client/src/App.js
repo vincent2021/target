@@ -27,8 +27,6 @@ const App = () => {
 
     const [loggedIn, setLogon] = useState(false);
     tokenAuth.isLogged(setLogon);
-    console.log(loggedIn);
-
     return (
         <div>
             <Link to='/' >

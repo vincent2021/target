@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import React, { useState, useEffect } from 'react';
 import axios from '../Services/Axios';
 import { getAge, resizeImage } from '../Services/Fct';
@@ -14,7 +15,8 @@ const ProfilClient = () => {
         age: "",
         user_pic: []
     });
-
+    
+    // eslint-disable-next-line
     const [images, setImage] = useState([]);
 
     if (user.username === '') {
