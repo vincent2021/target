@@ -26,7 +26,7 @@
     "nodemon": "^1.19.1"
   },
   "scripts": {
-    "start": "nodemon app.js",
+    "start": "nodemon App.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "fedecomb - vimucchi",
