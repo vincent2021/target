@@ -16,11 +16,12 @@ const ProfilClient = () => {
     });
 
     //default image
-    const [images, setImage] = useState([defaultImage]);
+    const [images, setImages] = useState([defaultImage]);
 
     const [IsLoading, setIsLoading] = useState(false);
 
     if (user.username === '') {
+        //corriger les deux appels
         axios.post(`/login/tokeninfo`)
             .then(res => {
                 setUser({
@@ -33,7 +34,6 @@ const ProfilClient = () => {
                 //back to the main page
                 console.log(err);
             })
-        console.log('if : ' + user.username)
     }
 
     const convertPic = (pic) => {
@@ -45,31 +45,54 @@ const ProfilClient = () => {
         })
     }
 
+    const swapPic = e => {
+        console.log(e.event.target);
+        const found = images.find(element => {
+            return element === e.target.id;
+        });
+        let imageCopie = images;
+        imageCopie[0] = found;
+        imageCopie[e.target.id] = images[0];
+        setImages(imageCopie);
+    }
+
     useEffect(() => {
-        console.log('Update Image Effect...');
+        console.log('hic')
         const block = document.getElementById('BlocImage');
         setUser({ ...user, user_pic: images });
-        images.map(img => {
-            console.log(img.id);
-            let newImage = document.createElement('img');
-            newImage.src = img;
-            newImage.onLoad = { resizeImage };
-            block.appendChild(newImage)
+        let i = 0;
+        images.map(async img => {
+            if (i !== 0) {
+                let newImage = document.createElement('img');
+                newImage.src = img;
+                newImage.id = i;
+                newImage.addEventListener('onClick', { swapPic }, { once: true });
+                block.appendChild(newImage);
+            }
+            i++
         })
-        const fd = new FormData();
-        fd.append('image', images);
-        axios.post(`/user/image`, fd)
+        setIsLoading(false);
+        const imgFormData = new FormData();
+        imgFormData.append('image', images);
+        axios({
+            method: 'post',
+            url: 'upload',
+            data: imgFormData,
+            config: { headers: { 'Content-Type': 'multipart/form-data' } }
+        })
             .then(res => {
-                console.log(res.data);
+                console.log('img_url = : ' + res.data);
+                setUser({ user_pic: [res.data] });
             })
             .catch(err => {
-                console.log(err);
+                console.log('?' + err);
             })
         return (() => {
             // effacer l'image à remplacer
             while (block.firstChild) {
                 block.removeChild(block.firstChild);
             }
+            setIsLoading(false);
         })
     }, [images]);
 
@@ -83,8 +106,9 @@ const ProfilClient = () => {
             e.target.files[0].type === "image/jpeg" ||
             e.target.files[0].type === "image/png"
         ) {
+            setIsLoading(true);
             const img = await convertPic(e.target.files[0])
-            setImage([...images, img]);
+            setImages([...images, img]);
         }
     }
 
