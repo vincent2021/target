@@ -28,9 +28,5 @@ router.route("/tokeninfo").post((req, res) => {
     res.send(tokenInfo['payload']);
 });
 
-router.route("/tokeninfo").post((req, res) => {
-    const tokenInfo = auth.decode(req.headers.authorization);
-    res.send(tokenInfo['payload']);
-});
 
 module.exports = router;

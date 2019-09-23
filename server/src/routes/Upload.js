@@ -3,6 +3,7 @@ const multer = require("multer");
 const fs = require('fs');
 const auth = require("../auth")
 const mkdirp = require('mkdirp');
+const db = require("../db");
 
 const upload = multer();
 const upload_app = express();
@@ -21,7 +22,10 @@ upload_app.post('/', upload.single('image'), (req, res) => {
         base64Data = req.body.image.replace(/^data:image\/png;base64,/,""),
         stream.write(base64Data, 'base64');
         stream.end(console.log('Image uploaded'));
-        res.send("http://localhost:8000/" + filename);
+
+        const url = "http://localhost:8000/" + filename;
+        db.modifyUser(uid, "user_pic[0]", url);
+        res.send(url);
     } else {
         console.log('No image Uploaded');
         res.sendStatus(500);
