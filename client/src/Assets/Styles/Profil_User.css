@@ -20,6 +20,10 @@ div.BlocImage {
     margin-bottom: 10px;
 }
 
+div.BlocImage>img {
+    width: calc(300px / 5);
+}
+
 .image {
     position: relative;
 }
