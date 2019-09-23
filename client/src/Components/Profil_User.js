@@ -3,6 +3,7 @@ import axios from '../Services/Axios';
 import { getAge, resizeImage } from '../Services/Fct';
 
 const ProfilClient = () => {
+    const defaultImage = 'https://savoirs.rfi.fr/sites/all/themes/custom/rfi/images/public/default-profile.png';
 
     const [user, setUser] = useState({
         username: "",
@@ -14,34 +15,25 @@ const ProfilClient = () => {
         user_pic: []
     });
 
-    const [images, setImage] = useState([]);
+    //default image
+    const [images, setImage] = useState([defaultImage]);
+
+    const [IsLoading, setIsLoading] = useState(false);
 
     if (user.username === '') {
         axios.post(`/login/tokeninfo`)
             .then(res => {
-                const DefaultPicture = 'https://savoirs.rfi.fr/sites/all/themes/custom/rfi/images/public/default-profile.png'
                 setUser({
                     ...res.data,
                     age: getAge(res.data.dob),
-                    user_pic: [DefaultPicture]
+                    user_pic: images
                 })
             })
             .catch(err => {
+                //back to the main page
                 console.log(err);
             })
-    }
-
-    // useEffect(() => {
-    //     let bloc = document.getElementById('BlocImage');
-    //     const img = document.createElement("img");
-    //     console.log(image.pictures[0]);
-    //     img.src = image.pictures[0];
-    //     bloc.appendChild(img)
-    // }, [image])
-
-    const infos = () => {
-        console.log(images);
-        console.log(user);
+        console.log('if : ' + user.username)
     }
 
     const convertPic = (pic) => {
@@ -53,6 +45,38 @@ const ProfilClient = () => {
         })
     }
 
+    useEffect(() => {
+        console.log('Update Image Effect...');
+        const block = document.getElementById('BlocImage');
+        setUser({ ...user, user_pic: images });
+        images.map(img => {
+            console.log(img.id);
+            let newImage = document.createElement('img');
+            newImage.src = img;
+            newImage.onLoad = { resizeImage };
+            block.appendChild(newImage)
+        })
+        const fd = new FormData();
+        fd.append('image', images);
+        axios.post(`/user/image`, fd)
+            .then(res => {
+                console.log(res.data);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        return (() => {
+            // effacer l'image à remplacer
+            while (block.firstChild) {
+                block.removeChild(block.firstChild);
+            }
+        })
+    }, [images]);
+
+    const infos = () => {
+        console.log(images);
+        console.log(user);
+    }
 
     const ImportPicture = async e => {
         if (
@@ -60,21 +84,7 @@ const ProfilClient = () => {
             e.target.files[0].type === "image/png"
         ) {
             const img = await convertPic(e.target.files[0])
-
             setImage([...images, img]);
-            setUser({ ...user, user_pic: images });
-
-            console.log(images, user)
-            const fd = new FormData();
-            fd.append('image', images);
-            axios.post(`/user/image`, fd)
-                .then(res => {
-                    console.log('reponses : ' + res.data);
-                })
-                .catch(err => {
-                    console.log('?' + err);
-                })
-
         }
     }
 

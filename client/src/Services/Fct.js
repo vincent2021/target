@@ -15,7 +15,7 @@ const getAge = (date) => {
     return age_now;
 }
 
-const resizeImage = async (e) => {
+const resizeImage = async e => {
     const img = await document.getElementById(e.target.id);
     img.style.width = 'auto';
     img.style.height = 'auto';
