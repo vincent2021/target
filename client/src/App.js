@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import io from "socket.io-client";
 import { Route, Link, Switch, Redirect } from "react-router-dom";
 import { LoginPage } from "./Components/Login";
@@ -9,6 +9,7 @@ import ProfilMatch from "./Components/MatchPage/Match_Profil";
 import BigLogo from "./Assets/Svg/BigLogo";
 // eslint-disable-next-line
 import SmallLogo from "./Assets/Svg/SmallLogo";
+import tokenAuth from "./Services/Token";
 
 import './Assets/Styles/App.css';
 import './Assets/Styles/Connection.css';
@@ -23,8 +24,9 @@ socket.on('info', function (data) {
 });
 
 const App = () => {
-    const loggedIn = false;
 
+    const [loggedIn, setLogon] = useState(false);
+    tokenAuth.isLogged(setLogon);
     return (
         <div>
             <Link to='/' >

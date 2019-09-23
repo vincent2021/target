@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import React, { useState, useEffect } from 'react';
 import axios from '../Services/Axios';
 import { getAge, resizeImage } from '../Services/Fct';
@@ -6,6 +7,7 @@ const ProfilClient = () => {
     const defaultImage = 'https://savoirs.rfi.fr/sites/all/themes/custom/rfi/images/public/default-profile.png';
 
     const [user, setUser] = useState({
+        uid: "",
         username: "",
         fistname: "",
         lastname: "",
@@ -17,7 +19,6 @@ const ProfilClient = () => {
 
     //default image
     const [images, setImages] = useState([defaultImage]);
-
     const [IsLoading, setIsLoading] = useState(false);
 
     if (user.username === '') {
@@ -103,7 +104,7 @@ const ProfilClient = () => {
 
     const ImportPicture = async e => {
         if (
-            e.target.files[0].type === "image/jpeg" ||
+            //e.target.files[0].type === "image/jpeg" ||
             e.target.files[0].type === "image/png"
         ) {
             setIsLoading(true);
