@@ -73,21 +73,6 @@ const ProfilClient = () => {
             i++
         })
         setIsLoading(false);
-        const imgFormData = new FormData();
-        imgFormData.append('image', images);
-        axios({
-            method: 'post',
-            url: 'upload',
-            data: imgFormData,
-            config: { headers: { 'Content-Type': 'multipart/form-data' } }
-        })
-            .then(res => {
-                console.log('img_url = : ' + res.data);
-                setUser({ user_pic: [res.data] });
-            })
-            .catch(err => {
-                console.log('?' + err);
-            })
         return (() => {
             // effacer l'image à remplacer
             while (block.firstChild) {
@@ -108,8 +93,23 @@ const ProfilClient = () => {
             e.target.files[0].type === "image/png"
         ) {
             setIsLoading(true);
-            const img = await convertPic(e.target.files[0])
-            setImages([...images, img]);
+            await convertPic(e.target.files[0]).then((img) => {
+                const imgFormData = new FormData();
+                imgFormData.append('image', img);
+                axios({
+                    method: 'post',
+                    url: 'upload',
+                    data: imgFormData,
+                    config: { headers: {'Content-Type': 'multipart/form-data' }}
+                    })
+                    .then(res => {
+                        console.log('img_url = : ' + res.data);
+                        setUser({ user_pic: [res.data] });
+                    })
+                    .catch(err => {
+                        console.log('?' + err);
+                    })
+            })
         }
     }
 
