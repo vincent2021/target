@@ -2,30 +2,21 @@
 
 /* Image */
 
-.BlocUser>span {
+span.BigPic {
     display: block;
     overflow: hidden;
     border: black 1px solid;
     width: 300px;
     height: 300px;
-    margin-bottom: -1px;
+    margin-bottom: 10px;
 }
 
-div.BlocImage {
-    display: flex;
-    align-content: space-between;
-    border: black 1px solid;
-    width: 300px;
-    height: 50px;
-    margin-bottom: 10px;
+span.BigPic>img {
+    position: relative;
 }
 
 div.BlocImage>img {
     width: calc(300px / 5);
-}
-
-.image {
-    position: relative;
 }
 
 /* Input */
@@ -60,7 +51,6 @@ input.ImportPicture {
     position: absolute;
     z-index: -1;
 }
-
 
 /* Informations */
 div.BlocInformations {
