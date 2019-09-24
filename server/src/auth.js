@@ -64,7 +64,7 @@ async function verify(token) {
     }
 }
 
-const decode = (token) => {
+const decode = (token) => {;
     return (jwt.decode(token, {complete: true}));
 }
 

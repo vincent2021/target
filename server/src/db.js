@@ -11,25 +11,12 @@ lastname,
 dob,
 city,
 gender,
-user_pic`;
+user_pic,
+`;
     
 // Create a client.
 function newClient() {
     return new dgraph.DgraphClient(clientStub1);
-}
-
-// Create data using JSON
-async function createData(dgraphClient, data) {
-    const txn = dgraphClient.newTxn();
-    try {
-        const mu = new dgraph.Mutation();
-        mu.setSetJson(data);
-        const assigned = await txn.mutate(mu);
-        await txn.commit();
-        console.log(assigned.getUidsMap());
-    } finally {
-        await txn.discard();
-    }
 }
 
 async function getUser() {
@@ -49,6 +36,18 @@ async function getUserProfile(userID) {
     dgraphClient = newClient();   
     const query = `{ userProfile(func: uid(${userID})) {
             ${ProfilData},
+        }
+    }`;
+    const res = await dgraphClient.newTxn().query(query);
+    const data = res.getJson();
+    return (data.userProfile[0]);
+}
+
+async function getUserPic(userID) {
+    dgraphClient = newClient();   
+    const query = `{ userProfile(func: uid(${userID})) {
+            uid,
+            user_pic
         }
     }`;
     const res = await dgraphClient.newTxn().query(query);
@@ -126,6 +125,49 @@ async function getFullMatch(uid) {
     }
 }
 
+// Change data for a specific UID
+async function modifyUser(uid, key, value) {
+    dgraphClient = newClient();
+    const txn = dgraphClient.newTxn();
+    try {
+      const mu = new dgraph.Mutation();
+      mu.setSetNquads(`<${uid}> <${key}> "${value}" .`);
+      mu.setCommitNow(true);
+      await txn.mutate(mu);
+  } finally {
+      await txn.discard();
+      return (key + " successfully changed");
+  }
+}
+
+// Change picture list for a specific uid
+async function changePics(uid, value) {
+    dgraphClient = newClient();
+    const txn = dgraphClient.newTxn();
+    try {
+      const mu = new dgraph.Mutation();
+      mu.setSetNquads(`<${uid}> <user_pic> "${value}" .`);
+      mu.setCommitNow(true);
+      await txn.mutate(mu);
+      return(txn);
+  } finally {
+      await txn.discard();
+  }
+}
+
+// Create data using JSON
+async function createData(dgraphClient, data) {
+    const txn = dgraphClient.newTxn();
+    try {
+        const mu = new dgraph.Mutation();
+        mu.setSetJson(data);
+        const assigned = await txn.mutate(mu);
+        await txn.commit();
+        console.log(assigned.getUidsMap());
+    } finally {
+        await txn.discard();
+    }
+}
 
 // Drop All - discard all data and start from a clean slate.
 async function dropAll(dgraphClient) {
@@ -134,7 +176,16 @@ async function dropAll(dgraphClient) {
     await dgraphClient.alter(op);
 }
 
-// Set schema.
+// Mise en place db + query + post serveur -> client
+async function createDb() {
+    const dgraphClientStub = db.newClientStub();
+    const dgraphClient = db.newClient(dgraphClientStub);
+    await db.dropAll(dgraphClient);
+    await db.setSchema(dgraphClient);
+    dgraphClientStub.close();
+  }
+
+  // Set schema.
 async function setSchema(dgraphClient) {
     const schema = `
         username: string @index(exact) .
@@ -147,34 +198,17 @@ async function setSchema(dgraphClient) {
     await dgraphClient.alter(op);
 }
 
-// * Mise en place db + query + post serveur -> client
-async function createDb() {
-    //get info
-    const dgraphClientStub = db.newClientStub();
-    const dgraphClient = db.newClient(dgraphClientStub);
-    await db.dropAll(dgraphClient);
-    await db.setSchema(dgraphClient);
-    // const json = await db.queryData(dgraphClient);
-    // app.post('/login', (req, res) => {
-    // async function makePostRequest() {
-    //   res.send(json);
-    // }
-    // makePostRequest();
-  // })
-    dgraphClientStub.close();
-  }
-
 module.exports  = {
     newClient: newClient,
-    dropAll: dropAll,
-    setSchema: setSchema,
     createData: createData,
-    createDb: createDb,
     addUser: addUser,
     getUser: getUser,
     getUserID: getUserID,
     getUserProfile: getUserProfile,
     getUserLike: getUserMatch,
     getFullMatch: getFullMatch,
-    newMatch : newMatch 
+    newMatch: newMatch,
+    modifyUser: modifyUser,
+    changePics: changePics,
+    getUserPic: getUserPic
 }

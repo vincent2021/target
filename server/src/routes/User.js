@@ -3,7 +3,6 @@ const db = require("../db.js");
 const auth = require("../auth.js");
 
 router.route('/getUser').post((req, res) => {
-    console.log(req.headers.authorization);
     auth.verify(req.headers.authorization).then(function (ret) {
         if (ret == false) {
             res.status(403).send;
@@ -26,6 +25,31 @@ router.route('/profile').post((req, res) => {
 router.route('/userid').post((req, res) => {
     db.getUserProfile(req.query['email']).then(function (ret) {
         res.send(ret);
+    });
+});
+
+router.route('/change').post((req, res) => {
+    const tokenInfo = auth.decode(req.headers.authorization);
+    const uid = tokenInfo.payload.uid;
+    db.modifyUser(uid, req.query['key'], req.query['value']).then(function (ret) {
+        res.send(ret);
+    });
+});
+
+router.route('/changePics').post((req, res) => {
+    const tokenInfo = auth.decode(req.headers.authorization);
+    const uid = tokenInfo.payload.uid;
+    db.changePics(uid, req.query['value']).then(function (ret) {
+        res.send(ret);
+    });
+});
+
+router.route('/pics').post((req, res) => {
+    const tokenInfo = auth.decode(req.headers.authorization);
+    const uid = tokenInfo.payload.uid;
+    db.getUserPic(uid).then(function (ret) {
+        picArray = ret.user_pic.split(';')
+        res.send(picArray);
     });
 });
 
