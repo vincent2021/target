@@ -34,36 +34,30 @@ const ProfilClient = () => {
             })
     }
 
-    const UpdateImagesDb = () => {
-        console.log('Updating Db...')
-        let imgFormData = new FormData();
-        imgFormData.append('image', ImagesUser);
-        axios({
-            method: 'post',
-            url: 'upload',
-            data: imgFormData,
-            config: { headers: { 'Content-Type': 'multipart/form-data' } }
-        })
-            .then(res => {
-                console.log('img_url = : ' + res.data);
-                setUser({ ...User, user_pic: ImagesUser });
-            })
-            .catch(err => {
-                console.log('?' + err);
-            })
-    }
-
     const ImportPicture = async e => {
         if (
-            e.target.files[0].type === "image/jpeg" ||
+            //e.target.files[0].type === "image/jpeg" ||
             e.target.files[0].type === "image/png"
         ) {
-            const img = await convertPic(e.target.files[0])
             if (ImagesUser.length < 5) {
-                setImagesUser([...ImagesUser, img]);
+                const img = await convertPic(e.target.files[0]);
+                let imgFormData = new FormData();
+                imgFormData.append('image', img);
+                axios({
+                    method: 'post',
+                    url: 'upload',
+                    data: imgFormData,
+                    config: { headers: { 'Content-Type': 'multipart/form-data' } }
+                })
+                .then(res => {
+                    setImagesUser([...ImagesUser, res.data]);
+                    setUser({ ...User, user_pic: ImagesUser });
+                })
+                .catch(err => {
+                    console.log('?' + err);
+                })
                 console.log('Image imported...')
                 setChanges(Changes === true ? false : true);
-                UpdateImagesDb();
             }
             else {
                 console.log('Too much images...')
@@ -79,7 +73,6 @@ const ProfilClient = () => {
                 ImagesUser.splice(index, 1);
                 setImagesUser(ImagesUser);
                 setChanges(Changes === true ? false : true);
-                UpdateImagesDb();
             }
         })
     }
