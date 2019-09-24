@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const db = require("../db.js");
 const auth = require("../auth.js");
+const mail = require("../mail.js");
 
 router.route("/connect").post((req, res) => {
     username = req.body.username;
@@ -13,6 +14,7 @@ router.route("/connect").post((req, res) => {
 
 router.route("/register").post((req, res) => {
     db.addUser(req.body);
+    mail.sendMail("vincent2021@gmail.com", "test", "Salut ma poule");
     res.send("User added to the db");
 });
 
