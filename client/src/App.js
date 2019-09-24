@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import io from "socket.io-client";
-import { Route, Link, Switch, Redirect } from "react-router-dom";
-import { LoginPage } from "./Components/Login";
+import { Route, Link, Switch, Redirect} from "react-router-dom";
+import { LoginPage , Logout} from "./Components/Login";
 import { RegisterPage } from "./Components/Register";
 import ProfilClient from "./Components/Profil_User";
 import ProfilUser from "./Components/Profil_Target";
@@ -9,7 +9,7 @@ import ProfilMatch from "./Components/MatchPage/Match_Profil";
 import BigLogo from "./Assets/Svg/BigLogo";
 // eslint-disable-next-line
 import SmallLogo from "./Assets/Svg/SmallLogo";
-import tokenAuth from "./Services/Token";
+import Auth from "./Services/Token";
 
 import './Assets/Styles/App.css';
 import './Assets/Styles/Connection.css';
@@ -23,10 +23,12 @@ socket.on('info', function (data) {
     console.log(data);
 });
 
+
 const App = () => {
 
     const [loggedIn, setLogon] = useState(false);
-    tokenAuth.isLogged(setLogon);
+    Auth.isLogged(setLogon);
+    
     return (
         <div>
             <Link to='/' >
@@ -40,6 +42,11 @@ const App = () => {
                 >
                     New in Target ? <br /> Create an account !
                     </Link>
+                <Logout
+                    id='logout'
+                    className='RouterLog'
+                    >
+                </Logout>
                 <Link
                     id='register'
                     className='Hide'

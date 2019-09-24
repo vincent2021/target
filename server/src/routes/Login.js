@@ -12,7 +12,6 @@ router.route("/connect").post((req, res) => {
 });
 
 router.route("/register").post((req, res) => {
-    console.log(req.body);
     db.addUser(req.body);
     res.send("User added to the db");
 });

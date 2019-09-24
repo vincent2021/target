@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from '../Services/Axios';
+import auth from '../Services/Token';
 
 class LoginPage extends React.Component {
 
@@ -66,4 +67,16 @@ class LoginPage extends React.Component {
     }
 }
 
-export { LoginPage };
+class Logout extends React.Component {
+
+    render() {
+        return (
+            <div className="Bloc">
+                <h1><button onClick={localStorage.removeItem('token')}>LOGOUT</button></h1>
+            </div>
+        )
+    }
+}
+
+
+export  { LoginPage , Logout};

@@ -4,8 +4,9 @@ const auth = require("../auth.js");
 
 router.route('/getUser').post((req, res) => {
     auth.verify(req.headers.authorization).then(function (ret) {
+        console.log(ret);
         if (ret == false) {
-            res.status(403).send;
+            res.sendStatus(403);
         } else {
             let user_nb = Math.round(Math.random() * 150);
             db.getUser().then(function (users) {

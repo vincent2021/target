@@ -40,7 +40,7 @@ const publicKEY  = fs.readFileSync('./src/public.key', 'utf8');
 
 const sign = (uid, username) => {
     const signOptions = {
-        expiresIn:  "12h",
+        expiresIn:  "120h",
         algorithm:  "RS256"
        };
     
@@ -54,7 +54,7 @@ const sign = (uid, username) => {
 
 async function verify(token) {
     const signOptions = {
-        expiresIn:  "12h",
+        expiresIn:  "120h",
         algorithm:  "RS256"
        };
     try {

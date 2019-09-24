@@ -7,7 +7,7 @@ rL0/eGWIm237o536gPctT8UQtJCsb+kJn/s9PCBrK6VVdTEpnRWEhZcCAwEAAQ==
 
 async function verify(token) {
     const signOptions = {
-        expiresIn: "12h",
+        expiresIn: "120h",
         algorithm: "RS256"
     };
     try {
@@ -35,8 +35,19 @@ function isLogged(setLogon) {
     });
 };
 
+function logout(setLogon) {
+    verify(localStorage.getItem('token')).then(res => {
+        if (res === true) {
+            localStorage.removeItem('token');
+            setLogon(false);
+            console.log("Logout successfull");
+        }
+    })
+};
+
 module.exports = {
     verify: verify,
     decode: decode,
-    isLogged: isLogged
+    isLogged: isLogged,
+    logout: logout
 };
