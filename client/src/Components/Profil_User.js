@@ -10,6 +10,7 @@ const ProfilClient = () => {
     const [User, setUser] = useState({});
     const [ImagesUser, setImagesUser] = useState([defaultImage]);
     const [IsLoading, setIsLoading] = useState(false);
+    const [Changes, setChanges] = useState(false);
     const Token = '';
 
     const getToken = () => {
@@ -17,19 +18,38 @@ const ProfilClient = () => {
         setIsLoading(true);
         axios.post(`/login/tokeninfo`)
             .then(res => {
-                // if !res.user_pic -> default pic
-                // else res.user_pic -> fetch pic inside 'ImagesUser'
-                const newUser = {
-                    uid: res.data.uid,
-                    username: res.data.username,
-                    user_pic: ImagesUser
-                };
-                setIsLoading(false);
-                setUser(newUser);
+                axios.post(`/user/profile?uid=${res.data.uid}`)
+                    .then((res, req) => {
+                        setUser({ ...res.data });
+                        setImagesUser(res.data.user_pic.split(";"));
+                        setIsLoading(false);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
             })
             .catch(err => {
                 //back to the main page
                 console.log(err);
+            })
+    }
+
+    const UpdateImagesDb = () => {
+        console.log('Updating Db...')
+        let imgFormData = new FormData();
+        imgFormData.append('image', ImagesUser);
+        axios({
+            method: 'post',
+            url: 'upload',
+            data: imgFormData,
+            config: { headers: { 'Content-Type': 'multipart/form-data' } }
+        })
+            .then(res => {
+                console.log('img_url = : ' + res.data);
+                setUser({ ...User, user_pic: ImagesUser });
+            })
+            .catch(err => {
+                console.log('?' + err);
             })
     }
 
@@ -39,25 +59,11 @@ const ProfilClient = () => {
             e.target.files[0].type === "image/png"
         ) {
             const img = await convertPic(e.target.files[0])
-            if (ImagesUser.length < 4) {
+            if (ImagesUser.length < 5) {
                 setImagesUser([...ImagesUser, img]);
                 console.log('Image imported...')
-                let imgFormData = new FormData();
-                imgFormData.append('image', ImagesUser);
-                console.log('hey')
-                axios({
-                    method: 'post',
-                    url: 'upload',
-                    data: imgFormData,
-                    config: { headers: { 'Content-Type': 'multipart/form-data' } }
-                })
-                    .then(res => {
-                        console.log('img_url = : ' + res.data);
-                        setUser({ ...User, user_pic: ImagesUser });
-                    })
-                    .catch(err => {
-                        console.log('?' + err);
-                    })
+                setChanges(Changes === true ? false : true);
+                UpdateImagesDb();
             }
             else {
                 console.log('Too much images...')
@@ -66,8 +72,16 @@ const ProfilClient = () => {
         }
     }
 
-    const ModifyPicture = e => {
-        console.log(e.target.value);
+    const DeletePicture = e => {
+        e.preventDefault();
+        ImagesUser.find((img, index) => {
+            if (img === document.getElementById('ImageUser').src) {
+                ImagesUser.splice(index, 1);
+                setImagesUser(ImagesUser);
+                setChanges(Changes === true ? false : true);
+                UpdateImagesDb();
+            }
+        })
     }
 
     const ModifyInformation = e => {
@@ -90,9 +104,9 @@ const ProfilClient = () => {
                 </div >
                 <div className="BlocUser">
                     <p className="Titre">{User.username}</p>
-                    <ImageContainers User={User} Images={ImagesUser} />
+                    <ImageContainers User={User} Images={ImagesUser} Changes={Changes} />
                     <div className="BlocImport">
-                        <input className="modify" onClick={ModifyPicture} type="submit" value="Modify Pics" style={{ backgroundColor: '#f99' }}></input>
+                        <button id="DeletePicture" className="modify" onClick={DeletePicture} type="Submit" style={{ backgroundColor: '#f33' }}>Delete Pic</button>
                         <input id="ImportPicture" className="ImportPicture" onChange={ImportPicture} type="file" value=""></input>
                         <label className="modify" htmlFor="ImportPicture" style={{ backgroundColor: '#ff3f' }} >Import Picture</label>
                     </div>

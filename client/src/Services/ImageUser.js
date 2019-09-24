@@ -22,7 +22,8 @@ const ImageContainers = (props) => {
     }
 
     useEffect(() => {
-        console.log('useEffect...')
+        console.log('useEffect ImageUser...')
+        console.log(props.Images);
         setBlocImages(
             props.Images.map((imgs, index) => (
                 <img
@@ -34,7 +35,7 @@ const ImageContainers = (props) => {
                 />
             ))
         )
-    }, [props.Images]);
+    }, [props.Changes]);
 
     const content = (
         <div>

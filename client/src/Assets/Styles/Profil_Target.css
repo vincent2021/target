@@ -15,7 +15,7 @@
 .BlocUser {
     display: flex;
     flex-direction: column;
-    background-color: #fff;
+    background-color: rgb(255, 255, 255);
     width: 300px;
     height: calc(80vh - 20px);
     margin: 10px;

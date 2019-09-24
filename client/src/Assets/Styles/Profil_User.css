@@ -11,6 +11,10 @@ span.BigPic {
     margin-bottom: 10px;
 }
 
+span.BigPic>img {
+    position: relative;
+}
+
 div.BlocImage>img {
     width: calc(300px / 5);
 }
