@@ -42,6 +42,22 @@ const ProfilClient = () => {
             if (ImagesUser.length < 4) {
                 setImagesUser([...ImagesUser, img]);
                 console.log('Image imported...')
+                let imgFormData = new FormData();
+                imgFormData.append('image', ImagesUser);
+                console.log('hey')
+                axios({
+                    method: 'post',
+                    url: 'upload',
+                    data: imgFormData,
+                    config: { headers: { 'Content-Type': 'multipart/form-data' } }
+                })
+                    .then(res => {
+                        console.log('img_url = : ' + res.data);
+                        setUser({ ...User, user_pic: ImagesUser });
+                    })
+                    .catch(err => {
+                        console.log('?' + err);
+                    })
             }
             else {
                 console.log('Too much images...')
@@ -74,7 +90,7 @@ const ProfilClient = () => {
                 </div >
                 <div className="BlocUser">
                     <p className="Titre">{User.username}</p>
-                    <ImageContainers User={User} Images={ImagesUser} setImages={setImagesUser} />
+                    <ImageContainers User={User} Images={ImagesUser} />
                     <div className="BlocImport">
                         <input className="modify" onClick={ModifyPicture} type="submit" value="Modify Pics" style={{ backgroundColor: '#f99' }}></input>
                         <input id="ImportPicture" className="ImportPicture" onChange={ImportPicture} type="file" value=""></input>

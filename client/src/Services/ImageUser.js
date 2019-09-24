@@ -15,17 +15,10 @@ const ImageContainers = (props) => {
 
     const [BlocImages, setBlocImages] = useState('');
     const [IsLoading, setIsLoading] = useState(false);
-    const [ImageSwap, setImageSwap] = useState(false);
 
     const SwapPic = e => {
         e.preventDefault();
-        let Image = document.getElementById('ImageUser');
-        let ImagesCopie = props.Images;
-        ImagesCopie[0] = e.target.src;
-        ImagesCopie[e.target.id] = Image.src;
-        Image.src = e.target.src;
-        props.setImages(ImagesCopie);
-        !ImageSwap ? setImageSwap(true) : setImageSwap(false);
+        document.getElementById('ImageUser').src = e.target.src;
     }
 
     useEffect(() => {
@@ -41,7 +34,7 @@ const ImageContainers = (props) => {
                 />
             ))
         )
-    }, [props.Images, ImageSwap]);
+    }, [props.Images]);
 
     const content = (
         <div>
@@ -50,8 +43,7 @@ const ImageContainers = (props) => {
                     onLoad={resizeImage}
                     id="ImageUser"
                     alt=""
-                    src={props.Images[0]}
-                    className="image">
+                    src={props.Images[0]}>
                 </img>
             </span>
             <div id="BlocImage" className="BlocImage">

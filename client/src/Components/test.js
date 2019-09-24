@@ -63,17 +63,7 @@ const ProfilClient = () => {
         console.log('Effect...')
         const block = document.getElementById('BlocImage');
         setUser(u => ({ ...u, user_pic: images }));
-        let i = 0;
-        images.map(async img => {
-            if (i !== 0) {
-                let newImage = document.createElement('img');
-                newImage.src = img;
-                newImage.id = i;
-                newImage.addEventListener('onClick', { swapPic });
-                block.appendChild(newImage);
-            }
-            i++
-        })
+
         setIsLoading(false);
         let imgFormData = new FormData();
         imgFormData.append('image', images);
