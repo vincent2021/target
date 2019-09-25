@@ -43,6 +43,17 @@ async function getUserProfile(userID) {
     return (data.userProfile[0]);
 }
 
+async function filterUser(gender, age_min, age_max) {
+    dgraphClient = newClient();   
+    const query = `{ users(func: eq(gender, ${gender})) {
+            ${ProfilData},
+        }
+    }`;
+    const res = await dgraphClient.newTxn().query(query);
+    const data = res.getJson();
+    return (data.users);
+}
+
 async function getUserPic(userID) {
     dgraphClient = newClient();   
     const query = `{ userProfile(func: uid(${userID})) {
@@ -210,5 +221,6 @@ module.exports  = {
     newMatch: newMatch,
     modifyUser: modifyUser,
     changePics: changePics,
-    getUserPic: getUserPic
+    getUserPic: getUserPic,
+    filterUser: filterUser
 }
