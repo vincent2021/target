@@ -6,7 +6,7 @@ import { RegisterPage } from "./Components/Register";
 import ProfilClient from "./Components/Profil_User";
 import ProfilUser from "./Components/Profil_Target";
 import ProfilMatch from "./Components/MatchPage/Match_Profil";
-import { killToken, isLogged } from "./Services/Token";
+import { isLogged } from "./Services/Token";
 import BigLogo from "./Assets/Svg/BigLogo";
 
 import './Assets/Styles/App.css';
@@ -21,25 +21,34 @@ socket.on('info', function (data) {
     console.log(data);
 });
 
-
 const App = () => {
 
     const [loggedIn, setLoggedIn] = useState(false);
 
+    // regarde au démarrage seulement si le token existe 
+    // et redefinit la variable loggedIn si besoin
     useEffect(() => {
-        setLoggedIn(isLogged);
-        console.log('eff setComponent :' + loggedIn)
+        console.log('component mont')
+        isLogged()
+            .then(res => {
+                setLoggedIn(res);
+            })
     }, [])
 
+    // regarde si la variable loggedIn change et modifie le bouton logout en fonction
     useEffect(() => {
-        console.log('eff loggedin : ' + loggedIn)
         const e = document.getElementById("LogoutButton");
         e.className = (loggedIn === true) ? "ShowButton" : "HideButton";
     }, [loggedIn])
 
+
+    // redefinit la variable loggedIn après un clic
+    // et kill le token
     const isLogout = () => {
-        setLoggedIn(killToken);
+        localStorage.removeItem('token')
+        setLoggedIn(false);
     }
+
 
     return (
         <div>
@@ -79,13 +88,13 @@ const App = () => {
                     </Link>
             </div>
             <Switch>
-                <Route exact path="/" render={() => (
+                {/* <Route exact path="/" render={() => (
                     loggedIn === true ? (
                         <Redirect to="/match" />
                     ) : (
                             <LoginPage />
                         )
-                )} />
+                )} /> */}
                 <Route exact path='/login' component={LoginPage} />
                 <Route exact path='/register' component={RegisterPage} />
                 <Route exact path='/profil' component={ProfilClient} />
