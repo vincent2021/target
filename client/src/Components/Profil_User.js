@@ -18,8 +18,10 @@ const ProfilClient = () => {
         setIsLoading(true);
         axios.post(`/login/tokeninfo`)
             .then(res => {
+                console.log('get token : ' + res.data)
                 axios.post(`/user/profile?uid=${res.data.uid}`)
                     .then((res, req) => {
+                        console.log('get user img : ' + res.data)
                         setUser({ ...res.data });
                         setImagesUser(res.data.user_pic.split(";"));
                         setIsLoading(false);
@@ -49,13 +51,13 @@ const ProfilClient = () => {
                     data: imgFormData,
                     config: { headers: { 'Content-Type': 'multipart/form-data' } }
                 })
-                .then(res => {
-                    setImagesUser([...ImagesUser, res.data]);
-                    setUser({ ...User, user_pic: ImagesUser });
-                })
-                .catch(err => {
-                    console.log('?' + err);
-                })
+                    .then(res => {
+                        setImagesUser([...ImagesUser, res.data]);
+                        setUser({ ...User, user_pic: ImagesUser });
+                    })
+                    .catch(err => {
+                        console.log('?' + err);
+                    })
                 console.log('Image imported...')
                 setChanges(Changes === true ? false : true);
             }

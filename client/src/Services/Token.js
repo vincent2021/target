@@ -21,33 +21,38 @@ const decode = (token) => {
     return (jwt.decode(token, { complete: true }));
 }
 
-function isLogged(setLogon) {
+const isLogged = () => {
     const dateNow = new Date();
-    verify(localStorage.getItem('token')).then(res => {
-        if (res === false) {
-            setLogon(false);
-        } else if (res.exp < dateNow.getTime() / 1000) {
-            localStorage.removeItem('token');
-            setLogon(false);
-        } else {
-            setLogon(true);
-        }
-    });
+    verify(localStorage.getItem('token'))
+        .then(res => {
+            if (res === false) {
+                console.log('no token ...');
+                return false;
+            } else if (res.exp < dateNow.getTime() / 1000) {
+                console.log('deco token...');
+                localStorage.removeItem('token');
+                return false;
+            } else {
+                console.log('token valid ...');
+                return true;
+            }
+        })
+        .catch(err => {
+            console.log('fail ...' + err);
+        });
+    console.log('fail ...');
 };
 
-function logout(setLogon) {
-    verify(localStorage.getItem('token')).then(res => {
-        if (res === true) {
-            localStorage.removeItem('token');
-            setLogon(false);
-            console.log("Logout successfull");
-        }
-    })
+const killToken = () => {
+    verify(localStorage.getItem('token'))
+        .then(res => {
+            if (res) {
+                console.log("Logout");
+                localStorage.removeItem('token');
+                return false;
+            }
+        })
 };
 
-module.exports = {
-    verify: verify,
-    decode: decode,
-    isLogged: isLogged,
-    logout: logout
-};
+
+export { killToken, isLogged }

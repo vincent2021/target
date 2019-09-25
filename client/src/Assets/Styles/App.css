@@ -71,7 +71,7 @@ a.RouterProfil {
     margin-bottom: 5px;
 }
 
-button.logout {
+button.ShowButton {
     position: fixed;
     width: auto;
     display: block;
@@ -85,4 +85,8 @@ button.logout {
     margin-bottom: 5px;
     right: 0px;
     top: 0px;
+}
+
+button.HideButton {
+    display: none;
 }

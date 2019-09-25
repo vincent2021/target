@@ -1,15 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import io from "socket.io-client";
 import { Route, Link, Switch, Redirect } from "react-router-dom";
-import { LoginPage, Logout } from "./Components/Login";
+import { LoginPage } from "./Components/Login";
 import { RegisterPage } from "./Components/Register";
 import ProfilClient from "./Components/Profil_User";
 import ProfilUser from "./Components/Profil_Target";
 import ProfilMatch from "./Components/MatchPage/Match_Profil";
+import { killToken, isLogged } from "./Services/Token";
 import BigLogo from "./Assets/Svg/BigLogo";
-// eslint-disable-next-line
-import SmallLogo from "./Assets/Svg/SmallLogo";
-import Auth from "./Services/Token";
 
 import './Assets/Styles/App.css';
 import './Assets/Styles/Connection.css';
@@ -26,8 +24,22 @@ socket.on('info', function (data) {
 
 const App = () => {
 
-    const [loggedIn, setLogon] = useState(false);
-    Auth.isLogged(setLogon);
+    const [loggedIn, setLoggedIn] = useState(false);
+
+    useEffect(() => {
+        setLoggedIn(isLogged);
+        console.log('eff setComponent :' + loggedIn)
+    }, [])
+
+    useEffect(() => {
+        console.log('eff loggedin : ' + loggedIn)
+        const e = document.getElementById("LogoutButton");
+        e.className = (loggedIn === true) ? "ShowButton" : "HideButton";
+    }, [loggedIn])
+
+    const isLogout = () => {
+        setLoggedIn(killToken);
+    }
 
     return (
         <div>
@@ -35,7 +47,7 @@ const App = () => {
                 <BigLogo />
             </Link>
             {/* logout */}
-            <button onClick={localStorage.removeItem('token')} className="logout">Logout</button>
+            <button id="LogoutButton" onClick={isLogout} >Logout</button>
             <div className='RouterBloc'>
                 <Link
                     id='login'
@@ -68,7 +80,7 @@ const App = () => {
             </div>
             <Switch>
                 <Route exact path="/" render={() => (
-                    loggedIn ? (
+                    loggedIn === true ? (
                         <Redirect to="/match" />
                     ) : (
                             <LoginPage />

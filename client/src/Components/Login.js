@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from '../Services/Axios';
-import auth from '../Services/Token';
 
 class LoginPage extends React.Component {
 
