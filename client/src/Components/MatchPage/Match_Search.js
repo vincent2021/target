@@ -60,6 +60,12 @@ const MatchSearch = (props) => {
                 onChange={props.handleLocalisation}
                 defaultValue={props.Localisation}
             />
+            <div>Interest : {props.Interest}%</div>
+            <MatchSlider
+                aria-label="Interest"
+                onChange={props.handleInterest}
+                defaultValue={props.Interest}
+            />
         </div>
     );
 }

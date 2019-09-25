@@ -9,6 +9,7 @@ const ProfilMatch = ({ match }) => {
     const [Age, setAge] = useState([20, 37]);
     const [Score, setScore] = useState([0, 100]);
     const [Localisation, setLocalisation] = useState([100]);
+    const [Interest, setInterest] = useState([100]);
     const [state, setState] = useState({
         id: '',
         username: '',
@@ -33,6 +34,9 @@ const ProfilMatch = ({ match }) => {
     };
     const handleLocalisation = (e, newValue) => {
         setLocalisation(newValue);
+    };
+    const handleInterest = (e, newValue) => {
+        setInterest(newValue);
     };
 
     const handleUser = async () => {
@@ -94,9 +98,11 @@ const ProfilMatch = ({ match }) => {
                 Age={Age}
                 Score={Score}
                 Localisation={Localisation}
+                Interest={Interest}
                 handleAge={handleAge}
                 handleLocalisation={handleLocalisation}
-                handleScore={handleScore} />
+                handleScore={handleScore}
+                handleInterest={handleInterest} />
         </div>
     )
 

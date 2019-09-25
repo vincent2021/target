@@ -67,16 +67,4 @@ class LoginPage extends React.Component {
     }
 }
 
-class Logout extends React.Component {
-
-    render() {
-        return (
-            <div className="Bloc">
-                <h1><button onClick={localStorage.removeItem('token')}>LOGOUT</button></h1>
-            </div>
-        )
-    }
-}
-
-
-export  { LoginPage , Logout};
+export { LoginPage };

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import io from "socket.io-client";
-import { Route, Link, Switch, Redirect} from "react-router-dom";
-import { LoginPage , Logout} from "./Components/Login";
+import { Route, Link, Switch, Redirect } from "react-router-dom";
+import { LoginPage, Logout } from "./Components/Login";
 import { RegisterPage } from "./Components/Register";
 import ProfilClient from "./Components/Profil_User";
 import ProfilUser from "./Components/Profil_Target";
@@ -28,12 +28,14 @@ const App = () => {
 
     const [loggedIn, setLogon] = useState(false);
     Auth.isLogged(setLogon);
-    
+
     return (
         <div>
             <Link to='/' >
                 <BigLogo />
             </Link>
+            {/* logout */}
+            <button onClick={localStorage.removeItem('token')} className="logout">Logout</button>
             <div className='RouterBloc'>
                 <Link
                     id='login'
@@ -42,11 +44,6 @@ const App = () => {
                 >
                     New in Target ? <br /> Create an account !
                     </Link>
-                <Logout
-                    id='logout'
-                    className='RouterLog'
-                    >
-                </Logout>
                 <Link
                     id='register'
                     className='Hide'
