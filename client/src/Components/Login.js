@@ -8,11 +8,9 @@ function LoginPage(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const username = profil.username;
-        const password = profil.password;
         console.log(profil);
         if (profil.username && profil.password) {
-            axios.post(`/login/connect`, { username, password })
+            axios.post(`/login/connect`, profil)
                 .then(res => {
                     console.log(res);
                     localStorage.setItem('token', res.data)

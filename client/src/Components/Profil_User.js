@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from '../Services/Axios';
 import { getAge, resizeImage } from '../Services/Fct';
 import ImageContainers, { convertPic } from '../Services/ImageUser';
+import { verify } from '../Services/Token';
 
 const ProfilClient = () => {
 
@@ -11,17 +12,14 @@ const ProfilClient = () => {
     const [ImagesUser, setImagesUser] = useState([defaultImage]);
     const [IsLoading, setIsLoading] = useState(false);
     const [Changes, setChanges] = useState(false);
-    const Token = '';
 
-    const getToken = () => {
+    const getToken = async () => {
         console.log("... Get Token ...")
-        setIsLoading(true);
-        axios.post(`/login/tokeninfo`)
-            .then(res => {
-                console.log('get token : ' + res.data)
-                axios.post(`/user/profile?uid=${res.data.uid}`)
+        const token = localStorage.getItem('token');
+        if (token) {
+            verify(token).then(readToken => {
+                axios.post(`/user/profile?uid=${readToken.uid}`)
                     .then((res, req) => {
-                        console.log('get user img : ' + res.data)
                         setUser({ ...res.data });
                         setImagesUser(res.data.user_pic.split(";"));
                         setIsLoading(false);
@@ -30,10 +28,7 @@ const ProfilClient = () => {
                         console.log(err);
                     })
             })
-            .catch(err => {
-                //back to the main page
-                console.log(err);
-            })
+        }
     }
 
     const ImportPicture = async e => {
@@ -45,6 +40,7 @@ const ProfilClient = () => {
                 const img = await convertPic(e.target.files[0]);
                 let imgFormData = new FormData();
                 imgFormData.append('image', img);
+                console.log(imgFormData)
                 axios({
                     method: 'post',
                     url: 'upload',
@@ -86,7 +82,7 @@ const ProfilClient = () => {
     useEffect(() => {
         console.log('UseEffect Profil User...');
         getToken();
-    }, [Token]);
+    }, []);
 
     let content = <p style={{ fontSize: '40px', position: 'fixed', bottom: '0px' }} >User is loading...</p>;
 
