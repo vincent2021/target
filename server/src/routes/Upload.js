@@ -7,7 +7,7 @@ const db = require("../db");
 
 const upload = multer({
     limits: { fieldSize: 25 * 1024 * 1024 }
-  });
+});
 const upload_app = express();
 
 upload_app.post('/', upload.single('image'), (req, res) => {

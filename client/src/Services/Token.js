@@ -29,11 +29,9 @@ function isLogged() {
     return new Promise(async (res, rej) => {
         const dateNow = new Date();
         const token = localStorage.getItem('token')
-        //si probleme await
         if (token) {
             verify(token)
                 .then(check => {
-                    console.log(check);
                     if (check === false) {
                         console.log('no token ...');
                         res(false);
