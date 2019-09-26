@@ -28,18 +28,24 @@ const decode = (token) => {
 function isLogged() {
     return new Promise(async (res, rej) => {
         const dateNow = new Date();
+        const token = localStorage.getItem('token')
         //si probleme await
-        let check = await verify(localStorage.getItem('token'))
-        if (check === false) {
-            console.log('no token ...');
-            res(false);
-        } else if (check.exp < dateNow.getTime() / 1000) {
-            console.log('deco token...');
-            localStorage.removeItem('token');
-            res(false);
-        } else {
-            console.log('token valid ...');
-            res(true);
+        if (token) {
+            verify(token)
+                .then(check => {
+                    console.log(check);
+                    if (check === false) {
+                        console.log('no token ...');
+                        res(false);
+                    } else if (check.exp < dateNow.getTime() / 1000) {
+                        console.log('deco token...');
+                        localStorage.removeItem('token');
+                        res(false);
+                    } else {
+                        console.log('token valid ...');
+                        res(true);
+                    }
+                })
         }
     })
 };
