@@ -13,6 +13,7 @@ upload_app.post('/', upload.single('image'), (req, res) => {
     const uid = tokenInfo.payload.uid;
     if (req.body.image) {
         console.log('Uploading image...');
+        mkdirp(`public/upload`);
         mkdirp(`public/upload/${uid}`);
         const ts = Date.now();
         const filename = `upload/${uid}/${ts}.png`;
