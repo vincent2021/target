@@ -1,23 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from '../Services/Axios';
+import auth from '../Services/Token';
 
-class LoginPage extends React.Component {
+function LoginPage(props) {
 
-    state = {
-        username: "",
-        password: "",
-        confirm: false
-    }
+    const [profil, setProfil] = useState({})
 
-    handleSubmit = e => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        const username = this.state.username;
-        const password = this.state.password;
-        if (username && password) {
+        const username = profil.username;
+        const password = profil.password;
+        console.log(profil);
+        if (profil.username && profil.password) {
             axios.post(`/login/connect`, { username, password })
                 .then(res => {
                     console.log(res);
                     localStorage.setItem('token', res.data)
+                    props.loggedIn();
                 })
                 .catch(err => {
                     console.log(err);
@@ -25,45 +24,48 @@ class LoginPage extends React.Component {
         }
     }
 
-    handleChange = e => {
+    const handleChange = e => {
         const target = e.target;
         const value = target.value;
         const name = target.name;
-        this.setState({
+        setProfil({
+            ...profil,
             [name]: value
         });
     }
 
-    render() {
-        return (
-            <div className="Bloc">
-                <form onSubmit={this.handleSubmit}>
-                    <h1>LOGIN</h1>
-                    <input
-                        type="text"
-                        name="username"
-                        placeholder="Username"
-                        onChange={this.handleChange}
-                        autoComplete="off"
-                        required
-                    />
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder="Password"
-                        onChange={this.handleChange}
-                        autoComplete="off"
-                        required
-                    />
-                    <input
-                        className="Submit"
-                        type="submit"
-                        value="Submit"
-                    />
-                </form>
-            </div>
-        )
-    }
+
+    let content = (
+        <div className="Bloc">
+            <form onSubmit={handleSubmit}>
+                <h1>LOGIN</h1>
+                <input
+                    type="text"
+                    name="username"
+                    placeholder="Username"
+                    onChange={handleChange}
+                    autoComplete="off"
+                    required
+                />
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    onChange={handleChange}
+                    autoComplete="off"
+                    required
+                />
+                <input
+                    className="Submit"
+                    type="submit"
+                    value="Submit"
+                />
+            </form>
+        </div>
+    )
+
+    return content;
+
 }
 
-export { LoginPage };
+export { LoginPage }

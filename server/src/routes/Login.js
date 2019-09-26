@@ -7,9 +7,10 @@ router.route("/connect").post((req, res) => {
     username = req.body.username;
     passwd = req.body.password;
     console.log("Check auth for " + username + ":" + passwd);
-    auth.login(username, passwd).then(function (ret) {
-        res.send(ret);
-    }, (err) => { console.log(err) });
+    auth.login(username, passwd)
+        .then(function (ret) {
+            res.send(ret);
+        }, (err) => { console.log(err) });
 });
 
 router.route("/register").post((req, res) => {

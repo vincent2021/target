@@ -33,7 +33,7 @@
 
 /* Image */
 
-.CenterMatch>a>span {
+.BlocUser>.spanTarget {
     display: block;
     overflow: hidden;
     border: black 1px solid;
@@ -42,7 +42,7 @@
     margin-bottom: -1px;
 }
 
-.image {
+.imageTarget {
     position: relative;
 }
 

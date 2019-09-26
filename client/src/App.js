@@ -37,8 +37,8 @@ const App = () => {
 
     // regarde si la variable loggedIn change et modifie le bouton logout en fonction
     useEffect(() => {
-        const e = document.getElementById("LogoutButton");
-        e.className = (loggedIn === true) ? "ShowButton" : "HideButton";
+        const logout = document.getElementById("LogoutButton");
+        logout.className = (loggedIn === true) ? "ShowButton" : "HideButton";
     }, [loggedIn])
 
 
@@ -47,8 +47,13 @@ const App = () => {
     const isLogout = () => {
         localStorage.removeItem('token')
         setLoggedIn(false);
+
     }
 
+    // pour changer la variable depuis LoginPage.js
+    const changeState = () => {
+        setLoggedIn(true);
+    }
 
     return (
         <div>
@@ -88,19 +93,21 @@ const App = () => {
                     </Link>
             </div>
             <Switch>
-                {/* <Route exact path="/" render={() => (
+                <Route exact path="/" render={() => (
                     loggedIn === true ? (
                         <Redirect to="/match" />
                     ) : (
-                            <LoginPage />
+                            <LoginPage loggedIn={changeState} />
                         )
-                )} /> */}
-                <Route exact path='/login' component={LoginPage} />
+                )} />
+                <Route exact path='/login'
+                    render={() => <LoginPage loggedIn={changeState} />} />
                 <Route exact path='/register' component={RegisterPage} />
                 <Route exact path='/profil' component={ProfilClient} />
                 <Route exact path='/match' component={ProfilMatch} />
                 <Route exact path="/user/:uid" component={ProfilUser} />
-                <Route component={LoginPage} />
+                <Route
+                    render={() => <LoginPage loggedIn={changeState} />} />
             </Switch>
         </div>
     )
