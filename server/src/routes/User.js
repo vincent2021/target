@@ -59,4 +59,13 @@ router.route('/image').post((req, res) => {
     res.statusCode(200);
 });
 
+router.route('/filter').post((req, res) => {
+    const age_min = req.query['age_min'];
+    const age_max = req.query['age_max'];
+    const gender = req.query['gender'];
+    db.filterUser(gender, age_min, age_max).then(function (ret) {
+        res.send(ret);
+    });
+});
+
 module.exports = router;
