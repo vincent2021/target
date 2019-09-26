@@ -14,15 +14,13 @@ const ProfilClient = () => {
     const [Changes, setChanges] = useState(false);
 
     const getToken = async () => {
-        axios.post('/user/myprofile')
-        .then(function (response) {
-            setUser({ ...response.data });
-            // setImagesUser(response.data.user_pic.split(";"));
+        axios.post('/user/myprofile').then(res => {
+            console.log(res.data);
+            setUser({ ...res.data });
+            setImagesUser(res.data.user_pic.split(";"));
             setIsLoading(false);
-            console.log(response);
-        })
-        .catch(function (error) {
-            console.log(error);
+        }).catch(err => {
+            console.log(err);
         })
     };
        
