@@ -13,7 +13,6 @@ const ProfilClient = () => {
     const [IsLoading, setIsLoading] = useState(false);
     const [Changes, setChanges] = useState(false);
 
-<<<<<<< HEAD
     const getToken = async () => {
         axios.post('/user/myprofile')
         .then(function (response) {
@@ -27,21 +26,6 @@ const ProfilClient = () => {
         })
     };
        
-=======
-    const getToken = () => {
-        axios.post(`/user/profile?uid=0x145`)
-            .then((res) => {
-                console.log('retour :' + res);
-                // setUser({ ...res.data });
-                // setImagesUser(res.data.user_pic.split(";"));
-                setIsLoading(false);
-            })
-            .catch(err => {
-                console.log(err);
-            })
-    }
-
->>>>>>> 7b47d97c1b32fe98a2b17587dba1d8d98413a3d3
     const ImportPicture = async e => {
         if (
             e.target.files[0].type === "image/jpeg" ||
