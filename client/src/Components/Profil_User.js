@@ -14,23 +14,18 @@ const ProfilClient = () => {
     const [Changes, setChanges] = useState(false);
 
     const getToken = async () => {
-        console.log("... Get Token ...")
-        const token = localStorage.getItem('token');
-        if (token) {
-            verify(token).then(readToken => {
-                axios.post(`/user/profile?uid=${readToken.uid}`)
-                    .then((res, req) => {
-                        setUser({ ...res.data });
-                        setImagesUser(res.data.user_pic.split(";"));
-                        setIsLoading(false);
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    })
-            })
-        }
-    }
-
+        axios.post('/user/myprofile')
+        .then(function (response) {
+            setUser({ ...response.data });
+            // setImagesUser(response.data.user_pic.split(";"));
+            setIsLoading(false);
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+    };
+       
     const ImportPicture = async e => {
         if (
             e.target.files[0].type === "image/jpeg" ||
