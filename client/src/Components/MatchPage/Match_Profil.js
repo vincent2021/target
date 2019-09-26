@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 // eslint-disable-next-line
 import { Link, Route } from "react-router-dom";
 import axios from '../../Services/Axios';
@@ -6,10 +6,12 @@ import MatchSearch from './Match_Search';
 import { getAge, resizeImage } from '../../Services/Fct';
 
 const ProfilMatch = ({ match }) => {
+
     const [Age, setAge] = useState([20, 37]);
     const [Score, setScore] = useState([0, 100]);
     const [Localisation, setLocalisation] = useState([100]);
     const [Interest, setInterest] = useState([100]);
+
     const [state, setState] = useState({
         id: '',
         username: '',
@@ -58,9 +60,9 @@ const ProfilMatch = ({ match }) => {
         });
     };
 
-    if (state.id === '') {
+    useEffect(() => {
         handleUser()
-    }
+    }, [])
 
     const handleMatch = (e) => {
         e.preventDefault();
@@ -81,7 +83,7 @@ const ProfilMatch = ({ match }) => {
             <div className="CenterMatch">
 
                 <Link to={`/user/${state.uid}`}>
-                    <span>
+                    <span className="spanMatch">
                         <img onLoad={resizeImage} id="imageTarget" alt="" src={state.user_pic} className="MatchProfil"></img>
                     </span>
                 </Link>
