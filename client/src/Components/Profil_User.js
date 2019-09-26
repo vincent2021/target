@@ -33,7 +33,7 @@ const ProfilClient = () => {
 
     const ImportPicture = async e => {
         if (
-            //e.target.files[0].type === "image/jpeg" ||
+            e.target.files[0].type === "image/jpeg" ||
             e.target.files[0].type === "image/png"
         ) {
             if (ImagesUser.length < 5) {
