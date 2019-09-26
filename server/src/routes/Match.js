@@ -22,4 +22,14 @@ router.route('/fullmatch').post((req, res) => {
     }, (err) => {console.log(err)});
 });
 
+
+router.route('/filter').post((req, res) => {
+    const gender = req.body.gender;
+    const age_max = req.body.age_max;
+    const age_min = req.body.age_max;
+    db.filterUser(gender, age_min, age_max).then(function (ret) {
+        res.send(ret);
+    });
+});
+
 module.exports = router;

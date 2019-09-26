@@ -23,6 +23,16 @@ router.route('/profile').post((req, res) => {
         })
 });
 
+
+router.route('/myprofile').post((req, res) => {
+    const tokenInfo = auth.decode(req.headers.authorization);
+    const uid = tokenInfo.payload.uid;
+    db.getUserProfile(uid)
+        .then(function (ret) {
+            res.send(ret);
+        })
+});
+
 router.route('/userid').post((req, res) => {
     db.getUserProfile(req.query['email']).then(function (ret) {
         res.send(ret);
@@ -59,13 +69,5 @@ router.route('/image').post((req, res) => {
     res.statusCode(200);
 });
 
-router.route('/filter').post((req, res) => {
-    const age_min = req.query['age_min'];
-    const age_max = req.query['age_max'];
-    const gender = req.query['gender'];
-    db.filterUser(gender, age_min, age_max).then(function (ret) {
-        res.send(ret);
-    });
-});
 
 module.exports = router;
