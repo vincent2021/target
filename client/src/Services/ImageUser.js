@@ -23,7 +23,6 @@ const ImageContainers = (props) => {
 
     useEffect(() => {
         console.log('useEffect ImageUser...')
-        console.log(props.Images);
         setBlocImages(
             props.Images.map((imgs, index) => (
                 <img
