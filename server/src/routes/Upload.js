@@ -14,15 +14,23 @@ upload_app.post('/', upload.single('image'), (req, res) => {
     const tokenInfo = auth.decode(req.headers.authorization);
     const uid = tokenInfo.payload.uid;
     if (req.body.image) {
-        console.log('Uploading image...');
         mkdirp(`public/upload`);
         mkdirp(`public/upload/${uid}`);
         const ts = Date.now();
-        const filename = `upload/${uid}/${ts}.png`;
+        data = req.body.image;
+        if (data.startsWith('data:image/png;base64')) {
+            console.log("uploading a PNG")
+            filename = `upload/${uid}/${ts}.png`;
+            base64Data = data.replace(/^data:image\/png;base64,/, "");
+        } else if (data.search('data:image/jpeg;base64')) {
+            console.log("uploading a JPG")
+            filename = `upload/${uid}/${ts}.jpg`;
+            base64Data = data.replace(/^data:image\/jpeg;base64,/, "");
+        }
         let stream = fs.createWriteStream("public/" + filename);
-        base64Data = req.body.image.replace(/^data:image\/png;base64,/, ""),
-            stream.write(base64Data, 'base64');
+        stream.write(base64Data, 'base64');
         stream.end(console.log('Image uploaded'));
+
         const url = "http://localhost:8000/" + filename;
         db.modifyUser(uid, "user_pic[0]", url);
         res.send(url);
