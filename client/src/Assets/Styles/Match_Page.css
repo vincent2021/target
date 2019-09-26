@@ -76,3 +76,14 @@ div.sliderComponent {
     left: 10px;
     width: 200px;
 }
+
+/* Image */
+
+.CenterMatch>a>span.spanMatch {
+    display: block;
+    overflow: hidden;
+    border: black 1px solid;
+    width: 300px;
+    height: 300px;
+    margin-bottom: -1px;
+}

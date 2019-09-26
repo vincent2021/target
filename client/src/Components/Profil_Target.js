@@ -51,8 +51,8 @@ const ProfilUser = ({ match }) => {
                     <input id="Report" onClick={ReportUser} type="submit" value="Report" style={{ backgroundColor: '#fb5' }}></input>
                 </div>
                 <div id="MatchBarre" className="MatchBarre"></div>
-                <span>
-                    <img onLoad={resizeImage} id="ImageTarget" alt="profil" src={user.user_pic} className="image"></img>
+                <span className="spanTarget">
+                    <img onLoad={resizeImage} id="ImageTarget" alt="profil" src={user.user_pic} className="imageTarget"></img>
                 </span>
                 <div id="BlocImage" className="BlocImage"></div>
                 <div className="BlocInformations">
