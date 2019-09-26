@@ -1,5 +1,6 @@
 const dgraph = require("dgraph-js");
 const grpc = require("grpc");
+const tool = require("./tool.js");
 const SERVER_ADDR = "54.194.192.127:9080";
 const SERVER_CREDENTIALS = grpc.credentials.createInsecure();
 const clientStub1 = new dgraph.DgraphClientStub(SERVER_ADDR, SERVER_CREDENTIALS);
@@ -44,7 +45,8 @@ async function getUserProfile(userID) {
 }
 
 async function filterUser(gender, age_min, age_max) {
-    dgraphClient = newClient();   
+    dgraphClient = newClient();
+    console.log("age_min=" +tool.toDOB(age_min) + '\n age_max=' + tool.toDOB(age_max))
     const query = `{ users(func: eq(gender, ${gender})) {
             ${ProfilData},
         }
