@@ -39,8 +39,16 @@ const App = () => {
 
     // regarde si la variable loggedIn change et modifie le bouton logout en fonction
     useEffect(() => {
-        const logout = document.getElementById("LogoutButton");
+        const logout = document.getElementById('LogoutButton');
+        const match = document.getElementById('match');
+        const profil = document.getElementById('profilClient');
+        const register = document.getElementById('register');
+        const login = document.getElementById('login');
         logout.className = (loggedIn === true) ? "ShowButton" : "HideButton";
+        match.className = (loggedIn === true) ? "RouterMatch" : "Hide";
+        profil.className = (loggedIn === true) ? "RouterProfil" : "Hide";
+        register.className = (loggedIn === false) ? "RouterLog" : "Hide";
+        login.className = (loggedIn === false) ? "RouterLog" : "Hide";
     }, [loggedIn])
 
 
@@ -49,7 +57,6 @@ const App = () => {
     const isLogout = () => {
         localStorage.removeItem('token')
         setLoggedIn(false);
-
     }
 
     // pour changer la variable depuis LoginPage.js
@@ -63,8 +70,6 @@ const App = () => {
                 <BigLogo />
             </Link>
             {/* logout */}
-            <button id="LogoutButton" onClick={isLogout} >Logout</button>
-            <Notification />
             <div className='RouterBloc'>
                 <Link
                     id='login'
@@ -75,7 +80,7 @@ const App = () => {
                     </Link>
                 <Link
                     id='register'
-                    className='Hide'
+                    className='RouterLog'
                     to='/login'
                 >
                     Already have an < br /> account ? Sign in !
@@ -94,6 +99,8 @@ const App = () => {
                 >
                     My Profil
                     </Link>
+                <Notification loggedIn={loggedIn} />
+                <button id="LogoutButton" onClick={isLogout} >Logout</button>
             </div>
             <Switch>
                 <Route exact path="/" render={() => (

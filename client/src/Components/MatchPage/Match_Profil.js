@@ -5,7 +5,7 @@ import axios from '../../Services/Axios';
 import MatchSearch from './Match_Search';
 import { getAge, resizeImage } from '../../Services/Fct';
 
-const ProfilMatch = ({ match }) => {
+const ProfilMatch = () => {
 
     const [Age, setAge] = useState([20, 37]);
     const [Score, setScore] = useState([0, 100]);
@@ -64,7 +64,7 @@ const ProfilMatch = ({ match }) => {
         handleUser()
     }, [])
 
-    const handleMatch = (e) => {
+    const handleMatch = e => {
         e.preventDefault();
         if (e.target.value === "Yes")
             console.log(';-D');
