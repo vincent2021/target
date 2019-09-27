@@ -1,0 +1,50 @@
+div.BlocPageNotif {
+    z-index: 10;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.198);
+}
+
+div.BlocPageNotif>.BlocNotif {
+    position: relative;
+    z-index: 10;
+    background-color: rgb(231, 231, 231);
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 50vw;
+    height: 400px;
+    padding: 10px;
+}
+
+button.ExitNotif {
+    color: #777;
+    border: none;
+    background: 0;
+    font: 14px/100% arial, sans-serif;
+    position: absolute;
+    right: 5px;
+    text-decoration: none;
+    text-shadow: 0 1px 0 #fff;
+    top: 5px;
+}
+
+button.ExitNotif:hover {
+    transform: none;
+}
+
+div.BlockTextNotif {
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: stretch;
+}
+
+div.BlockTextNotif>p {
+    font-size: 10px;
+    margin: 0px;
+}

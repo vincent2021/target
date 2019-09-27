@@ -20,9 +20,10 @@ body {
 div.RouterBloc {
     display: block;
     position: absolute;
+    margin: 10px;
 }
 
-a.Hide {
+.Hide {
     display: none;
 }
 
@@ -71,6 +72,8 @@ a.RouterProfil {
     margin-bottom: 5px;
 }
 
+
+/* logout */
 button.ShowButton {
     position: fixed;
     width: auto;
@@ -85,8 +88,45 @@ button.ShowButton {
     margin-bottom: 5px;
     right: 0px;
     top: 0px;
+    margin: 10px;
 }
 
 button.HideButton {
     display: none;
+}
+
+button.NotifButton {
+    position: fixed;
+    width: auto;
+    display: block;
+    text-decoration: none;
+    border: solid black 1px;
+    color: black;
+    background-color: rgb(107, 108, 221);
+    border-radius: 15px;
+    padding: 12px;
+    font-size: 14px;
+    margin-bottom: 5px;
+    right: 0px;
+    top: 60px;
+    margin: 10px;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    transition: all 0.2s ease-in-out;
+}
+
+label:hover {
+    transform: translateY(-2px);
+    transition: all 0.2s ease-in-out;
+}
+
+a:hover {
+    transform: translateY(-2px);
+    transition: all 0.2s ease-in-out;
+}
+
+button {
+    outline: 0;
 }

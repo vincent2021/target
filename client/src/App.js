@@ -8,6 +8,7 @@ import ProfilUser from "./Components/Profil_Target";
 import ProfilMatch from "./Components/MatchPage/Match_Profil";
 import { isLogged } from "./Services/Token";
 import BigLogo from "./Assets/Svg/BigLogo";
+import Notification from "./Services/Notification";
 
 import './Assets/Styles/App.css';
 import './Assets/Styles/Connection.css';
@@ -15,6 +16,7 @@ import './Assets/Styles/Match_Page.css';
 import './Assets/Styles/Profil_User.css';
 import './Assets/Styles/Profil_Target.css';
 import './Assets/Styles/Svg.css';
+import './Assets/Styles/Notification.css';
 
 const socket = io.connect('http://localhost:8000');
 socket.on('info', function (data) {
@@ -62,6 +64,7 @@ const App = () => {
             </Link>
             {/* logout */}
             <button id="LogoutButton" onClick={isLogout} >Logout</button>
+            <Notification />
             <div className='RouterBloc'>
                 <Link
                     id='login'
