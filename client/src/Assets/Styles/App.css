@@ -20,6 +20,7 @@ body {
 div.RouterBloc {
     display: block;
     position: absolute;
+    margin: 10px;
 }
 
 a.Hide {
@@ -85,8 +86,34 @@ button.ShowButton {
     margin-bottom: 5px;
     right: 0px;
     top: 0px;
+    margin: 10px;
 }
 
 button.HideButton {
     display: none;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    transition: all 0.2s ease-in-out;
+
+}
+
+input:hover {
+    transform: translateY(-2px);
+    transition: all 0.2s ease-in-out;
+}
+
+label:hover {
+    transform: translateY(-2px);
+    transition: all 0.2s ease-in-out;
+}
+
+a:hover {
+    transform: translateY(-2px);
+    transition: all 0.2s ease-in-out;
+}
+
+button {
+    outline: 0;
 }

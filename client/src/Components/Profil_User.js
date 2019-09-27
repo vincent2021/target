@@ -9,7 +9,7 @@ const ProfilClient = () => {
 
     const defaultImage = 'https://savoirs.rfi.fr/sites/all/themes/custom/rfi/images/public/default-profile.png';
     const [User, setUser] = useState({});
-    const [ImagesUser, setImagesUser] = useState([defaultImage]);
+    let [ImagesUser, setImagesUser] = useState([defaultImage]);
     const [IsLoading, setIsLoading] = useState(false);
     const [Changes, setChanges] = useState(false);
 
@@ -23,7 +23,7 @@ const ProfilClient = () => {
             console.log(err);
         })
     };
-       
+
     const ImportPicture = async e => {
         if (
             e.target.files[0].type === "image/jpeg" ||
@@ -42,12 +42,13 @@ const ProfilClient = () => {
                     .then(res => {
                         setImagesUser([...ImagesUser, res.data]);
                         setUser({ ...User, user_pic: ImagesUser });
+                        setChanges(Changes === true ? false : true);
+                        console.log(ImagesUser)
                     })
                     .catch(err => {
                         console.log('?' + err);
                     })
                 console.log('Image imported...')
-                setChanges(Changes === true ? false : true);
             }
             else {
                 console.log('Too much images...')
@@ -58,11 +59,16 @@ const ProfilClient = () => {
 
     const DeletePicture = e => {
         e.preventDefault();
+        let MainPicture = document.getElementById('ImageUser');
         ImagesUser.find((img, index) => {
-            if (img === document.getElementById('ImageUser').src) {
+            if (img === MainPicture.src) {
                 ImagesUser.splice(index, 1);
                 setImagesUser(ImagesUser);
                 setChanges(Changes === true ? false : true);
+                if (ImagesUser.length > 0)
+                    MainPicture.src = ImagesUser[0];
+                else
+                    MainPicture.src = defaultImage;
             }
         })
     }
