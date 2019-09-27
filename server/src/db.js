@@ -46,11 +46,11 @@ async function getUserProfile(userID) {
 
 async function filterUser(gender, age_min, age_max) {
     dgraphClient = newClient();
-    console.log("age_min=" +tool.toDOB(age_min) + '\n age_max=' + tool.toDOB(age_max))
-    const query = `{ users(func: eq(gender, ${gender})) {
+    const query = `{ users(func: eq(gender, ${gender})) @filter(lt(dob, ${age_min}) AND gt(dob, ${age_max})) {
             ${ProfilData},
         }
     }`;
+    console.log(query);
     const res = await dgraphClient.newTxn().query(query);
     const data = res.getJson();
     return (data.users);
