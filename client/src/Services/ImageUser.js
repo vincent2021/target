@@ -14,7 +14,6 @@ export const convertPic = (pic) => {
 const ImageContainers = (props) => {
 
     const [BlocImages, setBlocImages] = useState('');
-    const [IsLoading, setIsLoading] = useState(false);
 
     const SwapPic = e => {
         e.preventDefault();

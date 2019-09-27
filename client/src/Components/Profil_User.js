@@ -15,7 +15,6 @@ const ProfilClient = () => {
 
     const getToken = async () => {
         axios.post('/user/myprofile').then(res => {
-            console.log(res.data);
             setUser({ ...res.data });
             setImagesUser(res.data.user_pic.split(";"));
             setIsLoading(false);
@@ -43,17 +42,14 @@ const ProfilClient = () => {
                         setImagesUser([...ImagesUser, res.data]);
                         setUser({ ...User, user_pic: ImagesUser });
                         setChanges(Changes === true ? false : true);
-                        console.log(ImagesUser)
                     })
                     .catch(err => {
                         console.log('?' + err);
                     })
                 console.log('Image imported...')
             }
-            else {
+            else
                 console.log('Too much images...')
-                // hide le input
-            }
         }
     }
 
@@ -67,8 +63,6 @@ const ProfilClient = () => {
                 setChanges(Changes === true ? false : true);
                 if (ImagesUser.length > 0)
                     MainPicture.src = ImagesUser[0];
-                else
-                    MainPicture.src = defaultImage;
             }
         })
     }
