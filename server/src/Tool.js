@@ -9,13 +9,10 @@ const getAge = (date) => {
 }
 
 const getDOB = (age) => {
-    const date = new Date();
-    const age_ms = age * 365 * 24 * 60 * 60 * 100;
-    console.log("age" + age_ms);
-    console.log("date" + date);
-    const dob = date - age_ms;
-    console.log(dob);
-    return (dob);
+    let date = new Date;
+    let dob = new Date();
+    dob = date.setFullYear(date.getFullYear() - age);
+    return (dob.getFullYear() + "-" + dob.getMonth() + "-" + dob.getDate());
 }
 
 module.exports = {
