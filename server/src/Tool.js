@@ -1,4 +1,4 @@
-const getAge = (date) => {
+function getAge(date) {
     const dn = new Date(date)
     const auj = new Date();
     let age_now = (auj.getFullYear() - dn.getFullYear());
@@ -8,14 +8,13 @@ const getAge = (date) => {
     return age_now;
 }
 
-const getDOB = (age) => {
-    let date = new Date;
-    let dob = new Date();
-    dob = date.setFullYear(date.getFullYear() - age);
-    return (dob.getFullYear() + "-" + dob.getMonth() + "-" + dob.getDate());
+function toDOB(age) {
+    let dob = new Date
+    dob.setFullYear(dob.getFullYear() - age);
+    return (dob.toISOString());
 }
 
 module.exports = {
-    toAge: getAge,
-    toDOB: getDOB
+    getAge: getAge,
+    toDOB: toDOB
 }

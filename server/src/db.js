@@ -46,7 +46,7 @@ async function getUserProfile(userID) {
 
 async function filterUser(gender, age_min, age_max) {
     dgraphClient = newClient();
-    const query = `{ users(func: eq(gender, ${gender})) @filter(lt(dob, ${age_min}) AND gt(dob, ${age_max})) {
+    const query = `{ users(func: eq(gender, "${gender}")) @filter(lt(dob, "${age_min}") AND gt(dob, "${age_max}")) {
             ${ProfilData},
         }
     }`;

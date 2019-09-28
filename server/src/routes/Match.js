@@ -28,7 +28,7 @@ router.route('/filter').post((req, res) => {
     const gender = req.body.gender;
     const age_max = tool.toDOB(req.body.age_max);
     const age_min = tool.toDOB(req.body.age_min);
-    console.log(age_min.getDate() + ";" + age_max.getDate());
+    console.log(age_min + ";" + age_max);
     db.filterUser(gender, age_min, age_max).then(function (ret) {
         res.send(ret);
     });
