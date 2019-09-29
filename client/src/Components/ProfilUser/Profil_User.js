@@ -86,10 +86,6 @@ const ProfilClient = () => {
         content =
             <div className="BlocBase">
                 <div className="BlocUser">
-                    <p className="Titre">LIKED / VISITS</p>
-                    <div id="BlocVisits" className="BlocVisits"></div>
-                </div >
-                <div className="BlocUser">
                     <p className="Titre">{User.username}</p>
                     <ImageContainers User={User} Images={ImagesUser} Changes={Changes} />
                     <div className="BlocImport">
@@ -110,6 +106,10 @@ const ProfilClient = () => {
                         <ModifyInfo open={Info} setOpen={setInfo} />
                         <input className="modify" onClick={ModifyInformation} type="submit" value="Modify Informations" style={{ backgroundColor: '#0b3b' }}></input>
                     </div>
+                </div >
+                <div className="BlocUser">
+                    <p className="Titre">LIKED / VISITS</p>
+                    <div id="BlocVisits" className="BlocVisits"></div>
                 </div >
             </div >;
     }

@@ -1,4 +1,6 @@
 import React from 'react'
+import '../Styles/Svg.css';
+
 
 const BigLogo = props => (
   <svg className="prefix__titre" viewBox="0 0 475 130" {...props}>

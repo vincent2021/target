@@ -12,6 +12,13 @@
     top: 20vh;
 }
 
+@media only screen and (max-width:800px) {
+    .BlocBase {
+        align-items: center;
+        flex-direction: column;
+    }
+}
+
 .BlocUser {
     display: flex;
     flex-direction: column;
