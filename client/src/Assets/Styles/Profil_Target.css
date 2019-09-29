@@ -111,27 +111,8 @@ p.BlocTexte {
 /* Bloc Chat */
 
 div.BlocChat {
-    background-color: white;
-    height: 200px;
-    border: 1px black solid;
-    border-radius: 5px;
-    margin-bottom: 5px;
-}
-
-div.BlocWrite {}
-
-div.BlocWrite>textarea {
-    box-shadow: none;
-    resize: none;
-    outline: 0;
-    background-color: #eee;
-    border: 1px black solid;
-    height: 50px;
-    width: 294px;
-    padding: 3px;
-    font-size: 12px;
-    border-radius: 5px;
-    margin-bottom: 5px;
+    display: flex;
+    overflow: hidden;
 }
 
 /* Input Send */
@@ -144,4 +125,67 @@ input.send {
     border-radius: 5px;
     padding: 15px;
     font-size: 15px;
+}
+
+
+/* chat box */
+.sc-launcher {
+    position: absolute;
+}
+
+.sc-chat-window {
+    position: absolute;
+    right: auto;
+    width: 300px;
+    box-shadow: none;
+    border: black solid 1px;
+    height: 83.5%;
+    overflow: hidden;
+    bottom: auto;
+}
+
+.sc-header {
+    display: none;
+    background: rgb(149, 149, 149);
+    box-shadow: none;
+    border-bottom: black solid 1px;
+}
+
+.sc-header--close-button {
+    color: black;
+}
+
+.sc-header--img {
+    display: none;
+}
+
+.sc-header--team-name {
+    display: none;
+}
+
+.sc-user-input--file-icon-wrapper {
+    display: none;
+}
+
+.sc-message {
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+.sc-message-list {
+    padding-top: 10px;
+    padding-bottom: 70px;
+}
+
+.sc-message {
+    margin-left: 50px;
+    width: 225px;
+}
+
+.sc-user-input--text {
+    width: 230px;
+}
+
+.sc-user-input {
+    border-top: 1px black solid;
 }

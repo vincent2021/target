@@ -1,9 +1,10 @@
 // eslint-disable-next-line
 import React, { useState, useEffect } from 'react';
-import axios from '../Services/Axios';
-import { getAge, resizeImage } from '../Services/Fct';
-import ImageContainers, { convertPic } from '../Services/ImageUser';
-import { verify } from '../Services/Token';
+import axios from '../../Services/Axios';
+import { getAge, resizeImage } from '../../Services/Fct';
+import ImageContainers, { convertPic } from '../../Services/ImageUser';
+import ModifyInfo from './Modify_Info'
+import { verify } from '../../Services/Token';
 
 const ProfilClient = () => {
 
@@ -11,6 +12,7 @@ const ProfilClient = () => {
     const [User, setUser] = useState({});
     let [ImagesUser, setImagesUser] = useState([defaultImage]);
     const [IsLoading, setIsLoading] = useState(false);
+    const [Info, setInfo] = useState(false);
     const [Changes, setChanges] = useState(false);
 
     const getToken = async () => {
@@ -68,7 +70,9 @@ const ProfilClient = () => {
     }
 
     const ModifyInformation = e => {
-        console.log(e.target.value);
+        e.preventDefault();
+        console.log(Info);
+        setInfo(true);
     }
 
     useEffect(() => {
@@ -103,6 +107,7 @@ const ProfilClient = () => {
                        </p >
                     </div>
                     <div>
+                        <ModifyInfo open={Info} setOpen={setInfo} />
                         <input className="modify" onClick={ModifyInformation} type="submit" value="Modify Informations" style={{ backgroundColor: '#0b3b' }}></input>
                     </div>
                 </div >

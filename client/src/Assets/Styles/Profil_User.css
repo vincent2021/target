@@ -65,3 +65,64 @@ div.BlocInformations>p.BlocTexte {
     font-size: 10px;
     padding-left: 10px;
 }
+
+/* bloc informations */
+
+div.BlocPageFond {
+    z-Index: 3;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.198);
+    width: 100vw;
+    height: 100vh;
+    left: 0px;
+    top: 0px;
+
+}
+
+div.BlocPageInfo {
+    position: relative;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+div.BlocTextInfo {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+}
+
+div.BlocContentInfo {
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+textarea.Description {
+    resize: none;
+    width: 300px;
+    height: 100px;
+}
+
+textarea:focus {
+    outline: 0px;
+}
+
+button.ExitInfo {
+    color: #777;
+    border: none;
+    background: 0;
+    font: 14px/100% arial, sans-serif;
+    position: absolute;
+    right: 5px;
+    text-decoration: none;
+    text-shadow: 0 1px 0 #fff;
+    top: 5px;
+}
+
+button.ExitInfo:hover {
+    transform: none;
+}

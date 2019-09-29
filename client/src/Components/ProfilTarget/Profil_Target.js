@@ -1,13 +1,14 @@
-// eslint-disable-next-line
 import React, { useState, useEffect, createElement } from 'react';
-import axios from '../Services/Axios';
-import { getAge, resizeImage } from '../Services/Fct';
+import ChatBox from '../../Services/Chatbox';
+import axios from '../../Services/Axios';
+import { getAge, resizeImage } from '../../Services/Fct';
 
 const ProfilUser = ({ match }) => {
 
     const [user, setUser] = useState('');
     const [Age, setAge] = useState('')
     const [image, setImage] = useState({ pictures: [] });
+    const [chatison, setChatison] = useState(true);
 
     useEffect(() => {
         axios.post(`/user/profile?uid=${match.params.uid}`)
@@ -34,7 +35,8 @@ const ProfilUser = ({ match }) => {
         console.log(e.target.value);
     }
     const ActiveChat = e => {
-        console.log(e.target.value);
+        chatison === true ? setChatison(false) : setChatison(true);
+        console.log(chatison);
     }
     const PostComment = e => {
         let text = document.getElementById('Chat').value;
@@ -77,17 +79,14 @@ const ProfilUser = ({ match }) => {
                 </div >
             </div >
 
-
             <div className="BlocUser">
-                <div className="BlocChat" id="BlocChat"></div >
-                <div className="BlocWrite">
-                    <input type='text' id='Chat' ></input>
-                    {/* <textarea id='Chat'></textarea > */}
-                    <input className="send" onClick={PostComment} type="submit" value="Post" style={{ backgroundColor: '#0b3b' }}></input>
-                </div>
-            </div >
-
+                <div className="BlocChat" id="BlocChat">
+                    <ChatBox chatison={chatison} setChatison={setChatison} />
+                </div >
+            </div>
         </div >
+
+
     )
 }
 
