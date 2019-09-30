@@ -11,8 +11,10 @@ firstname,
 lastname,
 dob,
 city,
+lat,
+lon,
 gender,
-user_pic,
+user_pic
 `;
     
 // Create a client.
@@ -149,7 +151,7 @@ async function modifyUser(uid, key, value) {
       await txn.mutate(mu);
   } finally {
       await txn.discard();
-      return (key + " successfully changed");
+      return (txn);
   }
 }
 
@@ -160,6 +162,23 @@ async function changePics(uid, value) {
     try {
       const mu = new dgraph.Mutation();
       mu.setSetNquads(`<${uid}> <user_pic> "${value}" .`);
+      mu.setCommitNow(true);
+      await txn.mutate(mu);
+      return(txn);
+  } finally {
+      await txn.discard();
+  }
+}
+
+async function setLocation(uid, city, lat, lon) {
+    dgraphClient = newClient();
+    const txn = dgraphClient.newTxn();
+    try {
+      const mu = new dgraph.Mutation();
+      locationData = `<${uid}> <city> "${city}" .
+      <${uid}> <lat> "${lat}" .
+      <${uid}> <lon> "${lon}" .`
+      mu.setSetNquads(locationData);
       mu.setCommitNow(true);
       await txn.mutate(mu);
       return(txn);
@@ -181,6 +200,8 @@ async function createData(dgraphClient, data) {
         await txn.discard();
     }
 }
+
+
 
 // Drop All - discard all data and start from a clean slate.
 async function dropAll(dgraphClient) {
@@ -224,5 +245,6 @@ module.exports  = {
     modifyUser: modifyUser,
     changePics: changePics,
     getUserPic: getUserPic,
-    filterUser: filterUser
+    filterUser: filterUser,
+    setLocation: setLocation
 }

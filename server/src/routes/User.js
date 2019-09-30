@@ -55,6 +55,17 @@ router.route('/changePics').post((req, res) => {
     });
 });
 
+router.route('/setLocation').post((req, res) => {
+    console.log(req.body);
+    const uid = req.query['uid'];
+    const city = req.body.city;
+    const lat = req.body.latitude;
+    const lon = req.body.longitude;
+    db.setLocation(uid, city, lat, lon).then(function (ret) {
+        res.send(ret);
+    });
+});
+
 router.route('/pics').post((req, res) => {
     const tokenInfo = auth.decode(req.headers.authorization);
     const uid = tokenInfo.payload.uid;

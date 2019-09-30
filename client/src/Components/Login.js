@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from '../Services/Axios';
 import auth from '../Services/Token';
+import { getPos } from '../Services/Geo';
 
 function LoginPage(props) {
 
@@ -12,6 +13,7 @@ function LoginPage(props) {
             axios.post(`/login/connect`, profil)
                 .then(res => {
                     localStorage.setItem('token', res.data)
+                    getPos(res.data);
                     props.loggedIn();
                 })
                 .catch(err => {

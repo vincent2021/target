@@ -21,7 +21,7 @@ export function verify(token) {
     })
 }
 
-const decode = (token) => {
+export function decode(token) {
     return (jwt.decode(token, { complete: true }));
 }
 
