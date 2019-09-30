@@ -12,8 +12,14 @@ const ProfilClient = () => {
     const [User, setUser] = useState({});
     let [ImagesUser, setImagesUser] = useState([defaultImage]);
     const [IsLoading, setIsLoading] = useState(false);
-    const [Info, setInfo] = useState(false);
     const [Changes, setChanges] = useState(false);
+    const [Info, setInfo] = useState({
+        genre: '',
+        target: '',
+        text: '',
+        interest: []
+    });
+    const [OpenInfo, setOpenInfo] = useState(false);
 
     const getToken = async () => {
         axios.post('/user/myprofile').then(res => {
@@ -71,14 +77,18 @@ const ProfilClient = () => {
 
     const ModifyInformation = e => {
         e.preventDefault();
-        console.log(Info);
-        setInfo(true);
+        // console.log(Info);
+        setOpenInfo(true);
     }
 
     useEffect(() => {
         console.log('UseEffect Profil User...');
         getToken();
     }, []);
+
+    useEffect(() => {
+        console.log(Info, OpenInfo);
+    }, [Info, OpenInfo])
 
     let content = <p style={{ fontSize: '40px', position: 'fixed', bottom: '0px' }} >User is loading...</p>;
 
@@ -95,15 +105,15 @@ const ProfilClient = () => {
                     </div>
                     <div className="BlocInformations">
                         <p className="BlocTexte">
-                            Genre : Male / Female
-                            Interest in : Female / Male
-                            Both Bio : ...
-                            Interest : #blabla
-                            localistation: Moscou / Russia
-                       </p >
+                            Genre : Male / Female <br />
+                            Interest in : Female / Male <br />
+                            Both Bio : ... <br />
+                            Interest : #blabla <br />
+                            localistation: Moscou / Russia <br />
+                        </p >
                     </div>
                     <div>
-                        <ModifyInfo open={Info} setOpen={setInfo} />
+                        <ModifyInfo OpenInfo={OpenInfo} setOpenInfo={setOpenInfo} Info={Info} setInfo={setInfo} />
                         <input className="modify" onClick={ModifyInformation} type="submit" value="Modify Informations" style={{ backgroundColor: '#0b3b' }}></input>
                     </div>
                 </div >

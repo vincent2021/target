@@ -53,12 +53,12 @@ input.ImportPicture {
 }
 
 /* Informations */
+
 div.BlocInformations {
+    display: inline-block;
     background-color: white;
     border: black solid 1px;
-    height: 40px;
     border-radius: 10px;
-    padding-bottom: 10px;
 }
 
 div.BlocInformations>p.BlocTexte {
@@ -87,7 +87,7 @@ div.BlocPageInfo {
     background-color: rgb(255, 255, 255);
     border: 1px solid black;
     border-radius: 10px;
-    padding: 10px;
+    padding: 15px;
 }
 
 div.BlocTextInfo {
@@ -101,10 +101,16 @@ div.BlocContentInfo {
     padding-left: 20px;
 }
 
+div.BlocContentInfo>p {
+    color: rgb(88, 223, 110);
+}
+
 textarea.Description {
     resize: none;
+    border: 1px solid black;
     width: 300px;
     height: 100px;
+    padding: 10px;
 }
 
 textarea:focus {
@@ -125,4 +131,22 @@ button.ExitInfo {
 
 button.ExitInfo:hover {
     transform: none;
+}
+
+.SubInfo {
+    position: absolute;
+    background-color: rgb(65, 195, 119);
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+    border: solid black 1px;
+    border-radius: 5px;
+    padding: 12px;
+    font-size: 14px;
+    right: 15px;
+    bottom: -60px;
+}
+
+.SubInfo:hover {
+    background-color: rgb(43, 165, 94);
 }
