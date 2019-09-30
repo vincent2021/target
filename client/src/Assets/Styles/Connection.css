@@ -40,6 +40,15 @@ div.Bloc>form {
     border-radius: 2em;
     border: 1px solid black;
     background-color: #dddd;
+    margin-top: 50vh;
+    transform: translateY(-50%);
+}
+
+@media screen and (max-width: 750px) {
+    div.Bloc>form {
+        margin-top: 56vh;
+        transform: translateY(-50%);
+    }
 }
 
 form>input {

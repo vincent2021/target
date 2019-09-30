@@ -86,9 +86,9 @@ const ProfilClient = () => {
         getToken();
     }, []);
 
-    useEffect(() => {
-        console.log(Info, OpenInfo);
-    }, [Info, OpenInfo])
+    // useEffect(() => {
+    //     console.log(Info, OpenInfo);
+    // }, [Info, OpenInfo])
 
     let content = <p style={{ fontSize: '40px', position: 'fixed', bottom: '0px' }} >User is loading...</p>;
 

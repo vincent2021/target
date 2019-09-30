@@ -61,6 +61,8 @@ const ProfilMatch = () => {
     };
 
     useEffect(() => {
+        const Logo = document.getElementById('BigLogo');
+        Logo.className = 'HideSvg';
         handleUser()
     }, [])
 
@@ -96,6 +98,14 @@ const ProfilMatch = () => {
                     <input onClick={handleMatch} style={{ backgroundColor: '#35D467' }} type="submit" value="Yes"></input>
                 </div>
             </div>
+            <button
+                onClick={() => {
+                    const tab = document.getElementById("SliderMatch");
+                    tab.className = (tab.className === 'sliderComponenthide') ? 'sliderComponent' : 'sliderComponenthide';
+                }}
+                value="Match Search"
+                className="MatchSearchButton"
+            ></button>
             <MatchSearch
                 Age={Age}
                 Score={Score}
@@ -104,7 +114,8 @@ const ProfilMatch = () => {
                 handleAge={handleAge}
                 handleLocalisation={handleLocalisation}
                 handleScore={handleScore}
-                handleInterest={handleInterest} />
+                handleInterest={handleInterest}
+            />
         </div>
     )
 

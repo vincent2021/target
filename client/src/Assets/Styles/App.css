@@ -14,7 +14,8 @@
 
 body {
     font-family: 'national';
-    margin: 0;
+    margin: 0px;
+    padding: 0px;
 }
 
 div.RouterBloc {
@@ -24,23 +25,18 @@ div.RouterBloc {
     margin: 10px;
 }
 
+
 .Hide {
     display: none;
 }
 
 a.RouterLog {
-    position: relative;
-    display: inline-block;
-    width: auto;
     display: block;
+    text-align: center;
     text-decoration: none;
-    border: solid black 1px;
-    color: black;
-    background-color: #fcf;
-    border-radius: 15px;
-    padding: 12px;
-    font-size: 14px;
-    margin-bottom: 5px;
+    font-size: 15px;
+    margin-top: 10px;
+    color: rgb(59, 206, 66);
 }
 
 a.RouterMatch {
@@ -122,4 +118,15 @@ a:hover {
 
 button {
     outline: 0;
+}
+
+.HideSvg {
+    padding: 0px;
+}
+
+@media screen and (max-width: 750px) {
+
+    .HideSvg {
+        display: none;
+    }
 }

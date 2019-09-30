@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 const Notification = (props) => {
 
-    const [Notifications, setNotifications] = useState(['like de machin', 'comment de machine', 'block by trouduc']);
+    const [Notifications, setNotifications] = useState(['like de machin', 'comment de machine', 'block by trouduc', 'comment de machine']);
 
     useEffect(() => {
         props.loggedIn === true ? setContent(
@@ -33,9 +33,9 @@ const Notification = (props) => {
                 <div className="BlocNotif">
                     <button className="ExitNotif" onClick={exitNotification}>×</button>
                     <div className="BlockTextNotif">
-                        {Notifications.map(text => {
-                            return (<p>{text}</p>)
-                        })}
+                        {Notifications.map((text, index) => (
+                            <p key={index} >{text}</p>
+                        ))}
                     </div>
                 </div>
             </div>

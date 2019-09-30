@@ -27,8 +27,6 @@ const App = () => {
 
     const [loggedIn, setLoggedIn] = useState(false);
 
-    // regarde au démarrage seulement si le token existe 
-    // et redefinit la variable loggedIn si besoin
     useEffect(() => {
         console.log('component mont')
         isLogged()
@@ -37,60 +35,39 @@ const App = () => {
             })
     }, [])
 
-    // regarde si la variable loggedIn change et modifie le bouton logout en fonction
     useEffect(() => {
         const logout = document.getElementById('LogoutButton');
         const match = document.getElementById('match');
         const profil = document.getElementById('profilClient');
-        const register = document.getElementById('register');
-        const login = document.getElementById('login');
         logout.className = (loggedIn === true) ? "ShowButton" : "HideButton";
         match.className = (loggedIn === true) ? "RouterMatch" : "Hide";
         profil.className = (loggedIn === true) ? "RouterProfil" : "Hide";
-        register.className = (loggedIn === false) ? "RouterLog" : "Hide";
-        login.className = (loggedIn === false) ? "RouterLog" : "Hide";
     }, [loggedIn])
 
-
-    // redefinit la variable loggedIn après un clic
-    // et kill le token
     const isLogout = () => {
         localStorage.removeItem('token')
         setLoggedIn(false);
     }
 
-    // pour changer la variable depuis LoginPage.js
     const changeState = () => {
         setLoggedIn(true);
+        // changer ce truc horrible....
+        window.location.href('http://localhost:3000/profil')
+        window.location.reload();
     }
 
     return (
         <div>
-            <Link to='/' >
+            <Link to='/' id="BigLogo">
                 <BigLogo />
             </Link>
-            {/* logout */}
             <div className='RouterBloc'>
-                <Link
-                    id='login'
-                    className='RouterLog'
-                    to='/register'
-                >
-                    New in Target ? <br /> Create an account !
-                    </Link>
-                <Link
-                    id='register'
-                    className='RouterLog'
-                    to='/login'
-                >
-                    Already have an < br /> account ? Sign in !
-                    </Link>
                 <Link
                     id='match'
                     className='RouterMatch'
                     to='/match'
                 >
-                    Target people !
+                    Target
                     </Link>
                 <Link
                     id='profilClient'

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from "react-router-dom";
 import axios from '../Services/Axios';
 import auth from '../Services/Token';
 
@@ -56,6 +57,13 @@ function LoginPage(props) {
                     type="submit"
                     value="Submit"
                 />
+                <Link
+                    id='login'
+                    className='RouterLog'
+                    to='/register'
+                >
+                    Create an account !
+                    </Link>
             </form>
         </div>
     )

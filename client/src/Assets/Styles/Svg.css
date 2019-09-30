@@ -78,9 +78,17 @@ svg.prefix__titre {
     width: 500px;
 }
 
+
 @media screen and (max-width: 750px) {
+
+
     svg.prefix__titre {
+        top: 10px;
         width: 95vw;
+    }
+
+    .prefix__st2 {
+        stroke-width: 1.5px;
     }
 }
 

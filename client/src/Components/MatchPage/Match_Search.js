@@ -40,7 +40,7 @@ const MatchSlider = withStyles({
 const MatchSearch = (props) => {
 
     return (
-        <div className="sliderComponent">
+        <div id="SliderMatch" className="sliderComponent">
             <div>Age : {props.Age[0]}-{props.Age[1]}</div>
             <MatchSlider
                 id="Age"
