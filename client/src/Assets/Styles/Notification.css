@@ -7,6 +7,8 @@ div.BlocPageNotif {
     width: 100vw;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.198);
+    top: 0;
+    left: 0;
 }
 
 div.BlocPageNotif>.BlocNotif {

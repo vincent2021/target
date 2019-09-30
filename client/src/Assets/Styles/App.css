@@ -18,6 +18,7 @@ body {
 }
 
 div.RouterBloc {
+    z-index: 2;
     display: block;
     position: absolute;
     margin: 10px;
@@ -75,7 +76,6 @@ a.RouterProfil {
 
 /* logout */
 button.ShowButton {
-    position: fixed;
     width: auto;
     display: block;
     text-decoration: none;
@@ -86,9 +86,6 @@ button.ShowButton {
     padding: 12px;
     font-size: 14px;
     margin-bottom: 5px;
-    right: 0px;
-    top: 0px;
-    margin: 10px;
 }
 
 button.HideButton {
@@ -96,7 +93,6 @@ button.HideButton {
 }
 
 button.NotifButton {
-    position: fixed;
     width: auto;
     display: block;
     text-decoration: none;
@@ -107,9 +103,6 @@ button.NotifButton {
     padding: 12px;
     font-size: 14px;
     margin-bottom: 5px;
-    right: 0px;
-    top: 60px;
-    margin: 10px;
 }
 
 button:hover {

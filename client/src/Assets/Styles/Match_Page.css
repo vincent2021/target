@@ -87,3 +87,7 @@ div.sliderComponent {
     height: 300px;
     margin-bottom: -1px;
 }
+
+.CenterMatch>a {
+    transform: none;
+}

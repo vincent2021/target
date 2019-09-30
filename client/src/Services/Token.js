@@ -32,7 +32,7 @@ function isLogged() {
         if (token) {
             verify(token)
                 .then(check => {
-                    if (check === false) {
+                    if (!check) {
                         console.log('no token ...');
                         res(false);
                     } else if (check.exp < dateNow.getTime() / 1000) {

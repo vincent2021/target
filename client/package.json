@@ -9,6 +9,7 @@
     "jsonwebtoken": "^8.5.1",
     "npm": "^6.11.3",
     "react": "^16.8.6",
+    "react-chat-window": "^1.2.1",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",

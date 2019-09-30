@@ -78,9 +78,9 @@ svg.prefix__titre {
     width: 500px;
 }
 
-@media screen and (mAX-width: 750px) {
-    svg {
-        width: 300px;
+@media screen and (max-width: 750px) {
+    svg.prefix__titre {
+        width: 95vw;
     }
 }
 

@@ -1,13 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Notification = (props) => {
 
     const [Notifications, setNotifications] = useState(['like de machin', 'comment de machine', 'block by trouduc']);
 
+    useEffect(() => {
+        props.loggedIn === true ? setContent(
+            <button
+                id="Notification"
+                onClick={openNotification}
+                className="NotifButton"
+            >Notification</button>
+        ) :
+            setContent('')
+    }, [props.loggedIn])
+
     const exitNotification = e => {
         e.preventDefault();
         setContent(
             <button
+                id="Notification"
                 onClick={openNotification}
                 className="NotifButton"
             >Notification</button>
@@ -17,7 +29,7 @@ const Notification = (props) => {
     const openNotification = e => {
         e.preventDefault();
         setContent(
-            <div className="BlocPageNotif">
+            <div className="BlocPageNotif" id="Notification">
                 <div className="BlocNotif">
                     <button className="ExitNotif" onClick={exitNotification}>×</button>
                     <div className="BlockTextNotif">
@@ -32,6 +44,7 @@ const Notification = (props) => {
 
     const [Content, setContent] = useState(
         <button
+            id="Notification"
             onClick={openNotification}
             className="NotifButton"
         >Notification</button>

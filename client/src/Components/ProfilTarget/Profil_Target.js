@@ -1,16 +1,16 @@
-// eslint-disable-next-line
-import React, { useState, useEffect } from 'react';
-import axios from '../Services/Axios';
-import { getAge, resizeImage } from '../Services/Fct';
+import React, { useState, useEffect, createElement } from 'react';
+import ChatBox from '../../Services/Chatbox';
+import axios from '../../Services/Axios';
+import { getAge, resizeImage } from '../../Services/Fct';
 
 const ProfilUser = ({ match }) => {
 
     const [user, setUser] = useState('');
     const [Age, setAge] = useState('')
-    // eslint-disable-next-line
     const [image, setImage] = useState({ pictures: [] });
+    const [chatison, setChatison] = useState(true);
 
-    if (user === '') {
+    useEffect(() => {
         axios.post(`/user/profile?uid=${match.params.uid}`)
             .then(res => {
                 console.log(res.data);
@@ -20,7 +20,7 @@ const ProfilUser = ({ match }) => {
             .catch(err => {
                 console.log(err);
             })
-    }
+    }, [])
 
     const BlockUser = e => {
         console.log(e.target.value);
@@ -35,10 +35,18 @@ const ProfilUser = ({ match }) => {
         console.log(e.target.value);
     }
     const ActiveChat = e => {
-        console.log(e.target.value);
+        chatison === true ? setChatison(false) : setChatison(true);
+        console.log(chatison);
     }
     const PostComment = e => {
-        console.log(e.target.value);
+        let text = document.getElementById('Chat').value;
+        console.log(text)
+        var newDiv = document.createElement("div");
+        // let post = document.createElement('P').innerHTML = 'blabla';
+        var newContent = document.createTextNode(text);
+        newDiv.appendChild(newContent);
+        document.getElementById('BlocChat').appendChild(newDiv);
+
     }
 
     return (
@@ -71,16 +79,14 @@ const ProfilUser = ({ match }) => {
                 </div >
             </div >
 
-
             <div className="BlocUser">
-                <div className="BlocChat"></div >
-                <div className="BlocWrite">
-                    <textarea value="<3"></textarea >
-                    <input className="send" onClick={PostComment} type="submit" value="Post" style={{ backgroundColor: '#0b3b' }}></input>
-                </div>
-            </div >
-
+                <div className="BlocChat" id="BlocChat">
+                    <ChatBox chatison={chatison} setChatison={setChatison} />
+                </div >
+            </div>
         </div >
+
+
     )
 }
 

@@ -1,9 +1,10 @@
 // eslint-disable-next-line
 import React, { useState, useEffect } from 'react';
-import axios from '../Services/Axios';
-import { getAge, resizeImage } from '../Services/Fct';
-import ImageContainers, { convertPic } from '../Services/ImageUser';
-import { verify } from '../Services/Token';
+import axios from '../../Services/Axios';
+import { getAge, resizeImage } from '../../Services/Fct';
+import ImageContainers, { convertPic } from '../../Services/ImageUser';
+import ModifyInfo from './Modify_Info'
+import { verify } from '../../Services/Token';
 
 const ProfilClient = () => {
 
@@ -12,6 +13,13 @@ const ProfilClient = () => {
     let [ImagesUser, setImagesUser] = useState([defaultImage]);
     const [IsLoading, setIsLoading] = useState(false);
     const [Changes, setChanges] = useState(false);
+    const [Info, setInfo] = useState({
+        genre: '',
+        target: '',
+        text: '',
+        interest: []
+    });
+    const [OpenInfo, setOpenInfo] = useState(false);
 
     const getToken = async () => {
         axios.post('/user/myprofile').then(res => {
@@ -68,7 +76,9 @@ const ProfilClient = () => {
     }
 
     const ModifyInformation = e => {
-        console.log(e.target.value);
+        e.preventDefault();
+        // console.log(Info);
+        setOpenInfo(true);
     }
 
     useEffect(() => {
@@ -76,15 +86,15 @@ const ProfilClient = () => {
         getToken();
     }, []);
 
+    useEffect(() => {
+        console.log(Info, OpenInfo);
+    }, [Info, OpenInfo])
+
     let content = <p style={{ fontSize: '40px', position: 'fixed', bottom: '0px' }} >User is loading...</p>;
 
     if (!IsLoading && User.uid) {
         content =
             <div className="BlocBase">
-                <div className="BlocUser">
-                    <p className="Titre">LIKED / VISITS</p>
-                    <div id="BlocVisits" className="BlocVisits"></div>
-                </div >
                 <div className="BlocUser">
                     <p className="Titre">{User.username}</p>
                     <ImageContainers User={User} Images={ImagesUser} Changes={Changes} />
@@ -95,16 +105,21 @@ const ProfilClient = () => {
                     </div>
                     <div className="BlocInformations">
                         <p className="BlocTexte">
-                            Genre : Male / Female
-                            Interest in : Female / Male
-                            Both Bio : ...
-                            Interest : #blabla
-                            localistation: Moscou / Russia
-                       </p >
+                            Genre : {Info.genre} <br />
+                            Interest in : {Info.target} <br />
+                            Both Bio : {Info.text} <br />
+                            Interest : {Info.interest.map(i => (i + ' '))} <br />
+                            localistation: Moscou / Russia <br />
+                        </p >
                     </div>
                     <div>
+                        <ModifyInfo OpenInfo={OpenInfo} setOpenInfo={setOpenInfo} Info={Info} setInfo={setInfo} />
                         <input className="modify" onClick={ModifyInformation} type="submit" value="Modify Informations" style={{ backgroundColor: '#0b3b' }}></input>
                     </div>
+                </div >
+                <div className="BlocUser">
+                    <p className="Titre">LIKED / VISITS</p>
+                    <div id="BlocVisits" className="BlocVisits"></div>
                 </div >
             </div >;
     }
