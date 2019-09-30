@@ -23,6 +23,8 @@ async function generateFakeUser() {
         const firstName = newUser.name.first;
         const lastName = newUser.name.last;
         const pic = await fetch(`https://source.unsplash.com/random/?${gender}`);
+        const default_pic = 'http://localhost:8000/upload/default.png';
+        const pic_array = [`'${pic.url}', ${default_pic}, ${default_pic}, ${default_pic}, ${default_pic}`];
         const fakeUser = { 
             user: {
                 username: faker.internet.userName(firstName, lastName),
@@ -32,8 +34,10 @@ async function generateFakeUser() {
                 dob: newUser.dob.date,
                 email: faker.internet.email(firstName, lastName),
                 password: newUser.login.password,
-                user_pic: pic.url,
+                user_pic: pic_array,
                 city: newUser.location.city.charAt(0).toUpperCase() + newUser.location.city.substr(1)
+                lat: newUser.location.city.coordinates.latitude;
+                lon: newUser.location.city.coordinates.longitude;
         },};
         console.log(fakeUser);
         db.addUser(fakeUser);
