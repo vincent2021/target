@@ -24,8 +24,7 @@ const ProfilClient = () => {
     const getToken = async () => {
         axios.post('/user/myprofile').then(res => {
             setUser({ ...res.data });
-            setImagesUser(res.data.user_pic);
-            console.log(ImagesUser);
+            setImagesUser([res.data.user_pic]);
             setIsLoading(false);
         }).catch(err => {
             console.log(err);

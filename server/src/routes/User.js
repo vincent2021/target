@@ -3,18 +3,12 @@ const db = require("../db.js");
 const auth = require("../auth.js");
 
 router.route('/getUser').post((req, res) => {
-    auth.verify(req.headers.authorization).then(function (ret) {
-        console.log(ret);
-        if (ret == false) {
-            res.sendStatus(403);
-        } else {
-            let user_nb = Math.round(Math.random() * 150);
-            db.getUser().then(function (users) {
-                res.send(users[user_nb]);
-            });
-        }
+    let user_nb = Math.round(Math.random() * 50);
+    db.getUser().then(function (users) {
+    res.send(users[user_nb]);
     });
 });
+
 
 router.route('/profile').post((req, res) => {
     db.getUserProfile(req.query['uid'])

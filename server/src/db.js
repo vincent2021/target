@@ -18,7 +18,7 @@ const ProfilData = `uid
 async function getUser() {
     dgraphClient = newClient();   
     const query = `{
-        random(func: has(username)) {
+        random(func: has(firstname)) {
             ${ProfilData}
         }
     }`;

@@ -15,7 +15,7 @@ const tags = [
 
 faker.locale = "fr";
 
-async function generateFakeUser() {    
+async function generateFakeUser(user) {    
     try {
         let newUser = await fetch(`https://randomuser.me/api/?nat=fr`)
         newUser = await newUser.json();
@@ -30,9 +30,15 @@ async function generateFakeUser() {
         const geocode = await fetch(`https://geocode.xyz/${city}?json=1`)
             .then(res => res.json())
             .then(jsonData => {return(jsonData)});
+        let login;
+        if (user == 'test') {
+            login = 'vincent';
+        } else {
+            login = faker.internet.userName(firstName, lastName);
+        }
         const fakeUser = { 
             user: {
-                username: faker.internet.userName(firstName, lastName),
+                username: login,
                 firstname: firstName,
                 lastname: lastName,
                 gender: gender,
@@ -53,8 +59,12 @@ async function generateFakeUser() {
     }
 };
 
-db.createDb();
+//Pour supprimer la BD au moment du seed
+//db.createDb();
 
-for (let i = 0; i < 30; i++) {
+//Generate a user with login Vincent
+//generateFakeUser('test');
+
+for (let i = 0; i < 25; i++) {
     generateFakeUser();
 }
