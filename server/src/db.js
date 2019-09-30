@@ -39,9 +39,13 @@ async function getUserProfile(userID) {
     return (data.userProfile[0]);
 }
 
-async function filterUser(gender, age_min, age_max) {
+async function filterUser(gender, age_min, age_max, user_loc, km) {
     dgraphClient = newClient();
-    const query = `{ users(func: eq(gender, "${gender}")) @filter(lt(dob, "${age_min}") AND gt(dob, "${age_max}")) {
+    const query = `{ users(func: eq(gender, "${gender}"))
+    @filter(near(location, ${user_loc}, ${km})
+    AND lt(dob, "${age_min}")
+    AND gt(dob, "${age_max}"))
+        {
             ${ProfilData},
         }
     }`;
@@ -225,7 +229,7 @@ async function setSchema(dgraphClient) {
         email: string @index(fulltext) .
         user_pic: [string] .
         city: string .
-        location: geo .
+        location: geo @index(geo) .
     `;
     const op = new dgraph.Operation();
     op.setSchema(schema);

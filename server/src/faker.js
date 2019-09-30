@@ -26,6 +26,10 @@ async function generateFakeUser() {
         const pic = await fetch(`https://source.unsplash.com/random/?${gender}`);
         const default_pic = 'http://localhost:8000/upload/default.png';
         const pics_array = [`${pic.url}`, `${default_pic}`, `${default_pic}`, `${default_pic}`, `${default_pic}`];
+        const city = newUser.location.city.charAt(0).toUpperCase() + newUser.location.city.substr(1);
+        const geocode = await fetch(`https://geocode.xyz/${city}?json=1`)
+            .then(res => res.json())
+            .then(jsonData => {return(jsonData)});
         const fakeUser = { 
             user: {
                 username: faker.internet.userName(firstName, lastName),
@@ -34,12 +38,12 @@ async function generateFakeUser() {
                 gender: gender,
                 dob: newUser.dob.date,
                 email: faker.internet.email(firstName, lastName),
-                password: newUser.login.password,
+                password: '42born2code',
                 user_pic: pics_array,
-                city: newUser.location.city.charAt(0).toUpperCase() + newUser.location.city.substr(1),
+                city: city,
                 location: `{
                     "type": "Point",
-                    "coordinates": [${newUser.location.coordinates.latitude}, ${newUser.location.coordinates.longitude}]
+                    "coordinates": [${geocode.latt}, ${geocode.longt}]
                 }`,
         },};
         console.log(fakeUser);
@@ -51,6 +55,6 @@ async function generateFakeUser() {
 
 db.createDb();
 
-for (let i = 0; i < 50; i++) {
+for (let i = 0; i < 30; i++) {
     generateFakeUser();
 }
