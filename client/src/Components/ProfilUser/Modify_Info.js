@@ -11,33 +11,35 @@ const ModifyInfo = (props) => {
         props.setOpenInfo(false);
     }
 
+
     const handleSubmit = async e => {
         e.preventDefault();
-        const genre = document.getElementsByName('genre');
-        const target = document.getElementsByName('target');
-        const interest = document.getElementsByName('interest');
-        const text = document.getElementById('TalkAboutYou');
+        let genre = document.getElementsByName('genre');
+        let target = document.getElementsByName('target');
+        let interest = document.getElementsByName('interest');
+        let text = document.getElementById('TalkAboutYou');
         let list = [];
 
         genre.forEach(data => {
             if (data.checked)
-                props.setInfo({ ...props.Info, genre: data.value });
+                genre = data.value;
+            // props.setInfo({ ...props.Info, genre: data.value });
         })
         target.forEach(data => {
             if (data.checked)
-                props.setInfo({ ...props.Info, target: data.value })
+                target = data.value;
+            // props.setInfo({ ...props.Info, target: data.value })
         })
         interest.forEach(data => {
             if (data.checked)
                 list.push(data.value);
         })
-        props.setInfo({ ...props.Info, text: text.value })
         if (list.length < 2)
             alert('Check at least two interests');
         else {
-            props.setInfo({ ...props.Info, interest: list })
+            props.setInfo({ genre: genre, target: target, interest: list, text: text.value })
             props.setOpenInfo(false);
-            console.log(props.Info, props.OpenInfo);
+            setContent('');
         }
     }
 

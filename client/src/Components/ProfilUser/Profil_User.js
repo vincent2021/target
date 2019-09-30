@@ -105,10 +105,10 @@ const ProfilClient = () => {
                     </div>
                     <div className="BlocInformations">
                         <p className="BlocTexte">
-                            Genre : Male / Female <br />
-                            Interest in : Female / Male <br />
-                            Both Bio : ... <br />
-                            Interest : #blabla <br />
+                            Genre : {Info.genre} <br />
+                            Interest in : {Info.target} <br />
+                            Both Bio : {Info.text} <br />
+                            Interest : {Info.interest.map(i => (i + ' '))} <br />
                             localistation: Moscou / Russia <br />
                         </p >
                     </div>
