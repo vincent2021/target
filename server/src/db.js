@@ -5,22 +5,15 @@ const SERVER_ADDR = "54.194.192.127:9080";
 const SERVER_CREDENTIALS = grpc.credentials.createInsecure();
 const clientStub1 = new dgraph.DgraphClientStub(SERVER_ADDR, SERVER_CREDENTIALS);
 const ProfilData = `uid
-username,
-email,
-firstname,
-lastname,
-dob,
-city,
-lat,
-lon,
-gender,
-user_pic
-`;
-    
-// Create a client.
-function newClient() {
-    return new dgraph.DgraphClient(clientStub1);
-}
+                    username,
+                    email,
+                    firstname,
+                    lastname,
+                    dob,
+                    city,
+                    location,
+                    gender,
+                    user_pic`;
 
 async function getUser() {
     dgraphClient = newClient();   
@@ -31,7 +24,7 @@ async function getUser() {
     }`;
     const res = await dgraphClient.newTxn().query(query);
     const data = res.getJson();
-    //data.all.forEach((person) => console.log(person));
+    //data.all.forEach((person) = console.log(person));
     return (data.random);
 }
 
@@ -67,7 +60,7 @@ async function getUserPic(userID) {
     }`;
     const res = await dgraphClient.newTxn().query(query);
     const data = res.getJson();
-    return (data.userProfile[0]);
+    return (data);
 }
 
 //Add a user
@@ -88,14 +81,13 @@ async function getUserID(email) {
     return (data.getUserID[0].uid);
 }
 
-
 //Match 2 users
 async function newMatch(uid1, uid2) {
     dgraphClient = newClient();
     const txn = dgraphClient.newTxn();
     try {
         const mu = new dgraph.Mutation();
-        matchData = `<${uid1}> <match> <${uid2}> .`;
+        matchData = `${uid1} match ${uid2} .`;
         mu.setSetNquads(matchData);
         mu.setCommitNow(true);
         await txn.mutate(mu);
@@ -146,7 +138,7 @@ async function modifyUser(uid, key, value) {
     const txn = dgraphClient.newTxn();
     try {
       const mu = new dgraph.Mutation();
-      mu.setSetNquads(`<${uid}> <${key}> "${value}" .`);
+      mu.setSetNquads(`${uid} ${key} "${value}" .`);
       mu.setCommitNow(true);
       await txn.mutate(mu);
   } finally {
@@ -155,13 +147,14 @@ async function modifyUser(uid, key, value) {
   }
 }
 
-// Change picture list for a specific uid
-async function changePics(uid, value) {
+// Delete a specific picture (WIP)
+async function deletePic(uid, value) {
     dgraphClient = newClient();
     const txn = dgraphClient.newTxn();
     try {
       const mu = new dgraph.Mutation();
-      mu.setSetNquads(`<${uid}> <user_pic> "${value}" .`);
+      //mu.setDelList(`${uid} user_pic "${value}" .`);
+      //mu.SetDelNquads(`${uid} user_pic "${value}" .`);
       mu.setCommitNow(true);
       await txn.mutate(mu);
       return(txn);
@@ -175,9 +168,9 @@ async function setLocation(uid, city, lat, lon) {
     const txn = dgraphClient.newTxn();
     try {
       const mu = new dgraph.Mutation();
-      locationData = `<${uid}> <city> "${city}" .
-      <${uid}> <lat> "${lat}" .
-      <${uid}> <lon> "${lon}" .`
+      locationData = `${uid} city "${city}" .
+      ${uid} lat "${lat}" .
+      ${uid} lon "${lon}" .`
       mu.setSetNquads(locationData);
       mu.setCommitNow(true);
       await txn.mutate(mu);
@@ -201,31 +194,38 @@ async function createData(dgraphClient, data) {
     }
 }
 
+// Create a client.
+function newClient() {
+    return new dgraph.DgraphClient(clientStub1);
+}
 
+async function createDb() {
+    const dgraphClient = newClient();
+    await dropAll(dgraphClient);
+    await setSchema(dgraphClient);
+  }
 
-// Drop All - discard all data and start from a clean slate.
+  // Delete the DB
 async function dropAll(dgraphClient) {
     const op = new dgraph.Operation();
     op.setDropAll(true);
     await dgraphClient.alter(op);
 }
 
-// Mise en place db + query + post serveur -> client
-async function createDb() {
-    const dgraphClientStub = db.newClientStub();
-    const dgraphClient = db.newClient(dgraphClientStub);
-    await db.dropAll(dgraphClient);
-    await db.setSchema(dgraphClient);
-    dgraphClientStub.close();
-  }
-
-  // Set schema.
 async function setSchema(dgraphClient) {
     const schema = `
         username: string @index(exact) .
-        email: string @index(exact) .
-        firstname: string @index(exact) .
-        lastname: string @index(exact) .
+        firstname: string @index(fulltext) .
+        lastname: string @index(fulltext) .
+        name: string @index(fulltext) .
+        password: password .
+        gender: string @index(exact) .
+        match: uid @reverse .
+        dob: datetime @index(hour) .
+        email: string @index(fulltext) .
+        user_pic: [string] .
+        city: string .
+        location: geo .
     `;
     const op = new dgraph.Operation();
     op.setSchema(schema);
@@ -233,6 +233,7 @@ async function setSchema(dgraphClient) {
 }
 
 module.exports  = {
+    createDb: createDb,
     newClient: newClient,
     createData: createData,
     addUser: addUser,
@@ -243,7 +244,7 @@ module.exports  = {
     getFullMatch: getFullMatch,
     newMatch: newMatch,
     modifyUser: modifyUser,
-    changePics: changePics,
+    deletePic: deletePic,
     getUserPic: getUserPic,
     filterUser: filterUser,
     setLocation: setLocation

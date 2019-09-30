@@ -8,7 +8,7 @@ import { verify } from '../../Services/Token';
 
 const ProfilClient = () => {
 
-    const defaultImage = 'https://savoirs.rfi.fr/sites/all/themes/custom/rfi/images/public/default-profile.png';
+    const defaultImage = 'http://localhost:8000/upload/default.png';
     const [User, setUser] = useState({});
     let [ImagesUser, setImagesUser] = useState([defaultImage]);
     const [IsLoading, setIsLoading] = useState(false);
@@ -24,7 +24,8 @@ const ProfilClient = () => {
     const getToken = async () => {
         axios.post('/user/myprofile').then(res => {
             setUser({ ...res.data });
-            setImagesUser(res.data.user_pic.split(";"));
+            setImagesUser(res.data.user_pic);
+            console.log(ImagesUser);
             setIsLoading(false);
         }).catch(err => {
             console.log(err);

@@ -25,6 +25,7 @@ router.route('/profile').post((req, res) => {
 
 
 router.route('/myprofile').post((req, res) => {
+    console.log(req.headers.authorization);
     const tokenInfo = auth.decode(req.headers.authorization);
     const uid = tokenInfo.payload.uid;
     db.getUserProfile(uid)
@@ -67,11 +68,9 @@ router.route('/setLocation').post((req, res) => {
 });
 
 router.route('/pics').post((req, res) => {
-    const tokenInfo = auth.decode(req.headers.authorization);
-    const uid = tokenInfo.payload.uid;
-    db.getUserPic(uid).then(function (ret) {
-        picArray = ret.user_pic.split(';')
-        res.send(picArray);
+    db.getUserPic(req.query['uid']).then((ret) => {
+        console.log(ret.user_pic);
+        res.send(ret);
     });
 });
 
