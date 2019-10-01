@@ -27,4 +27,10 @@ router.route("/tokeninfo").post((req, res) => {
     res.send(tokenInfo['payload']);
 });
 
+router.route("/resetpwd").post((req, res) => {
+    const email = req.query['email'];
+    auth.resetPasswd(email).then((ret) =>
+        res.send(ret));
+});
+
 module.exports = router;

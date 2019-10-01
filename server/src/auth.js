@@ -7,7 +7,7 @@ const SERVER_ADDR = "54.194.192.127:9080";
 const SERVER_CREDENTIALS = grpc.credentials.createInsecure();
 const clientStub1 = new dgraph.DgraphClientStub(SERVER_ADDR, SERVER_CREDENTIALS);
 const geo = require("./Geo");
-const db = require("./db");
+const mail = require("./mail");
 
 // Create a client.
 function newClient() {
@@ -83,9 +83,39 @@ const decode = (token) => {;
     return (jwt.decode(token, {complete: true}));
 }
 
+async function resetPasswd(email) {
+    let new_passwd =  Math.random().toString(36).substring(2, 15);
+    console.log(new_passwd);
+    new_passwd = "test42"
+    try {
+        dgraphClient = newClient();
+        const query = `{
+            getUID(func: eq(email, "${email}")) {
+                uid
+                }
+            }`;
+        const res = await dgraphClient.newTxn().query(query);
+        const uid = res.getJson().getUID[0].uid;
+        const txn = dgraphClient.newTxn();
+        try {
+          const mu = new dgraph.Mutation();
+          mu.setSetNquads(`<${uid}> <password> "${new_passwd}" .`);
+          mu.setCommitNow(true);
+          await txn.mutate(mu);
+          mail.sendResetMail(email, new_passwd);
+        } finally {
+            await txn.discard();
+        }
+    } catch (err) {
+        console.log(err);
+        return "Wrong email";
+    }
+}
+
 module.exports = {
     sign: sign,
     verify: verify,
     decode: decode,
-    login: login
+    login: login,
+    resetPasswd: resetPasswd
 };
