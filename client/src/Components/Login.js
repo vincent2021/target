@@ -6,31 +6,35 @@ import { getPos } from '../Services/Geo';
 function LoginPage(props) {
 
     const [profil, setProfil] = useState({})
-    //Get geolocalisation
-    navigator.geolocation.getCurrentPosition(function(pos) {
-        const user_loc = {
-            lat: pos.coords.latitude,
-            lon: pos.coords.longitude
-        }
-        setProfil({
-            ...profil,
-            user_loc
+   
+    useEffect(() => {
+        //Get geolocalisation from browser
+        navigator.geolocation.getCurrentPosition(function (pos) {
+            const user_loc = {
+                lat: pos.coords.latitude,
+                lon: pos.coords.longitude
+            }
+            setProfil({
+                ...profil,
+                user_loc
+            });
         });
-      });
-    
-    console.log(profil);
+        //get ip from the user
+        fetch('https://api.ipify.org?format=json')
+        .then(res => res.json())
+        .then(json => {
+            const user_ip = json.ip;
+            setProfil({
+                ...profil,
+                user_ip
+            });
+        });
+    }, []);
+
     const handleSubmit = (e) => {
         e.preventDefault();
         if (profil.username && profil.password) {
-            fetch('https://api.ipify.org?format=json')
-                .then(res => res.json())
-                .then(json => {
-                    const user_ip = json.ip;
-                    setProfil({
-                        ...profil,
-                        user_ip
-                    });
-                });
+
 
             const location = getPos();
             console.log(location);
