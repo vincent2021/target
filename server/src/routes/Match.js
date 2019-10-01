@@ -27,6 +27,7 @@ router.route('/fullmatch').post((req, res) => {
 //PowerQuery to match with filter
 router.route('/filter').post((req, res) => {
     const token = tokenInfo = auth.decode(req.headers.authorization).payload;
+    console.log(token);
     const user_loc = `[${token.loc.lat}, ${token.loc.lon}]`;
     const uid = token.uid;
     const km = req.body.range * 1000;

@@ -37,7 +37,7 @@ const ModifyInfo = (props) => {
         if (list.length < 2)
             alert('Check at least two interests');
         else {
-            props.setInfo({ genre: genre, target: target, interest: list, text: text.value })
+            props.setInfo({ gender: genre, target: target, interest: list, text: text.value })
             props.setOpenInfo(false);
             setContent('');
         }

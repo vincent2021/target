@@ -17,6 +17,7 @@ async function login(body) {
     const username = body.username;
     const password = body.password;
     const user_loc = body.user_loc;
+    console.log(user_loc);
     const ip = body.user_ip;
     console.log(body);
     try {

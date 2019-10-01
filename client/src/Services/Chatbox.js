@@ -9,7 +9,7 @@ class Demo extends Component {
             messageList: [{
                 author: 'them',
                 type: 'text',
-                data: {text: "yolo"}
+                data: { text: "yolo" }
             }]
         };
     }
@@ -35,11 +35,13 @@ class Demo extends Component {
     _sendMessage(text) {
         if (text.length > 0) {
             this.setState({
-                messageList: [...this.state.messageList, {
-                    author: 'them',
-                    type: 'text',
-                    data: { text }
-                }]
+                messageList: [
+                    ...this.state.messageList, {
+                        author: 'them',
+                        type: 'text',
+                        data: { text }
+                    }
+                ]
             })
         }
     }

@@ -91,16 +91,11 @@ const ProfilClient = () => {
     }, [ImagesUser])
 
     useEffect(() => {
-
         // ENVOYER LES INFOS A LA DB
-
-        // Info.forEach((key,value) => {
-        //     axios.post(`/user/change?key=${key}&value=${value}`)
-        //     .then(res => {
-        //         console.log(res);
-        //     })
-        // })
-
+        axios.post(`/user/modifyInfo`, Info)
+            .then(res => {
+                console.log(res);
+            })
     }, [Info])
 
     let content = <p style={{ fontSize: '40px', position: 'fixed', bottom: '0px' }} >User is loading...</p>;
@@ -139,7 +134,6 @@ const ProfilClient = () => {
     else if (!IsLoading && !User.uid) {
         content = <p style={{ fontSize: '40px', position: 'fixed', bottom: '0px' }}> Something is wrong...</p>;
     }
-
     return content;
 }
 
