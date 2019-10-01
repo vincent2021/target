@@ -120,7 +120,7 @@ const ProfilClient = () => {
                         <p className="BlocTexte">
                             Genre : {Info.genre} <br />
                             Interest in : {Info.target} <br />
-                            Both Bio : {Info.text} <br />
+                            Bio : {Info.text} <br />
                             Interest : {Info.interest.map(i => (i + ' '))} <br />
                             localistation: Moscou / Russia <br />
                         </p >

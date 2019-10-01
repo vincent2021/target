@@ -6,14 +6,16 @@ class Demo extends Component {
     constructor() {
         super();
         this.state = {
-            messageList: []
+            messageList: [{
+                author: 'them',
+                type: 'text',
+                data: {text: "yolo"}
+            }]
         };
     }
 
     componentDidMount() {
         document.getElementById('sc-launcher').childNodes[0].remove();
-        // document.getElementById('sc-launcher').childNodes[0].className = 'sc-chat-window closed';
-        // document.getElementById('sc-launcher').childNodes[1].className = 'sc-chat-window closed'
     }
 
     componentDidUpdate() {
@@ -27,6 +29,7 @@ class Demo extends Component {
         this.setState({
             messageList: [...this.state.messageList, message]
         })
+        console.log(this.state);
     }
 
     _sendMessage(text) {

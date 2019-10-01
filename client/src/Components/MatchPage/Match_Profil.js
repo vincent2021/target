@@ -88,7 +88,7 @@ const ProfilMatch = () => {
             if (match[0] && match[1])
                 axios.post(`/match/new?uid1=${match[0]}&uid2=${match[1]}`)
                     .then(res => {
-                        console.log(res);
+                        console.log('match !');
                     })
         }
         else
