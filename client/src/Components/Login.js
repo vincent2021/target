@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import axios from '../Services/Axios';
 import { getPos } from '../Services/Geo';
@@ -6,18 +6,22 @@ import { getPos } from '../Services/Geo';
 function LoginPage(props) {
 
     const [profil, setProfil] = useState({})
-    navigator.geolocation.getCurrentPosition(function(pos) {
-        const user_loc = {
-            lat: pos.coords.latitude,
-            lon: pos.coords.longitude
-        }
-        setProfil({
-            ...profil,
-            user_loc
+
+    useEffect(() => {
+        navigator.geolocation.getCurrentPosition(function (pos) {
+            const user_loc = {
+                lat: pos.coords.latitude,
+                lon: pos.coords.longitude
+            }
+            setProfil({
+                ...profil,
+                user_loc
+            });
         });
-      });
-    
-    console.log(profil);
+        console.log(profil);
+    }, []);
+
+
     const handleSubmit = (e) => {
         e.preventDefault();
         if (profil.username && profil.password) {
@@ -33,7 +37,7 @@ function LoginPage(props) {
 
             const location = getPos();
             console.log(location);
-                   
+
             axios.post(`/login/connect`, profil)
                 .then(res => {
                     if (res.data === "Wrong Password" || res.data === "Wrong Username") {
@@ -41,7 +45,8 @@ function LoginPage(props) {
                     } else {
                         localStorage.setItem('token', res.data);
                         props.loggedIn();
-                }})
+                    }
+                })
                 .catch(err => {
                     console.log(err);
                 })
