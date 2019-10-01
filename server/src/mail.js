@@ -21,9 +21,9 @@ async function sendResetMail(email, new_pwd) {
         text: body,
         html: `<b>${body}</b>`
     });
-
-    console.log('Message sent: %s', info.messageId);
-    console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+    ret = 'Mail sent with new pwd: ' + nodemailer.getTestMessageUrl(info);
+    console.log(ret);
+    return (ret);
 }
 
 module.exports = {
