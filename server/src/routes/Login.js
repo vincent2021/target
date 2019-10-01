@@ -9,7 +9,7 @@ router.route("/connect").post((req, res) => {
     auth.login(username, passwd)
         .then(function (ret) {
             res.send(ret);
-        }, (err) => { console.log(err) });
+        }, (err) => { console.log(err)});
 });
 
 router.route("/register").post((req, res) => {

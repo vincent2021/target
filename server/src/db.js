@@ -142,7 +142,7 @@ async function modifyUser(uid, key, value) {
     const txn = dgraphClient.newTxn();
     try {
       const mu = new dgraph.Mutation();
-      mu.setSetNquads(`${uid} ${key} "${value}" .`);
+      mu.setSetNquads(`<${uid}> <${key}> "${value}" .`);
       mu.setCommitNow(true);
       await txn.mutate(mu);
   } finally {
@@ -152,13 +152,13 @@ async function modifyUser(uid, key, value) {
 }
 
 // Delete a specific picture (WIP)
-async function deletePic(uid, value) {
+async function deleteUserInfo(uid, key, url) {
     dgraphClient = newClient();
     const txn = dgraphClient.newTxn();
     try {
       const mu = new dgraph.Mutation();
-      //mu.setDelList(`${uid} user_pic "${value}" .`);
-      //mu.SetDelNquads(`${uid} user_pic "${value}" .`);
+      console.log(`<${uid}> <${key}> "${url}" .`);
+      mu.setDelNquads(`<${uid}> <${key}> "${url}" .`);
       mu.setCommitNow(true);
       await txn.mutate(mu);
       return(txn);
@@ -171,14 +171,19 @@ async function setLocation(uid, city, lat, lon) {
     dgraphClient = newClient();
     const txn = dgraphClient.newTxn();
     try {
-      const mu = new dgraph.Mutation();
-      locationData = `${uid} city "${city}" .
-      ${uid} lat "${lat}" .
-      ${uid} lon "${lon}" .`
-      mu.setSetNquads(locationData);
-      mu.setCommitNow(true);
-      await txn.mutate(mu);
-      return(txn);
+        const mu = new dgraph.Mutation();
+        jsonData = {
+            uid: uid,
+            city: city,
+            location: `{
+                'type': 'Point',
+                'coordinates': [${lat}, ${lon}]
+            }`
+        };
+        mu.setSetJson(jsonData);
+        mu.setCommitNow(true);
+        await txn.mutate(mu);
+        return(txn);
   } finally {
       await txn.discard();
   }
@@ -190,9 +195,8 @@ async function createData(dgraphClient, data) {
     try {
         const mu = new dgraph.Mutation();
         mu.setSetJson(data);
-        const assigned = await txn.mutate(mu);
+        await txn.mutate(mu);
         await txn.commit();
-        console.log(assigned.getUidsMap());
     } finally {
         await txn.discard();
     }
@@ -248,7 +252,7 @@ module.exports  = {
     getFullMatch: getFullMatch,
     newMatch: newMatch,
     modifyUser: modifyUser,
-    deletePic: deletePic,
+    deleteUserInfo: deleteUserInfo,
     getUserPic: getUserPic,
     filterUser: filterUser,
     setLocation: setLocation

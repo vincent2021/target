@@ -11,6 +11,23 @@ function newClient() {
     return new dgraph.DgraphClient(clientStub1);
 }
 
+const IPGeolocationAPI = require('ip-geolocation-api-javascript-sdk');
+const GeolocationParams = require('ip-geolocation-api-javascript-sdk/GeolocationParams.js');
+
+function getPos(token) {
+        const uid = decode(token).payload.uid;
+        const api_key = 'a8df2c6b5c02482baeae3fb17c70c98b';
+        const api = new IPGeolocationAPI(api_key, false); 
+        const params = new GeolocationParams(); 
+        params.setFields('city, latitude, longitude');
+        const handleResponse = (json) => {
+            axios.post(`/user/setLocation?uid=${uid}`, json).then((res) => {})
+        }
+        return(api.getGeolocation(handleResponse, params));
+}
+
+
+
 async function login(username, password) {
     try {
         dgraphClient = newClient();
@@ -22,9 +39,13 @@ async function login(username, password) {
             }`;
         const res = await dgraphClient.newTxn().query(query);
         const data = res.getJson();
-        if (data.login[0].secret == true) {
+        if (data.login[0] && data.login[0].secret == true) {
             const uid = data.login[0].uid;
-            token = sign(uid, username);
+            if (ip != undefined) {
+
+            } else {
+                token = sign(uid, username);
+            }
             return (token);
         } else {
             return ("Wrong Password");
