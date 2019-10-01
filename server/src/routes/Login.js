@@ -4,9 +4,7 @@ const auth = require("../auth.js");
 const mail = require("../mail.js");
 
 router.route("/connect").post((req, res) => {
-    const username = req.body.username;
-    const passwd = req.body.password;
-    auth.login(username, passwd)
+    auth.login(req.body)
         .then(function (ret) {
             res.send(ret);
         }, (err) => { console.log(err)});

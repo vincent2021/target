@@ -1,44 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import axios from '../Services/Axios';
-import { getPos } from '../Services/Geo';
 
 function LoginPage(props) {
 
-    const [profil, setProfil] = useState({})
-   
+    const [profil, setProfil] = useState({});
+    const [user_ip, setUser_ip] = useState();
+    const [user_loc, setUser_loc] = useState();
+
     useEffect(() => {
         //Get geolocalisation from browser
         navigator.geolocation.getCurrentPosition(function (pos) {
-            const user_loc = {
+            setUser_loc({
                 lat: pos.coords.latitude,
                 lon: pos.coords.longitude
-            }
-            setProfil({
-                ...profil,
-                user_loc
             });
         });
-        //get ip from the user
+        //get IP from the user
         fetch('https://api.ipify.org?format=json')
-        .then(res => res.json())
-        .then(json => {
-            const user_ip = json.ip;
-            setProfil({
-                ...profil,
-                user_ip
+            .then(res => res.json())
+            .then(json => {
+                setUser_ip(json.ip);
             });
-        });
     }, []);
+
+    useEffect(() => {
+        setProfil({
+            ...profil,
+            user_ip: user_ip,
+            user_loc: user_loc
+        });
+    }, [user_ip, user_loc])
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (profil.username && profil.password) {
-
-
-            const location = getPos();
-            console.log(location);
-
+            console.log(profil);
             axios.post(`/login/connect`, profil)
                 .then(res => {
                     if (res.data === "Wrong Password" || res.data === "Wrong Username") {
