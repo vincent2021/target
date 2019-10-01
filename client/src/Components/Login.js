@@ -6,17 +6,40 @@ import { getPos } from '../Services/Geo';
 function LoginPage(props) {
 
     const [profil, setProfil] = useState({})
-
+    navigator.geolocation.getCurrentPosition(function(pos) {
+        const user_loc = {
+            lat: pos.coords.latitude,
+            lon: pos.coords.longitude
+        }
+        setProfil({
+            ...profil,
+            user_loc
+        });
+      });
+    
+    console.log(profil);
     const handleSubmit = (e) => {
         e.preventDefault();
         if (profil.username && profil.password) {
+            fetch('https://api.ipify.org?format=json')
+                .then(res => res.json())
+                .then(json => {
+                    const user_ip = json.ip;
+                    setProfil({
+                        ...profil,
+                        user_ip
+                    });
+                });
+
+            const location = getPos();
+            console.log(location);
+                   
             axios.post(`/login/connect`, profil)
                 .then(res => {
                     if (res.data === "Wrong Password" || res.data === "Wrong Username") {
                         alert(res.data);
                     } else {
-                        localStorage.setItem('token', res.data)
-                        getPos(res.data);
+                        localStorage.setItem('token', res.data);
                         props.loggedIn();
                 }})
                 .catch(err => {

@@ -19,9 +19,7 @@ router.route('/profile').post((req, res) => {
 
 
 router.route('/myprofile').post((req, res) => {
-    console.log(req.headers.authorization);
-    const tokenInfo = auth.decode(req.headers.authorization);
-    const uid = tokenInfo.payload.uid;
+    const uid = auth.decode(req.headers.authorization).payload.uid;
     db.getUserProfile(uid)
         .then(function (ret) {
             res.send(ret);
@@ -43,15 +41,13 @@ router.route('/change').post((req, res) => {
 });
 
 router.route('/changePics').post((req, res) => {
-    const tokenInfo = auth.decode(req.headers.authorization);
-    const uid = tokenInfo.payload.uid;
+    const uid = auth.decode(req.headers.authorization).payload.uid;
     db.changePics(uid, req.query['value']).then(function (ret) {
         res.send(ret);
     });
 });
 
 router.route('/setLocation').post((req, res) => {
-    console.log(req.body);
     const uid = req.query['uid'];
     const city = req.body.city;
     const lat = req.body.latitude;
@@ -63,15 +59,19 @@ router.route('/setLocation').post((req, res) => {
 
 router.route('/pics').post((req, res) => {
     db.getUserPic(req.query['uid']).then((ret) => {
-        console.log(ret.user_pic);
         res.send(ret);
     });
 });
 
-router.route('/image').post((req, res) => {
-    console.log(req.body);
-    res.statusCode(200);
+router.route('/delpic').post((req, res) => {
+    const uid = auth.decode(req.headers.authorization).payload.uid;
+    db.deleteUserInfo(uid, "user_pic", req.query['url']).then((ret) => {
+        if (ret.mutated == true) {
+            res.send("Picture Deleted");
+        } else {
+            res.send("DB error");
+        }
+    });
 });
-
 
 module.exports = router;
