@@ -39,7 +39,7 @@ const ImageContainers = (props) => {
         <div>
             <span className="BigPic">
                 <img
-                    onLoad={resizeImage}
+                    onLoad={e => {resizeImage(e, 300)}}
                     id="ImageUser"
                     alt=""
                     src={props.Images[0]}>

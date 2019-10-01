@@ -91,7 +91,7 @@ async function newMatch(uid1, uid2) {
     const txn = dgraphClient.newTxn();
     try {
         const mu = new dgraph.Mutation();
-        matchData = `${uid1} match ${uid2} .`;
+        matchData = `<${uid1}> <match> <${uid2}> .`;
         mu.setSetNquads(matchData);
         mu.setCommitNow(true);
         await txn.mutate(mu);

@@ -168,3 +168,22 @@ button.ExitInfo:hover {
 .SubInfo:hover {
     background-color: rgb(43, 165, 94);
 }
+
+/* Profils Matché */
+
+div.BlocVisits{
+    display: flex;
+    justify-content: wrap;
+    flex-wrap: wrap;
+    /* flex-direction: column;  */
+}
+
+div.BlocVisits>a>span{
+    display: block;
+    overflow: hidden;
+    width: 100px;
+    height: 100px;
+}
+div.BlocVisits>a>span>img{
+    position: relative;
+}

@@ -2,7 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from '../../Services/Axios';
 import ImageContainers, { convertPic } from '../../Services/ImageUser';
-import ModifyInfo from './Modify_Info'
+import ModifyInfo from './Modify_Info';
+import ProfilMatch from './Match';
 
 const ProfilClient = () => {
 
@@ -25,9 +26,9 @@ const ProfilClient = () => {
             setImagesUser(res.data.user_pic);
             setIsLoading(false);
         })
-        .catch(err => {
-            console.log(err);
-        })
+            .catch(err => {
+                console.log(err);
+            })
     };
 
     const ImportPicture = async e => {
@@ -89,6 +90,19 @@ const ProfilClient = () => {
         console.log(ImagesUser);
     }, [ImagesUser])
 
+    useEffect(() => {
+
+        // ENVOYER LES INFOS A LA DB
+
+        // Info.forEach((key,value) => {
+        //     axios.post(`/user/change?key=${key}&value=${value}`)
+        //     .then(res => {
+        //         console.log(res);
+        //     })
+        // })
+
+    }, [Info])
+
     let content = <p style={{ fontSize: '40px', position: 'fixed', bottom: '0px' }} >User is loading...</p>;
 
     if (!IsLoading && User.uid) {
@@ -117,8 +131,8 @@ const ProfilClient = () => {
                     </div>
                 </div >
                 <div className="BlocUser">
-                    <p className="Titre">LIKED / VISITS</p>
-                    <div id="BlocVisits" className="BlocVisits"></div>
+                    <p className="Titre">MATCH</p>
+                    <ProfilMatch MyUid={User.uid} />
                 </div >
             </div >;
     }
