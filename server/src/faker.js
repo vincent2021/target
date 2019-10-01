@@ -24,8 +24,7 @@ async function generateFakeUser(user) {
         const firstName = newUser.name.first;
         const lastName = newUser.name.last;
         const pic = await fetch(`https://source.unsplash.com/random/?${gender}`);
-        const default_pic = 'http://localhost:8000/upload/default.png';
-        const pics_array = [`${pic.url}`, `${default_pic}`, `${default_pic}`, `${default_pic}`, `${default_pic}`];
+        const pics_array = [`${pic.url}`];
         const city = newUser.location.city.charAt(0).toUpperCase() + newUser.location.city.substr(1);
         const geocode = await fetch(`https://geocode.xyz/${city}?json=1`)
             .then(res => res.json())
@@ -65,6 +64,6 @@ async function generateFakeUser(user) {
 //Generate a user with login Vincent
 //generateFakeUser('test');
 
-for (let i = 0; i < 25; i++) {
+for (let i = 0; i < 50; i++) {
     generateFakeUser();
 }

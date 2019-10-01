@@ -42,12 +42,13 @@ async function getUserProfile(userID) {
     return (data.userProfile[0]);
 }
 
-async function filterUser(gender, age_min, age_max, user_loc, km) {
+async function filterUser(uid, gender, age_min, age_max, user_loc, km) {
     dgraphClient = newClient();
     const query = `{ users(func: eq(gender, "${gender}"))
     @filter(near(location, ${user_loc}, ${km})
     AND lt(dob, "${age_min}")
-    AND gt(dob, "${age_max}"))
+    AND gt(dob, "${age_max}")
+    AND NOT uid(${uid}))
         {
             ${ProfilData},
         }

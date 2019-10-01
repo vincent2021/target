@@ -26,14 +26,15 @@ router.route('/fullmatch').post((req, res) => {
 
 //PowerQuery to match with filter
 router.route('/filter').post((req, res) => {
+    const token = tokenInfo = auth.decode(req.headers.authorization).payload;
+    const user_loc = `[${token.loc.lat}, ${token.loc.lon}]`;
+    const uid = token.uid;
+    const km = req.body.range * 1000;
     const gender = req.body.gender;
     const age_max = tool.toDOB(req.body.age_max);
     const age_min = tool.toDOB(req.body.age_min);
-    const token_loc = tokenInfo = auth.decode(req.headers.authorization).payload.loc;
-    const user_loc = `[${token_loc.lat}, ${token_loc.lon}]`;
-    const km = req.body.range * 1000;
-    console.log(age_min + ";" + age_max + user_loc + km);
-    db.filterUser(gender, age_min, age_max, user_loc, km).then(function (ret) {
+
+    db.filterUser(uid, gender, age_min, age_max, user_loc, km).then(function (ret) {
         res.send(ret);
     });
 });
