@@ -11,7 +11,9 @@ div.matchBack {
     position: absolute;
     transition: background-color 1s ease-in-out, width 1s ease-in-out;
     z-index: -2;
-    height: 100%;
+    height: 100vh;
+    top: 0px;
+    left: 0px;
 }
 
 p.matchNumber {
@@ -23,6 +25,54 @@ p.matchNumber {
     bottom: 0;
 }
 
+@media screen and (max-width: 750px) {
+    p.matchNumber {
+        transform: translateX(-25px);
+    }
+}
+
+@media screen and (max-width: 750px) {
+
+    div.RouterBloc {
+        position: relative;
+        display: flex;
+        justify-content: row;
+        justify-content: center;
+        align-content: center;
+        align-items: center;
+        position: relative;
+        background-color: rgb(255, 255, 255);
+        margin-top: 10px;
+        padding: 7px;
+        margin: 0px;
+        top: 0px;
+    }
+
+    .RouterBloc>a {
+        color: rgb(0, 0, 0);
+        padding: 0px;
+        padding-right: 10px;
+        padding-left: 10px;
+        padding-top: 2px;
+        background-color: transparent;
+        border: none;
+    }
+
+    .RouterBloc>a:hover {
+        transform: none;
+    }
+
+    .RouterBloc>button {
+        color: rgb(0, 0, 0);
+        padding: 0px;
+        padding-right: 10px;
+        padding-left: 10px;
+        padding-top: 2px;
+        background-color: transparent;
+        border: none;
+    }
+}
+
 /* div principale */
 
 div.CenterMatch {
@@ -31,7 +81,14 @@ div.CenterMatch {
     flex-direction: column;
     align-items: center;
     width: 100%;
-    margin-top: 150px;
+    margin-top: 50vh;
+    transform: translateY(-50%);
+}
+
+@media screen and (max-width: 750px) {
+    div.CenterMatch {
+        transform: translateY(-60%);
+    }
 }
 
 /* children */
@@ -56,6 +113,12 @@ div.MatchButton {
     width: 400px;
 }
 
+@media screen and (max-width: 750px) {
+    div.MatchButton {
+        width: 300px;
+    }
+}
+
 div.MatchButton>input {
     color: transparent;
     border: solid black 1px;
@@ -67,6 +130,7 @@ div.MatchButton>input {
 /* Panneau recherche personalisée */
 
 div.sliderComponent {
+    display: block;
     position: absolute;
     background-color: #FFFD38;
     border: solid black 1px;
@@ -75,6 +139,41 @@ div.sliderComponent {
     top: 300px;
     left: 10px;
     width: 200px;
+}
+
+button.MatchSearchButton {
+    display: none;
+}
+
+@media screen and (max-width: 750px) {
+
+    div.sliderComponent {
+        display: none;
+    }
+
+    div.sliderComponenthide {
+        display: block, ;
+        position: absolute;
+        background-color: #FFFD38;
+        border: solid black 1px;
+        padding: 20px;
+        border-radius: 30px;
+        top: 70px;
+        left: 30px;
+        width: 200px;
+    }
+
+    button.MatchSearchButton {
+        display: block;
+        position: absolute;
+        background-color: #FFFD38;
+        border: 1px black solid;
+        border-radius: 30px;
+        margin: 5px;
+        padding: 5px;
+        width: 30px;
+        height: 30px;
+    }
 }
 
 /* Image */
@@ -90,4 +189,14 @@ div.sliderComponent {
 
 .CenterMatch>a {
     transform: none;
+}
+
+/* Texte */
+
+@media screen and (max-width: 750px) {
+    .CenterMatch>p {
+        padding: 0px;
+        margin: 5px;
+        font-size: 12px;
+    }
 }

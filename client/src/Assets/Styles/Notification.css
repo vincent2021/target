@@ -6,19 +6,18 @@ div.BlocPageNotif {
     align-items: center;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.198);
+    background-color: rgba(0, 0, 0, 0.384);
     top: 0;
     left: 0;
 }
 
 div.BlocPageNotif>.BlocNotif {
     position: relative;
+    display: inline-block;
     z-index: 10;
     background-color: rgb(231, 231, 231);
     border: 1px solid black;
     border-radius: 10px;
-    width: 50vw;
-    height: 400px;
     padding: 10px;
 }
 
@@ -39,7 +38,7 @@ button.ExitNotif:hover {
 }
 
 div.BlockTextNotif {
-    position: absolute;
+
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
@@ -47,6 +46,8 @@ div.BlockTextNotif {
 }
 
 div.BlockTextNotif>p {
-    font-size: 10px;
+    font-size: 11px;
+    padding-left: 15px;
+    padding-right: 15px;
     margin: 0px;
 }

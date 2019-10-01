@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from '../Services/Axios';
+import { Link } from "react-router-dom";
 
 class RegisterPage extends Component {
     state = {
@@ -166,6 +167,13 @@ class RegisterPage extends Component {
                         // impossible de cliquer sans envoyer un formulaire valide
                         disabled={!this.state.confirm}
                     />
+                    <Link
+                        id='register'
+                        className='RouterLog'
+                        to='/login'
+                    >
+                        Sign in !
+                    </Link>
                 </form>
             </div >
         )

@@ -2,13 +2,12 @@
 
 /* Structure */
 .BlocBase {
+    display: block;
     position: absolute;
     display: flex;
     flex-direction: wrap;
     justify-content: center;
-    /* align-items: center; */
     width: 100vw;
-    /* height: 200vh; */
     top: 20vh;
 }
 
@@ -16,6 +15,7 @@
     .BlocBase {
         align-items: center;
         flex-direction: column;
+        top: 40px;
     }
 }
 
@@ -26,6 +26,12 @@
     width: 300px;
     height: calc(80vh - 20px);
     margin: 10px;
+}
+
+@media only screen and (max-width:800px) {
+    .BlocUser {
+        height: auto;
+    }
 }
 
 
@@ -146,7 +152,7 @@ input.send {
     width: 300px;
     box-shadow: none;
     border: black solid 1px;
-    height: 83.5%;
+    height: 500px;
     overflow: hidden;
     bottom: auto;
 }
