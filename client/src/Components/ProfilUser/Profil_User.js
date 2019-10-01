@@ -1,16 +1,14 @@
 // eslint-disable-next-line
 import React, { useState, useEffect } from 'react';
 import axios from '../../Services/Axios';
-import { getAge, resizeImage } from '../../Services/Fct';
 import ImageContainers, { convertPic } from '../../Services/ImageUser';
 import ModifyInfo from './Modify_Info'
-import { verify } from '../../Services/Token';
 
 const ProfilClient = () => {
 
     const defaultImage = 'http://localhost:8000/upload/default.png';
     const [User, setUser] = useState({});
-    let [ImagesUser, setImagesUser] = useState([defaultImage]);
+    let [ImagesUser, setImagesUser] = useState([]);
     const [IsLoading, setIsLoading] = useState(false);
     const [Changes, setChanges] = useState(false);
     const [Info, setInfo] = useState({
@@ -24,9 +22,10 @@ const ProfilClient = () => {
     const getToken = async () => {
         axios.post('/user/myprofile').then(res => {
             setUser({ ...res.data });
-            setImagesUser([res.data.user_pic]);
+            setImagesUser(res.data.user_pic);
             setIsLoading(false);
-        }).catch(err => {
+        })
+        .catch(err => {
             console.log(err);
         })
     };
@@ -86,9 +85,9 @@ const ProfilClient = () => {
         getToken();
     }, []);
 
-    // useEffect(() => {
-    //     console.log(Info, OpenInfo);
-    // }, [Info, OpenInfo])
+    useEffect(() => {
+        console.log(ImagesUser);
+    }, [ImagesUser])
 
     let content = <p style={{ fontSize: '40px', position: 'fixed', bottom: '0px' }} >User is loading...</p>;
 

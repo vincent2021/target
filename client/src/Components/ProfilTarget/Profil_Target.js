@@ -38,16 +38,6 @@ const ProfilUser = ({ match }) => {
         chatison === true ? setChatison(false) : setChatison(true);
         console.log(chatison);
     }
-    const PostComment = e => {
-        let text = document.getElementById('Chat').value;
-        console.log(text)
-        var newDiv = document.createElement("div");
-        // let post = document.createElement('P').innerHTML = 'blabla';
-        var newContent = document.createTextNode(text);
-        newDiv.appendChild(newContent);
-        document.getElementById('BlocChat').appendChild(newDiv);
-
-    }
 
     return (
         <div className="BlocBase">
