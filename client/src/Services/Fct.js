@@ -15,7 +15,7 @@ const getAge = (date) => {
     return age_now;
 }
 
-const resizeImage = async e => {
+const resizeImage = async (e, size) => {
     const img = await document.getElementById(e.target.id);
     img.style.width = 'auto';
     img.style.height = 'auto';
@@ -23,12 +23,12 @@ const resizeImage = async e => {
     img.style.bottom = '0px';
 
     if (img.width >= img.height) {
-        img.style.height = '300px';
-        img.style.right = (img.width - 300) / 2 + 'px';
+        img.style.height = size + 'px';
+        img.style.right = (img.width - size) / 2 + 'px';
     }
     else {
-        img.style.width = '300px';
-        img.style.bottom = (img.height - 300) / 2 + 'px';
+        img.style.width = size + 'px';
+        img.style.bottom = (img.height - size) / 2 + 'px';
     }
 }
 

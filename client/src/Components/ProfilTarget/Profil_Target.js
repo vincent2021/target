@@ -50,7 +50,7 @@ const ProfilUser = ({ match }) => {
                 </div>
                 <div id="MatchBarre" className="MatchBarre"></div>
                 <span className="spanTarget">
-                    <img onLoad={resizeImage} id="ImageTarget" alt="profil" src={user.user_pic} className="imageTarget"></img>
+                    <img onLoad={e => {resizeImage(e, 300)}} id="ImageTarget" alt="profil" src={user.user_pic} className="imageTarget"></img>
                 </span>
                 <div id="BlocImage" className="BlocImage"></div>
                 <div className="BlocInformations">

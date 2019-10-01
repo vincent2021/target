@@ -3,6 +3,7 @@ import { Link, Route } from "react-router-dom";
 import axios from '../../Services/Axios';
 import MatchSearch from './Match_Search';
 import { getAge, resizeImage } from '../../Services/Fct';
+import { decode } from '../../Services/Token';
 
 const ProfilMatch = () => {
 
@@ -28,6 +29,7 @@ const ProfilMatch = () => {
     const [Score, setScore] = useState([0, 100]);
     const [Localisation, setLocalisation] = useState([100]);
     const [Interest, setInterest] = useState([100]);
+    const [Uid, setUid] = useState(decode(localStorage.getItem('token')).payload.uid || '');
 
     const handleAge = e => {
         e.preventDefault();
@@ -40,7 +42,7 @@ const ProfilMatch = () => {
 
     const handleScore = e => {
         e.preventDefault();
-           // setFilter({
+        // setFilter({
         //     ...filter,
         // })
     };
@@ -81,11 +83,19 @@ const ProfilMatch = () => {
 
     const handleMatch = e => {
         e.preventDefault();
-        if (e.target.value === "Yes")
-            console.log(';-D');
+        if (e.target.value === "Yes") {
+            let match = [Uid, user[number].uid];
+            if (match[0] && match[1])
+                axios.post(`/match/new?uid1=${match[0]}&uid2=${match[1]}`)
+                    .then(res => {
+                        console.log(res);
+                    })
+        }
         else
             console.log(":'-(");
         !user[number + 1] ? setNumber(0) : setNumber(number + 1);;
+        // effacer apres 
+        settingMatch();
     }
 
     useEffect(() => {
@@ -111,7 +121,7 @@ const ProfilMatch = () => {
 
                         <Link to={`/user/${user[number].uid}`}>
                             <span className="spanMatch">
-                                <img onLoad={resizeImage} id="imageTarget" alt="" src={user[number].user_pic[0]} className="MatchProfil"></img>
+                                <img onLoad={e => {resizeImage(e, 300)}} id="imageTarget" alt="" src={user[number].user_pic[0]} className="MatchProfil"></img>
                             </span>
                         </Link>
 
@@ -151,22 +161,22 @@ const ProfilMatch = () => {
         else
             setContent(
                 <div>
-                <MatchSearch
-                    Age={Age}
-                    Score={Score}
-                    Localisation={Localisation}
-                    Interest={Interest}
-                    setAge={setAge}
-                    setScore={setScore}
-                    setLocalisation={setLocalisation}
-                    setInterest={setInterest}
-                    handleAge={handleAge}
-                    handleLocalisation={handleLocalisation}
-                    handleScore={handleScore}
-                    handleInterest={handleInterest}
-                />
-                <div style={{ position: 'fixed', right: '5px', top: 0 }}>{user.length} targets find</div>
-            </div>
+                    <MatchSearch
+                        Age={Age}
+                        Score={Score}
+                        Localisation={Localisation}
+                        Interest={Interest}
+                        setAge={setAge}
+                        setScore={setScore}
+                        setLocalisation={setLocalisation}
+                        setInterest={setInterest}
+                        handleAge={handleAge}
+                        handleLocalisation={handleLocalisation}
+                        handleScore={handleScore}
+                        handleInterest={handleInterest}
+                    />
+                    <div style={{ position: 'fixed', right: '5px', top: 0 }}>{user.length} targets find</div>
+                </div>
             );
     }, [user, background, number, Age, Localisation, Score, Interest])
 
