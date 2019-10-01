@@ -151,19 +151,6 @@ async function modifyUser(uid, key, value) {
   }
 }
 
-async function modifyUserJSON(uid, json) {
-    dgraphClient = newClient();
-    const txn = dgraphClient.newTxn();
-    try {
-      const mu = new dgraph.Mutation();
-      mu.setSetNquads(`<${uid}> <${key}> "${value}" .`);
-      mu.setCommitNow(true);
-      await txn.mutate(mu);
-  } finally {
-      await txn.discard();
-      return (txn);
-  }
-}
 
 // Delete a specific picture (WIP)
 async function deleteUserInfo(uid, key, url) {
