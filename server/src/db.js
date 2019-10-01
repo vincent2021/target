@@ -16,9 +16,10 @@ const ProfilData = `uid
                     target,
                     text,
                     interest,
-                    user_pic`;
+                    user_pic,
+                    score`;
 
-async function getUser() {
+async function getRandomUser() {
     dgraphClient = newClient();   
     const query = `{
         random(func: has(firstname)) {
@@ -27,7 +28,6 @@ async function getUser() {
     }`;
     const res = await dgraphClient.newTxn().query(query);
     const data = res.getJson();
-    //data.all.forEach((person) = console.log(person));
     return (data.random);
 }
 
@@ -273,7 +273,6 @@ module.exports  = {
     newClient: newClient,
     createData: createData,
     addUser: addUser,
-    getUser: getUser,
     getUserID: getUserID,
     getUserProfile: getUserProfile,
     getUserLike: getUserMatch,

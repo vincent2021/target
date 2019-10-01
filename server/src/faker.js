@@ -50,6 +50,7 @@ async function generateFakeUser(user) {
                     "type": "Point",
                     "coordinates": [${geocode.latt}, ${geocode.longt}]
                 }`,
+                score: 50
         },};
         console.log(fakeUser);
         ret = db.addUser(fakeUser);
