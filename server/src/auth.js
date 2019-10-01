@@ -26,7 +26,7 @@ function getPos(token) {
         return(api.getGeolocation(handleResponse, params));
 }
 
-async function login(username, password) {
+async function login(username, password, ip) {
     try {
         dgraphClient = newClient();
         const query = `{
@@ -37,13 +37,9 @@ async function login(username, password) {
             }`;
         const res = await dgraphClient.newTxn().query(query);
         const data = res.getJson();
-        if (data.login[0].secret && data.login[0].secret == true) {
+        if (data.login[0].secret == true) {
             const uid = data.login[0].uid;
-            if (ip != undefined) {
-
-            } else {
                 token = sign(uid, username);
-            }
             return (token);
         } else {
             return ("Wrong Password");
