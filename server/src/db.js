@@ -48,7 +48,8 @@ async function filterUser(uid, gender, age_min, age_max, user_loc, km) {
     @filter(near(location, ${user_loc}, ${km})
     AND lt(dob, "${age_min}")
     AND gt(dob, "${age_max}")
-    AND NOT uid(${uid}))
+    AND NOT uid(${uid})
+    AND NOT uid_in(~match, ${uid}))
         {
             ${ProfilData},
         }
