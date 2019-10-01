@@ -13,6 +13,9 @@ const ProfilData = `uid
                     city,
                     location,
                     gender,
+                    target,
+                    text,
+                    interest,
                     user_pic`;
 
 async function getUser() {
@@ -67,10 +70,6 @@ async function getUserPic(userID) {
     return (data);
 }
 
-//Add a user
-async function addUser(user) {
-    return createData(newClient(), user);
-}
 
 //Get an ID from email
 async function getUserID(email) {
@@ -151,6 +150,20 @@ async function modifyUser(uid, key, value) {
   }
 }
 
+async function modifyUserJSON(uid, json) {
+    dgraphClient = newClient();
+    const txn = dgraphClient.newTxn();
+    try {
+      const mu = new dgraph.Mutation();
+      mu.setSetNquads(`<${uid}> <${key}> "${value}" .`);
+      mu.setCommitNow(true);
+      await txn.mutate(mu);
+  } finally {
+      await txn.discard();
+      return (txn);
+  }
+}
+
 // Delete a specific picture (WIP)
 async function deleteUserInfo(uid, key, url) {
     dgraphClient = newClient();
@@ -189,8 +202,15 @@ async function setLocation(uid, city, lat, lon) {
   }
 }
 
+//Add a user
+async function addUser(user) {
+    return createData(user);
+}
+
+
 // Create data using JSON
-async function createData(dgraphClient, data) {
+async function createData(data) {
+    const dgraphClient = newClient();
     const txn = dgraphClient.newTxn();
     try {
         const mu = new dgraph.Mutation();
@@ -228,12 +248,15 @@ async function setSchema(dgraphClient) {
         name: string @index(fulltext) .
         password: password .
         gender: string @index(exact) .
+        target: string @index(exact) .
         match: uid @reverse .
         dob: datetime @index(hour) .
         email: string @index(fulltext) .
         user_pic: [string] .
         city: string .
         location: geo @index(geo) .
+        text: string .
+        interest: string .
     `;
     const op = new dgraph.Operation();
     op.setSchema(schema);

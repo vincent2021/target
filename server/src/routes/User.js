@@ -33,10 +33,18 @@ router.route('/userid').post((req, res) => {
 });
 
 router.route('/change').post((req, res) => {
-    const tokenInfo = auth.decode(req.headers.authorization);
-    const uid = tokenInfo.payload.uid;
+    const uid = auth.decode(req.headers.authorization).payload.uid;
     db.modifyUser(uid, req.query['key'], req.query['value']).then(function (ret) {
         res.send(ret);
+    });
+});
+
+router.route('/modifyInfo').post((req, res) => {
+    const uid = auth.decode(req.headers.authorization).payload.uid;
+    req.body['uid'] = uid;
+    console.log(req.body);
+    db.createData(req.body).then(function (ret) {
+        res.send("Info modified");
     });
 });
 
