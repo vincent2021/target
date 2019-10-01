@@ -1,5 +1,4 @@
-// eslint-disable-next-line
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Slider from '@material-ui/core/Slider';
 import { withStyles } from '@material-ui/styles';
 
@@ -39,35 +38,45 @@ const MatchSlider = withStyles({
 
 const MatchSearch = (props) => {
 
-    return (
-        <div id="SliderMatch" className="sliderComponent">
-            <div>Age : {props.Age[0]}-{props.Age[1]}</div>
-            <MatchSlider
-                id="Age"
-                aria-label="Age"
-                onChange={props.handleAge}
-                defaultValue={props.Age}
-            />
-            <div>Score : {props.Score[0]}-{props.Score[1]}</div>
-            <MatchSlider
-                aria-label="Score"
-                onChange={props.handleScore}
-                defaultValue={props.Score}
-            />
-            <div>Localistation : {props.Localisation}km</div>
-            <MatchSlider
-                aria-label="Localisation"
-                onChange={props.handleLocalisation}
-                defaultValue={props.Localisation}
-            />
-            <div>Interest : {props.Interest}%</div>
-            <MatchSlider
-                aria-label="Interest"
-                onChange={props.handleInterest}
-                defaultValue={props.Interest}
-            />
-        </div>
-    );
+    const [content, setContent] = useState(<div>Waiting for slider</div>);
+
+    useEffect(() => {
+        setContent(
+            <div id="SliderMatch" className="sliderComponent">
+                <div>Age : {props.Age[0]}-{props.Age[1]}</div>
+                <MatchSlider
+                    id="Age"
+                    aria-label="Age"
+                    onChange={(e, newValue) => { props.setAge(newValue) }}
+                    onClickCapture={props.handleAge}
+                    defaultValue={props.Age}
+                />
+                <div>Score : {props.Score[0]}-{props.Score[1]}</div>
+                <MatchSlider
+                    aria-label="Score"
+                    onChange={(e, newValue) => {props.setScore(newValue) }}
+                    onClickCapture={props.handleScore}
+                    defaultValue={props.Score}
+                />
+                <div>Localistation : {props.Localisation}km</div>
+                <MatchSlider
+                    aria-label="Localisation"
+                    onChange={(e, newValue) => {props.setLocalisation(newValue) }}
+                    onClickCapture={props.handleLocalisation}
+                    defaultValue={props.Localisation}
+                />
+                <div>Interest : {props.Interest}%</div>
+                <MatchSlider
+                    aria-label="Interest"
+                    onChange={(e, newValue) => {props.setInterest(newValue) }}
+                    onClickCapture={props.handleInterest}
+                    defaultValue={props.Interest}
+                />
+            </div>
+        );
+    }, [props])
+
+    return content;
 }
 
 export default MatchSearch
