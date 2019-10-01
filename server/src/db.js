@@ -101,6 +101,22 @@ async function newMatch(uid1, uid2) {
     return (`Match from ${uid1} to ${uid2} done`);
 }
 
+//unmatch
+async function unMatch(uid1, uid2) {
+    dgraphClient = newClient();
+    const txn = dgraphClient.newTxn();
+    try {
+        const mu = new dgraph.Mutation();
+        matchData = `<${uid1}> <match> <${uid2}> .`;
+        mu.setDelNquads(matchData);
+        mu.setCommitNow(true);
+        await txn.mutate(mu);
+    } finally {
+        await txn.discard();
+    }
+    return (`Unlike from ${uid1} to ${uid2} done`);
+}
+
 //Return all match for a user
 async function getUserMatch(uid) {
     dgraphClient = newClient();   
@@ -266,5 +282,6 @@ module.exports  = {
     deleteUserInfo: deleteUserInfo,
     getUserPic: getUserPic,
     filterUser: filterUser,
-    setLocation: setLocation
+    setLocation: setLocation,
+    unMatch: unMatch
 }

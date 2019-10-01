@@ -17,6 +17,14 @@ router.route('/user').post((req, res) => {
     }, (err) => {console.log(err)});
 });
 
+router.route('/unlike').post((req, res) => {
+    const uid1 = tokenInfo = auth.decode(req.headers.authorization).payload.uid;
+    const uid2 = req.query['uid'];
+    db.unMatch(uid1, uid2).then(function (ret) {
+        res.send(ret);
+    }, (err) => {console.log(err)});
+});
+
 router.route('/fullmatch').post((req, res) => {
     console.log('Get full match for ' + req.query['uid']);
     db.getFullMatch(req.query['uid']).then(function (ret) {
@@ -27,7 +35,10 @@ router.route('/fullmatch').post((req, res) => {
 //PowerQuery to match with filter
 router.route('/filter').post((req, res) => {
     const token = tokenInfo = auth.decode(req.headers.authorization).payload;
-    const user_loc = `[${token.loc.lat}, ${token.loc.lon}]`;
+    let user_loc = '[48.8967052, 2.3183661]'
+    if (token.loc) {
+        user_loc = `[${token.loc.lat}, ${token.loc.lon}]`;
+    };
     const uid = token.uid;
     const km = req.body.range * 1000;
     const gender = req.body.gender;
