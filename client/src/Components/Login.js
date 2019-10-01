@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import axios from '../Services/Axios';
-import auth from '../Services/Token';
 import { getPos } from '../Services/Geo';
 
 function LoginPage(props) {
@@ -12,10 +11,13 @@ function LoginPage(props) {
         if (profil.username && profil.password) {
             axios.post(`/login/connect`, profil)
                 .then(res => {
-                    localStorage.setItem('token', res.data)
-                    getPos(res.data);
-                    props.loggedIn();
-                })
+                    if (res.data === "Wrong Password" || res.data === "Wrong Username") {
+                        alert(res.data);
+                    } else {
+                        localStorage.setItem('token', res.data)
+                        getPos(res.data);
+                        props.loggedIn();
+                }})
                 .catch(err => {
                     console.log(err);
                 })

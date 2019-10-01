@@ -4,9 +4,8 @@ const auth = require("../auth.js");
 const mail = require("../mail.js");
 
 router.route("/connect").post((req, res) => {
-    username = req.body.username;
-    passwd = req.body.password;
-    console.log("Check auth for " + username + ":" + passwd);
+    const username = req.body.username;
+    const passwd = req.body.password;
     auth.login(username, passwd)
         .then(function (ret) {
             res.send(ret);
@@ -15,7 +14,7 @@ router.route("/connect").post((req, res) => {
 
 router.route("/register").post((req, res) => {
     db.addUser(req.body);
-    mail.sendMail("vincent2021@gmail.com", "test", "Salut ma poule");
+    mail.sendMail("vincent2021@gmail.com", "Test", "Salut ma poule");
     res.send("User added to the db");
 });
 
@@ -29,6 +28,5 @@ router.route("/tokeninfo").post((req, res) => {
     const tokenInfo = auth.decode(req.headers.authorization);
     res.send(tokenInfo['payload']);
 });
-
 
 module.exports = router;

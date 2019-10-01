@@ -23,13 +23,15 @@ router.route('/fullmatch').post((req, res) => {
     }, (err) => {console.log(err)});
 });
 
-
+//PowerQuery to match with filter
 router.route('/filter').post((req, res) => {
     const gender = req.body.gender;
     const age_max = tool.toDOB(req.body.age_max);
     const age_min = tool.toDOB(req.body.age_min);
-    console.log(age_min + ";" + age_max);
-    db.filterUser(gender, age_min, age_max).then(function (ret) {
+    const user_loc = "[48.8534, 2.3488]";
+    const km = req.body.range * 1000;
+    console.log(age_min + ";" + age_max + user_loc + km);
+    db.filterUser(gender, age_min, age_max, user_loc, km).then(function (ret) {
         res.send(ret);
     });
 });

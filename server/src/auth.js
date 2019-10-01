@@ -1,4 +1,4 @@
-const fs   = require('fs');
+const fs = require('fs');
 const jwt  = require('jsonwebtoken');
 const dgraph = require("dgraph-js");
 const grpc = require("grpc");
@@ -17,19 +17,20 @@ async function login(username, password) {
         const query = `{
             login(func: eq(username, "${username}")) {
                 uid,
-                password
+                secret: checkpwd(password, "${password}")
                 }
             }`;
         const res = await dgraphClient.newTxn().query(query);
         const data = res.getJson();
-        if (data.login[0].password == password) {
+        if (data.login[0].secret == true) {
             const uid = data.login[0].uid;
             token = sign(uid, username);
-            return (sign(uid, username));
+            return (token);
         } else {
             return ("Wrong Password");
         }
     } catch (err) {
+        console.log(err);
         return "Wrong Username";
     }
 }
