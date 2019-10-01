@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import axios from '../Services/Axios';
 import { getPos } from '../Services/Geo';
@@ -38,7 +38,7 @@ function LoginPage(props) {
 
             const location = getPos();
             console.log(location);
-                   
+
             axios.post(`/login/connect`, profil)
                 .then(res => {
                     if (res.data === "Wrong Password" || res.data === "Wrong Username") {
@@ -46,7 +46,8 @@ function LoginPage(props) {
                     } else {
                         localStorage.setItem('token', res.data);
                         props.loggedIn();
-                }})
+                    }
+                })
                 .catch(err => {
                     console.log(err);
                 })
