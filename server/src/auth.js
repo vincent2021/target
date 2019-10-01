@@ -37,7 +37,7 @@ async function login(body) {
             } else if (ip) {
                 geo.setPosFromUser(uid, ip, user_loc.lat, user_loc.lon);
             }
-            token = sign(uid, username);
+            token = sign(uid, username, user_loc);
             return (token);
         } else {
             return ("Wrong password");
@@ -52,7 +52,7 @@ const privateKEY  = fs.readFileSync('./src/private.key', 'utf8');
 const publicKEY  = fs.readFileSync('./src/public.key', 'utf8');
 
 
-const sign = (uid, username) => {
+const sign = (uid, username, user_loc) => {
     const signOptions = {
         expiresIn:  "120h",
         algorithm:  "RS256"
@@ -60,7 +60,8 @@ const sign = (uid, username) => {
     
     let payload = {
         uid: uid,
-        username: username
+        username: username,
+        loc: user_loc
        };
     
     return (jwt.sign(payload, privateKEY, signOptions));
