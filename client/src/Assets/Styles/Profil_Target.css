@@ -152,8 +152,7 @@ input.send {
     width: 300px;
     box-shadow: none;
     border: black solid 1px;
-    height: 500px;
-    overflow: hidden;
+    height: 545px;
     bottom: auto;
 }
 
@@ -186,13 +185,17 @@ input.send {
 }
 
 .sc-message-list {
+    border-radius:10px;
     padding-top: 10px;
     padding-bottom: 70px;
 }
 
 .sc-message {
-    margin-left: 50px;
-    width: 225px;
+    margin-left: 10px;
+    width: 280px;
+}
+
+.sc-message-text {
 }
 
 .sc-user-input--text {
@@ -202,3 +205,9 @@ input.send {
 .sc-user-input {
     border-top: 1px black solid;
 }
+
+.sc-message--avatar{
+    display:none;
+}
+
+

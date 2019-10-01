@@ -9,6 +9,12 @@ const ProfilUser = ({ match }) => {
     const [Age, setAge] = useState('')
     const [image, setImage] = useState({ pictures: [] });
     const [chatison, setChatison] = useState(true);
+    const [Info, setInfo] = useState({
+        genre: '',
+        target: '',
+        text: '',
+        interest: []
+    });
 
     useEffect(() => {
         axios.post(`/user/profile?uid=${match.params.uid}`)
@@ -31,13 +37,14 @@ const ProfilUser = ({ match }) => {
     const UnlikeUser = e => {
         console.log(e.target.value);
     }
-    const LikeUser = e => {
-        console.log(e.target.value);
-    }
     const ActiveChat = e => {
         chatison === true ? setChatison(false) : setChatison(true);
         console.log(chatison);
     }
+
+    useEffect(() => {
+        console.log(user);
+    }, [user])
 
     return (
         <div className="BlocBase">
@@ -50,21 +57,20 @@ const ProfilUser = ({ match }) => {
                 </div>
                 <div id="MatchBarre" className="MatchBarre"></div>
                 <span className="spanTarget">
-                    <img onLoad={e => {resizeImage(e, 300)}} id="ImageTarget" alt="profil" src={user.user_pic} className="imageTarget"></img>
+                    <img onLoad={e => { resizeImage(e, 300) }} id="ImageTarget" alt="profil" src={user.user_pic} className="imageTarget"></img>
                 </span>
                 <div id="BlocImage" className="BlocImage"></div>
                 <div className="BlocInformations">
                     <p className="BlocTexte">
-                        Genre : Male / Female
-                        Interest in : Female / Male
-                        Both Bio : ...
-                        Interest : #blabla
-                        localistation: Moscou / Russia
+                        Genre : {Info.genre} <br />
+                        Interest in : {Info.target} <br />
+                        Bio : {Info.text} <br />
+                        Interest : {Info.interest.map(i => (i + ' '))} <br />
+                        localistation: Moscou / Russia <br />
                     </p >
                 </div >
                 <div className="UserButton">
                     <input id="Unlike" onClick={UnlikeUser} type="submit" value="Unlike" style={{ backgroundColor: '#fcf' }}></input>
-                    <input id="Like" onClick={LikeUser} type="submit" value="Like" style={{ backgroundColor: '#ccf' }}></input>
                     <input id="Chat" onClick={ActiveChat} type="submit" value="Chat" style={{ backgroundColor: '#0b3b' }}></input>
                 </div >
             </div >
