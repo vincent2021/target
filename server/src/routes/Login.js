@@ -4,9 +4,7 @@ const auth = require("../auth.js");
 const mail = require("../mail.js");
 
 router.route("/connect").post((req, res) => {
-    const username = req.body.username;
-    const passwd = req.body.password;
-    auth.login(username, passwd)
+    auth.login(req.body)
         .then(function (ret) {
             res.send(ret);
         }, (err) => { console.log(err)});
@@ -27,6 +25,12 @@ router.route("/userid").post((req, res) => {
 router.route("/tokeninfo").post((req, res) => {
     const tokenInfo = auth.decode(req.headers.authorization);
     res.send(tokenInfo['payload']);
+});
+
+router.route("/resetpwd").post((req, res) => {
+    const email = req.query['email'];
+    auth.resetPasswd(email).then((ret) =>
+        res.send(ret));
 });
 
 module.exports = router;

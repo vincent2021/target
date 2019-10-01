@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const db = require("../db.js");
 const auth = require("../auth.js");
+const mail = require("../mail.js");
 
 router.route('/getUser').post((req, res) => {
     let user_nb = Math.round(Math.random() * 50);
@@ -33,10 +34,18 @@ router.route('/userid').post((req, res) => {
 });
 
 router.route('/change').post((req, res) => {
-    const tokenInfo = auth.decode(req.headers.authorization);
-    const uid = tokenInfo.payload.uid;
+    const uid = auth.decode(req.headers.authorization).payload.uid;
     db.modifyUser(uid, req.query['key'], req.query['value']).then(function (ret) {
         res.send(ret);
+    });
+});
+
+router.route('/modifyInfo').post((req, res) => {
+    const uid = auth.decode(req.headers.authorization).payload.uid;
+    req.body['uid'] = uid;
+    console.log(req.body);
+    db.createData(req.body).then(function (ret) {
+        res.send("Info modified");
     });
 });
 
@@ -72,6 +81,28 @@ router.route('/delpic').post((req, res) => {
             res.send("DB error");
         }
     });
+});
+
+router.route('/delpic_admin').post((req, res) => {
+    db.deleteUserInfo(req.query['uid'], "user_pic", req.query['url']).then((ret) => {
+        if (ret.mutated == true) {
+            res.send("Picture Deleted");
+        } else {
+            res.send("DB error");
+        }
+    });
+});
+
+router.route('/reportuser').post((req, res) => {
+    uid = req.query['uid'];
+    db.getUserProfile(uid)
+        .then((ret) => {
+            url = `http://localhost:3000/user/${uid}`
+            mail.sendReportMail(url, JSON.stringify(ret)).then(preview =>{
+                res.send(preview);
+            });
+            
+        })
 });
 
 module.exports = router;
