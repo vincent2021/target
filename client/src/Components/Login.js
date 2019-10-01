@@ -6,6 +6,7 @@ import { getPos } from '../Services/Geo';
 function LoginPage(props) {
 
     const [profil, setProfil] = useState({})
+    //Get geolocalisation
     navigator.geolocation.getCurrentPosition(function(pos) {
         const user_loc = {
             lat: pos.coords.latitude,
