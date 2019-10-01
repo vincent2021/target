@@ -32,7 +32,10 @@ upload_app.post('/', upload.single('image'), (req, res) => {
         stream.end(console.log('Image uploaded'));
 
         const url = "http://localhost:8000/" + filename;
-        db.modifyUser(uid, "user_pic[0]", url);
+        db.modifyUser(uid, "user_pic", url).then(res => {
+            console.log(res);
+        });
+        console.log(url);
         res.send(url);
     } else {
         console.log('No image Uploaded');

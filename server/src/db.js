@@ -142,7 +142,8 @@ async function modifyUser(uid, key, value) {
     const txn = dgraphClient.newTxn();
     try {
       const mu = new dgraph.Mutation();
-      mu.setSetNquads(`${uid} ${key} "${value}" .`);
+      console.log(`${uid} ${key} "${value}" .`);
+      mu.setSetNquads(`${uid} <${key}> "${value}" .`);
       mu.setCommitNow(true);
       await txn.mutate(mu);
   } finally {
