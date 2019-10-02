@@ -79,7 +79,7 @@ const ProfilUser = ({ match }) => {
             <div className="BlocBase">
                 <div className="BlocUser">
                     <div className="HeaderProfil">
-                        <p className="Titre">{user.username} / {Age}</p>
+                        <p className="Titre">{user.username} / age :{Age} / score :{user.score}</p>
                         <input id="Report User" onClick={ReportUser} type="submit" value="Report" style={{ backgroundColor: '#fb5' }}></input>
                     </div>
                     <div id="MatchBarre" className="MatchBarre"></div>

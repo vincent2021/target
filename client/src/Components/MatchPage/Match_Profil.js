@@ -43,7 +43,8 @@ const ProfilMatch = () => {
         e.preventDefault();
         setFilter({
             ...filter,
-            range: Score[1]
+            score_min: Score[1],
+            score_max: Score[2]
         })
     };
 
