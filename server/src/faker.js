@@ -15,17 +15,20 @@ const tags = [
 
 faker.locale = "fr";
 
+function sleep(ms){
+    return new Promise(resolve=>{
+        setTimeout(resolve,ms)
+    })
+}
 async function generateLocation(city) {
-
     let geocode = await fetch(`https://geocode.xyz/${city}?json=1`)
     .then(res => res.json()).then(jsonData => {return(jsonData)});
-    if (geocode.error.code == '008' || geocode.error.code == '006') {
+    if (geocode.error && (geocode.error.code == '008' || geocode.error.code == '006')) {
         geocode = {
             latt: '48.86666',
             longt: '2.33333'
         };
     }
-    console.log(geocode);
     return (geocode);
 }
 
@@ -48,8 +51,7 @@ async function generateFakeUser(test_user) {
         const pic = await fetch(`https://source.unsplash.com/random/?${gender}`);
         const pics_array = [`${pic.url}`];
         const city = newUser.location.city.charAt(0).toUpperCase() + newUser.location.city.substr(1);
-        const geocode = await generateLocation();
-        console.log(geocode);
+        const geocode = await generateLocation(city);
         let login;
         if (test_user !== 'random') {
             login = test_user;
@@ -89,6 +91,10 @@ async function generateFakeUser(test_user) {
 //generateFakeUser('felix');
 //generateFakeUser('test');
 
-for (let i = 0; i < 150 ; i++) {
-    generateFakeUser('random');
+async function seed(nb) {
+    for (let i = 0; i < nb ; i++) {
+        await generateFakeUser('random');
+    }
 }
+
+seed(150);

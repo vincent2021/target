@@ -20,7 +20,6 @@ app.use(express.static('public'));
 
 //Proctected API
 app.use('/user', function (req, res, next) {
-  console.log(auth.decode(req.headers.authorization));
   auth.verify(req.headers.authorization).then(function (ret) {
     if (ret == false) {
         res.sendStatus(403);
@@ -29,7 +28,6 @@ app.use('/user', function (req, res, next) {
 }})}, User);
 
 app.use('/match', function (req, res, next) {
-  console.log(auth.decode(req.headers.authorization));
   auth.verify(req.headers.authorization).then(function (ret) {
     if (ret == false) {
         res.sendStatus(403);
