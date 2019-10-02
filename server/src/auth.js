@@ -17,9 +17,7 @@ async function login(body) {
     const username = body.username;
     const password = body.password;
     const user_loc = body.user_loc;
-    console.log(user_loc);
     const ip = body.user_ip;
-    console.log(body);
     try {
         dgraphClient = newClient();
         const query = `{
@@ -32,7 +30,7 @@ async function login(body) {
         const res = await dgraphClient.newTxn().query(query);
         const data = res.getJson();
         console.log(data);
-        if (data.login[0].secret == true) {
+        if (data.login[0].secret === true) {
             const uid = data.login[0].uid;
             if (user_loc == undefined) {
                 geo.getPos(uid, ip);
