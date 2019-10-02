@@ -29,6 +29,7 @@ async function login(body) {
             }`;
         const res = await dgraphClient.newTxn().query(query);
         const data = res.getJson();
+        const target = data.login[0].target;
         if (data.login[0].secret === true) {
             const uid = data.login[0].uid;
             if (user_loc == undefined) {

@@ -187,7 +187,7 @@ async function setSchema(dgraphClient) {
         city: string .
         location: geo @index(geo) .
         text: string .
-        interest: string .
+        interest: [string] .
         score: int @index(int) .
         visit: uid .
         reject: uid @reverse .
