@@ -38,7 +38,12 @@ async function filterUser(uid, looking_for, age_min, age_max, user_loc, km, scor
             ${ProfilData},
         }
     }`;
-    console.log(query)
+    console.log(`{ users(func: anyofterms(gender, "${looking_for}"))
+    @filter(near(location, ${user_loc}, ${km})
+    AND le(dob, "${age_min}")
+    AND ge(dob, "${age_max}")
+    AND ge(score, "${score_min}")
+    AND le(score, "${score_max}"))`)
     const res = await dgraphClient.newTxn().query(query);
     const data = res.getJson();
     return (data.users);

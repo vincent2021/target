@@ -96,7 +96,7 @@ const ProfilUser = ({ match }) => {
                             Interest in : {user.target} <br />
                             Bio : {user.text} <br />
                             Interest : {user.interest} <br />
-                            localistation: Moscou / Russia <br />
+                            Localisation: {user.city} <br />
                         </p >
                     </div >
                     <div className="UserButton">
