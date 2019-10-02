@@ -26,7 +26,6 @@ function setPosFromUser(uid, ip, lat, lon) {
     params.setIPAddress(ip); 
     const handleResponse = (json) => {
         db.setLocation(uid, json.city, lat, lon).then((ret) => {
-        console.log(ret);
         })
     };
     api.getGeolocation(handleResponse, params);

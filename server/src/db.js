@@ -219,6 +219,7 @@ async function addUser(user) {
 
 // Create data using JSON
 async function createData(data) {
+    console.log(data);
     const dgraphClient = newClient();
     const txn = dgraphClient.newTxn();
     try {

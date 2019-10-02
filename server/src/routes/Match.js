@@ -79,7 +79,6 @@ router.route('/filter').post((req, res) => {
     const uid = token.uid;
     const km = req.body.range * 1000;
     const looking_for = req.body.gender;
-    console.log(looking_for);
     const age_max = tool.toDOB(req.body.age_max);
     const age_min = tool.toDOB(req.body.age_min);
 

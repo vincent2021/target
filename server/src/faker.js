@@ -15,28 +15,44 @@ const tags = [
 
 faker.locale = "fr";
 
-async function generateFakeUser(user) {    
+async function generateLocation(city) {
+
+    let geocode = await fetch(`https://geocode.xyz/${city}?json=1`)
+    .then(res => res.json()).then(jsonData => {return(jsonData)});
+    if (geocode.error.code == '008' || geocode.error.code == '006') {
+        geocode = {
+            latt: '48.86666',
+            longt: '2.33333'
+        };
+    }
+    console.log(geocode);
+    return (geocode);
+}
+
+
+
+async function generateFakeUser(test_user) {    
     try {
         let newUser = await fetch(`https://randomuser.me/api/?nat=fr`)
         newUser = await newUser.json();
         newUser = newUser.results[0];
         const gender = newUser.gender;
-        if (gender = "male") {
-            const target = "female";
+        let target = '';
+        if (gender === "male") {
+           target = "female";
         } else {
-            const target = "male";
+           target = "male";
         }
         const firstName = newUser.name.first;
         const lastName = newUser.name.last;
         const pic = await fetch(`https://source.unsplash.com/random/?${gender}`);
         const pics_array = [`${pic.url}`];
         const city = newUser.location.city.charAt(0).toUpperCase() + newUser.location.city.substr(1);
-        const geocode = await fetch(`https://geocode.xyz/${city}?json=1`)
-            .then(res => res.json())
-            .then(jsonData => {return(jsonData)});
+        const geocode = await generateLocation();
+        console.log(geocode);
         let login;
-        if (user != 'random') {
-            login = user;
+        if (test_user !== 'random') {
+            login = test_user;
         } else {
             login = faker.internet.userName(firstName, lastName);
         }
@@ -59,7 +75,6 @@ async function generateFakeUser(user) {
                 target: target,
                 text: 'Loreum Ipsum'
         },};
-        console.log(fakeUser);
         ret = db.addUser(fakeUser);
     } catch (err) {
         console.log(err);
@@ -70,10 +85,10 @@ async function generateFakeUser(user) {
 //db.createDb();
 
 //Generate a user with specific login
-generateFakeUser('vincent');
-generateFakeUser('felix');
-generateFakeUser('test');
+//generateFakeUser('vincent');
+//generateFakeUser('felix');
+//generateFakeUser('test');
 
-for (let i = 0; i < 600; i++) {
-    generateFakeUser();
+for (let i = 0; i < 150 ; i++) {
+    generateFakeUser('random');
 }

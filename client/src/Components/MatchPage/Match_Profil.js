@@ -29,11 +29,9 @@ const ProfilMatch = () => {
     const [Localisation, setLocalisation] = useState([100]);
     const [Interest, setInterest] = useState([100]);
     const [Uid, setUid] = useState(() => {
-        try {
-            console.log('yeah token');
-            return decode(localStorage.getItem('token').payload.uid);
-        } catch (err) {
-            console.log('no token');
+        try{
+            return decode(localStorage.getItem('token').payload.uid);   
+        }catch(err){
             return false;
         }
     })
