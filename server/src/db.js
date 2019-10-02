@@ -74,7 +74,6 @@ async function modifyUser(uid, key, value) {
 async function setNotif(uid, msg) {
     dgraphClient = newClient();
     const txn = dgraphClient.newTxn();
-    console.log("notif for" + uid + " txt: "+ msg)
     try {
       const mu = new dgraph.Mutation();
       mu.setSetNquads(`<${uid}> <notif> ${msg} .`);
@@ -142,7 +141,6 @@ async function addUser(user) {
 
 // Create data using JSON
 async function createData(data) {
-    console.log(data);
     const dgraphClient = newClient();
     const txn = dgraphClient.newTxn();
     try {
@@ -189,7 +187,7 @@ async function setSchema(dgraphClient) {
         city: string .
         location: geo @index(geo) .
         text: string .
-        interest: string .
+        interest: [string] .
         score: int @index(int) .
         visit: uid .
         reject: uid @reverse .
