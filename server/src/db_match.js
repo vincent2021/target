@@ -25,6 +25,7 @@ async function filterUser(uid, looking_for, age_min, age_max, user_loc, km) {
     if (looking_for == "both") {
         looking_for = "male female";
     }
+
     const query = `{ users(func: anyofterms(gender, "${looking_for}"))
     @filter(near(location, ${user_loc}, ${km})
     AND lt(dob, "${age_min}")

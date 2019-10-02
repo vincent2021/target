@@ -6,7 +6,6 @@ import { resizeImage } from '../../Services/Fct';
 import { decode } from '../../Services/Token';
 
 const ProfilMatch = () => {
-
     const [user, setUser] = useState([]);
     const [background, setBackground] = useState({
         number: '',
@@ -48,9 +47,10 @@ const ProfilMatch = () => {
 
     const handleScore = e => {
         e.preventDefault();
-        // setFilter({
-        //     ...filter,
-        // })
+        setFilter({
+            ...filter,
+            range: Score[1]
+        })
     };
 
     const handleLocalisation = e => {
@@ -68,23 +68,27 @@ const ProfilMatch = () => {
         // })
     };
 
-    const settingMatch = () => {
-        const random = Math.floor(Math.random() * 100);
-        const color = (random > 50) ? '#35D467' : '#ff5640';
+    const settingMatch = (score) => {
+        const color = (score >= 50) ? '#35D467' : '#ff5640';
         setBackground({
-            number: random + '%',
-            width: random + 2 + '%',
+            number: score + '%',
+            width: score + 2 + '%',
             backgroundColor: color,
             value: {
-                left: random - 2 + '%'
+                left: score - 2 + '%'
             }
         });
     }
 
+    // RENVOYER A L ACCUEIL SI PAS DE USER
+
     const handleUser = async () => {
         await axios.post('/match/filter', filter)
-            .then((res, req) => { console.log(req); setUser(res.data); });
-        settingMatch();
+            .then((res, req) => {
+                setUser(res.data);
+                if (res.data[0])
+                    settingMatch(res.data[0].score)
+            });
     };
 
     const handleMatch = e => {
@@ -97,7 +101,7 @@ const ProfilMatch = () => {
                         console.log('match !');
                     })
         }
-        else{
+        else {
             let match = [Uid, user[number].uid];
             if (match[0] && match[1])
                 axios.post(`/match/reject?uid=${match[1]}`)
@@ -105,10 +109,13 @@ const ProfilMatch = () => {
                         console.log('reject !');
                     })
         }
-           
-        !user[number + 1] ? setNumber(0) : setNumber(number + 1);;
-        // effacer apres 
-        settingMatch();
+        if (!user[number + 1]){
+            setNumber(0);
+            settingMatch(user[0].score);
+        } else {
+            setNumber(number + 1);
+            settingMatch(user[number + 1].score);
+        }
     }
 
     useEffect(() => {
@@ -118,7 +125,6 @@ const ProfilMatch = () => {
     useEffect(() => {
         const Logo = document.getElementById('BigLogo');
         Logo.className = 'HideSvg';
-        handleUser();
     }, []);
 
     useEffect(() => {
@@ -131,10 +137,9 @@ const ProfilMatch = () => {
 
                     {/* profil */}
                     <div className="CenterMatch">
-
                         <Link to={`/user/${user[number].uid}`}>
                             <span className="spanMatch">
-                                <img onLoad={e => {resizeImage(e, 300)}} id="imageTarget" alt="" src={user[number].user_pic[0]} className="MatchProfil"></img>
+                                <img onLoad={e => { resizeImage(e, 300) }} id="imageTarget" alt="" src={user[number].user_pic[0]} className="MatchProfil"></img>
                             </span>
                         </Link>
 
@@ -191,7 +196,10 @@ const ProfilMatch = () => {
                     <div style={{ position: 'fixed', right: '5px', top: 0 }}>{user.length} targets find</div>
                 </div>
             );
-    }, [user, background, number, Age, Localisation, Score, Interest])
+        return(() => {
+            setContent('');
+        })
+    }, [background, Age, Localisation, Score, Interest])
 
     return content;
 }

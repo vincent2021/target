@@ -43,6 +43,12 @@
     padding-bottom: 5px;
 }
 
+.ChooseProfil{
+    display: flex;
+    width:500px;
+    flex-direction: row;
+}
+
 
 /* Image */
 

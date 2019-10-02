@@ -32,6 +32,11 @@ const resizeImage = async (e, size) => {
     }
 }
 
-export { getAge, resizeImage }
+const isLogout = () => {
+    localStorage.removeItem('token');
+    document.location.href = 'http://localhost:3000/login';
+}
+
+export { getAge, resizeImage, isLogout }
 
 

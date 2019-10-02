@@ -34,10 +34,8 @@ function LoginPage(props) {
     }, [user_ip, user_loc])
 
     useEffect(() => {
-        if (props.loggedIn === true) {
-            setRedirection(<Redirect to="/match" />)
-            console.log('login to match')
-        }
+        if (props.loggedIn === true) 
+            document.location.href = 'http://localhost:3000/match';
     }, [props.setloggedIn, props.loggedIn])
 
     const handleSubmit = (e) => {
