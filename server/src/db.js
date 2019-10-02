@@ -71,6 +71,34 @@ async function modifyUser(uid, key, value) {
   }
 }
 
+async function setNotif(uid, msg) {
+    dgraphClient = newClient();
+    const txn = dgraphClient.newTxn();
+    console.log("notif for" + uid + " txt: "+ msg)
+    try {
+      const mu = new dgraph.Mutation();
+      mu.setSetNquads(`<${uid}> <notif> ${msg} .`);
+      mu.setCommitNow(true);
+      await txn.mutate(mu);
+  } finally {
+      await txn.discard();
+      return (txn);
+  }
+}
+
+async function getNotif(userID) {
+    dgraphClient = newClient();   
+    const query = `{ user(func: uid(${userID})) {
+            uid,
+            notif
+        }
+    }`;
+    const res = await dgraphClient.newTxn().query(query);
+    const data = res.getJson();
+    return (data.user[0].notif);
+}
+
+
 // Delete a specific picture (WIP)
 async function deleteUserInfo(uid, key, url) {
     dgraphClient = newClient();
@@ -108,11 +136,9 @@ async function setLocation(uid, city, lat, lon) {
   }
 }
 
-//Add a user
 async function addUser(user) {
     return createData(user);
 }
-
 
 // Create data using JSON
 async function createData(data) {
@@ -167,6 +193,7 @@ async function setSchema(dgraphClient) {
         score: int @index(int) .
         visit: uid .
         reject: uid @reverse .
+        notif: [string] .
     `;
     const op = new dgraph.Operation();
     op.setSchema(schema);
@@ -183,5 +210,7 @@ module.exports  = {
     modifyUser: modifyUser,
     deleteUserInfo: deleteUserInfo,
     getUserPic: getUserPic,
-    setLocation: setLocation
+    setLocation: setLocation,
+    getNotif: getNotif,
+    setNotif: setNotif
 }

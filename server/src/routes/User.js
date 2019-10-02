@@ -60,6 +60,20 @@ router.route('/changePics').post((req, res) => {
     });
 });
 
+router.route('/getNotif').post((req, res) => {
+    const uid = auth.decode(req.headers.authorization).payload.uid;
+    db.getNotif(uid).then(function (ret) {
+        res.send(ret);
+    });
+});
+
+router.route('/setNotif').post((req, res) => {
+    const uid = auth.decode(req.headers.authorization).payload.uid;
+    db.setNotif(uid, req.query['msg']).then(function (ret) {
+        res.send(ret);
+    });
+});
+
 router.route('/setLocation').post((req, res) => {
     const uid = req.query['uid'];
     const city = req.body.city;
