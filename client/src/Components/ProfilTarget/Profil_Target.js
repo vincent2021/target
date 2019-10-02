@@ -27,8 +27,12 @@ const ProfilUser = ({ match }) => {
         axios.post(`/user/profile?uid=${match.params.uid}`)
             .then(res => {
                 setUser(res.data);
-                setAge(getAge(res.data.dob));
-            })
+                async function blabla() {
+                    getAge(res.data.dob).then(res => setAge(res))
+                }
+                blabla();
+            }
+            )
             .catch(err => {
                 console.log(err);
             })
@@ -36,14 +40,14 @@ const ProfilUser = ({ match }) => {
 
     const BlockUser = e => {
         e.preventDefault();
-        
+
     }
     const ReportUser = e => {
         e.preventDefault();
         axios.post(`/user/reportuser?uid=`)
-        .then(res => {
-            console.log('report')
-        })
+            .then(res => {
+                console.log('report')
+            })
     }
     const UnlikeUser = e => {
         e.preventDefault();
@@ -79,7 +83,7 @@ const ProfilUser = ({ match }) => {
             <div className="BlocBase">
                 <div className="BlocUser">
                     <div className="HeaderProfil">
-                        <p className="Titre">{user.username} / {Age}</p>
+                        <p className="Titre">{user.username} / Age : {Age} / Score : {user.score}</p>
                         <input id="BlockThisUser" onClick={BlockUser} type="submit" value="Block This User" style={{ backgroundColor: '#f55' }}></input>
                         <input id="Report" onClick={ReportUser} type="submit" value="Report" style={{ backgroundColor: '#fb5' }}></input>
                     </div>
@@ -114,7 +118,7 @@ const ProfilUser = ({ match }) => {
             </div >
         )
 
-    }, [user.interest, user.text, user.target, user.gender, ImageContainer])
+    }, [user.interest, user.text, user.target, user.gender, ImageContainer, Age, chatison])
 
     return content
 }

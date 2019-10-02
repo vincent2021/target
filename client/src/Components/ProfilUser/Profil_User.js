@@ -11,21 +11,18 @@ const ProfilClient = () => {
     let [ImagesUser, setImagesUser] = useState([]);
     const [IsLoading, setIsLoading] = useState(false);
     const [Changes, setChanges] = useState(false);
-    const [Info, setInfo] = useState({
-        gender: '',
-        target: '',
-        text: '',
-        interest: []
-    });
+    const [Info, setInfo] = useState({});
     const [OpenInfo, setOpenInfo] = useState(false);
     const [Page, setPage] = useState('match');
+    const [Content, setContent] = useState(<p style={{ fontSize: '40px', position: 'fixed', bottom: '0px' }} >User is loading...</p>);
 
     const getToken = async () => {
-        axios.post('/user/myprofile').then(res => {
-            setUser({ ...res.data });
-            setImagesUser(res.data.user_pic);
-            setIsLoading(false);
-        })
+        axios.post('/user/myprofile')
+            .then(res => {
+                setUser({ ...res.data });
+                setImagesUser(res.data.user_pic);
+                setIsLoading(false);
+            })
             .catch(err => {
                 console.log(err);
             })
@@ -67,9 +64,9 @@ const ProfilClient = () => {
         let MainPicture = document.getElementById('ImageUser');
         ImagesUser.find((img, index) => {
             if (img === MainPicture.src) {
-                let images = { img: img}
+                let images = { img: img }
                 axios.post(`user/delpic`, images)
-                    .then(res => { console.log('image deleted on db')})
+                    .then(res => { console.log('image deleted on db') })
                 ImagesUser.splice(index, 1);
                 setImagesUser(ImagesUser);
                 setChanges(Changes === true ? false : true);
@@ -78,10 +75,6 @@ const ProfilClient = () => {
             }
         })
     }
-
-    useEffect(() => {
-        // console.log(ImagesUser);
-    }, [Changes])
 
     const ModifyInformation = e => {
         e.preventDefault();
@@ -94,31 +87,24 @@ const ProfilClient = () => {
     }
 
     useEffect(() => {
-        // setInfo({...User})
-    }, [User])
+        if (Info.gender) {
+            setUser({
+                ...User,
+                ...Info
+            });
+            axios.post(`/user/modifyInfo`, Info)
+        }
+    }, [Info])
 
     useEffect(() => {
-        console.log('UseEffect Profil User...');
         getToken();
     }, []);
 
     useEffect(() => {
-        return (() => {
-            console.log(Info);
-            axios.post(`/user/modifyInfo`, Info)
-                .then(res => {
-                    console.log(res);
-                })
-        })
-    }, [setInfo])
-
-    let content = <p style={{ fontSize: '40px', position: 'fixed', bottom: '0px' }} >User is loading...</p>;
-
-    if (!IsLoading && User.uid) {
-        content =
+        setContent(
             <div className="BlocBase">
                 <div className="BlocUser">
-                    <p className="Titre">{User.username}</p>
+                    <p className="Titre">{User.username} / score : {User.score}</p>
                     <ImageContainers User={User} Images={ImagesUser} setImages={setImagesUser} Changes={Changes} />
                     <div className="BlocImport">
                         <button id="DeletePicture" className="modify" onClick={DeletePicture} type="Submit" style={{ backgroundColor: '#f33' }}>Delete Pic</button>
@@ -127,10 +113,10 @@ const ProfilClient = () => {
                     </div>
                     <div className="BlocInformations">
                         <p className="BlocTexte">
-                            Genre : {Info.gender} <br />
-                            Interest in : {Info.target} <br />
-                            Bio : {Info.text} <br />
-                            Interest : {Info.interest.map(i => (i + ' '))} <br />
+                            Genre : {User.gender} <br />
+                            Interest in : {User.target} <br />
+                            Bio : {User.text} <br />
+                            {/* Interest : {User.interest.map(i => (i + ' '))} <br /> */}
                             localistation: Moscou / Russia <br />
                         </p >
                     </div>
@@ -147,12 +133,11 @@ const ProfilClient = () => {
                     </div>
                     <ProfilMatch MyUid={User.uid} Page={Page} />
                 </div >
-            </div >;
-    }
-    else if (!IsLoading && !User.uid) {
-        content = <p style={{ fontSize: '40px', position: 'fixed', bottom: '0px' }}> Something is wrong...</p>;
-    }
-    return content;
+            </div >
+        )
+    }, [User, OpenInfo, ImagesUser,Changes])
+
+    return Content;
 }
 
 export default ProfilClient
