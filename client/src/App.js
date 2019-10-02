@@ -49,13 +49,6 @@ const App = () => {
         setLoggedIn(false);
     }
 
-    const changeState = () => {
-        setLoggedIn(true);
-        // changer ce truc horrible....
-        window.location.href('http://localhost:3000/profil')
-        window.location.reload();
-    }
-
     return (
         <div>
             <Link to='/' id="BigLogo">
@@ -84,17 +77,15 @@ const App = () => {
                     loggedIn === true ? (
                         <Redirect to="/match" />
                     ) : (
-                            <LoginPage loggedIn={changeState} />
+                        <Redirect to="/login" />
                         )
                 )} />
-                <Route exact path='/login'
-                    render={() => <LoginPage loggedIn={changeState} />} />
+                <Route exact path='/login' render={() => <LoginPage setloggedIn={setLoggedIn} loggedIn={loggedIn}/>} />
                 <Route exact path='/register' component={RegisterPage} />
                 <Route exact path='/profil' component={ProfilClient} />
                 <Route exact path='/match' component={ProfilMatch} />
                 <Route exact path="/user/:uid" component={ProfilUser} />
-                <Route
-                    render={() => <LoginPage loggedIn={changeState} />} />
+                <Route render={() => <LoginPage setloggedIn={setLoggedIn} loggedIn={loggedIn}/>} />
             </Switch>
         </div>
     )

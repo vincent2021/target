@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Link, Route } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import axios from '../../Services/Axios';
 import MatchSearch from './Match_Search';
-import { getAge, resizeImage } from '../../Services/Fct';
+import { resizeImage } from '../../Services/Fct';
 import { decode } from '../../Services/Token';
 
 const ProfilMatch = () => {
@@ -29,7 +29,15 @@ const ProfilMatch = () => {
     const [Score, setScore] = useState([0, 100]);
     const [Localisation, setLocalisation] = useState([100]);
     const [Interest, setInterest] = useState([100]);
-    const [Uid, setUid] = useState(decode(localStorage.getItem('token')).payload.uid || '');
+    const [Uid, setUid] = useState(() => {
+        try{
+            console.log('yeah token');
+            return decode(localStorage.getItem('token').payload.uid);   
+        }catch(err){
+            console.log('no token');
+            return false;
+        }
+    })
 
     const handleAge = e => {
         e.preventDefault();
@@ -91,8 +99,15 @@ const ProfilMatch = () => {
                         console.log('match !');
                     })
         }
-        else
-            console.log(":'-(");
+        else{
+            let match = [Uid, user[number].uid];
+            if (match[0] && match[1])
+                axios.post(`/match/reject?uid=${match[1]}`)
+                    .then(res => {
+                        console.log('reject !');
+                    })
+        }
+           
         !user[number + 1] ? setNumber(0) : setNumber(number + 1);;
         // effacer apres 
         settingMatch();

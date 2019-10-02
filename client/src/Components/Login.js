@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from "react-router-dom";
-import axios from '../Services/Axios';
+import { Link, Redirect } from "react-router-dom";
+// import axios from '../Services/Axios';
+import axios from '../Services/Axioslogin';
 
 function LoginPage(props) {
 
     const [profil, setProfil] = useState({});
     const [user_ip, setUser_ip] = useState();
     const [user_loc, setUser_loc] = useState();
+    const [Redirection, setRedirection] = useState();
 
     useEffect(() => {
         //Get geolocalisation from browser
@@ -32,17 +34,23 @@ function LoginPage(props) {
         });
     }, [user_ip, user_loc])
 
+    useEffect(() => {
+        if (props.loggedIn === true) {
+            setRedirection(<Redirect to="/match" />)
+            console.log('login to match')
+        }
+    }, [props.setloggedIn, props.loggedIn])
+
     const handleSubmit = (e) => {
         e.preventDefault();
         if (profil.username && profil.password) {
-            console.log(profil);
             axios.post(`/login/connect`, profil)
-                .then(res => {
+                .then(async res => {
                     if (res.data === "Wrong Password" || res.data === "Wrong Username") {
                         alert(res.data);
                     } else {
                         localStorage.setItem('token', res.data);
-                        props.loggedIn();
+                        props.setloggedIn(true)
                     }
                 })
                 .catch(err => {
@@ -64,6 +72,7 @@ function LoginPage(props) {
 
     let content = (
         <div className="Bloc">
+            {Redirection}
             <form onSubmit={handleSubmit}>
                 <h1>LOGIN</h1>
                 <input
