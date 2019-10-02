@@ -29,7 +29,6 @@ async function login(body) {
             }`;
         const res = await dgraphClient.newTxn().query(query);
         const data = res.getJson();
-        console.log(data);
         if (data.login[0].secret === true) {
             const uid = data.login[0].uid;
             if (user_loc == undefined) {
@@ -44,7 +43,7 @@ async function login(body) {
         }
     } catch (err) {
         console.log(err);
-        return "Wrong Username or DB error";
+        return "Wrong username";
     }
 }
 

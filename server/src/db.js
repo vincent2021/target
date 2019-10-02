@@ -180,7 +180,6 @@ async function deleteUserInfo(uid, key, url) {
     const txn = dgraphClient.newTxn();
     try {
       const mu = new dgraph.Mutation();
-      console.log(`<${uid}> <${key}> "${url}" .`);
       mu.setDelNquads(`<${uid}> <${key}> "${url}" .`);
       mu.setCommitNow(true);
       await txn.mutate(mu);

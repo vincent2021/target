@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Redirect } from "react-router-dom";
-// import axios from '../Services/Axios';
-import axios from '../Services/Axioslogin';
+import axios from 'axios';
 
 function LoginPage(props) {
 
@@ -44,9 +43,12 @@ function LoginPage(props) {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (profil.username && profil.password) {
-            axios.post(`/login/connect`, profil)
-                .then(async res => {
-                    if (res.data === "Wrong Password" || res.data === "Wrong Username") {
+            axios({
+                method: 'post',
+                url: 'http://localhost:8000/login/connect/',
+                data: profil
+              }).then(async res => {
+                    if (res.data === "Wrong password" || res.data === "Wrong username") {
                         alert(res.data);
                     } else {
                         localStorage.setItem('token', res.data);
