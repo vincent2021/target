@@ -67,7 +67,8 @@ const ProfilClient = () => {
         let MainPicture = document.getElementById('ImageUser');
         ImagesUser.find((img, index) => {
             if (img === MainPicture.src) {
-                axios.post(`user/delpic?url=${img}`)
+                let images = { img: img}
+                axios.post(`user/delpic`, images)
                     .then(res => { console.log('image deleted on db')})
                 ImagesUser.splice(index, 1);
                 setImagesUser(ImagesUser);
