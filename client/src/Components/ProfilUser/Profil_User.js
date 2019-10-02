@@ -7,7 +7,6 @@ import ProfilMatch from './Match';
 
 const ProfilClient = () => {
 
-    const defaultImage = 'http://localhost:8000/upload/default.png';
     const [User, setUser] = useState({});
     let [ImagesUser, setImagesUser] = useState([]);
     const [IsLoading, setIsLoading] = useState(false);
@@ -87,11 +86,6 @@ const ProfilClient = () => {
     }, []);
 
     useEffect(() => {
-        console.log(ImagesUser);
-    }, [ImagesUser])
-
-    useEffect(() => {
-        // ENVOYER LES INFOS A LA DB
         axios.post(`/user/modifyInfo`, Info)
             .then(res => {
                 console.log(res);

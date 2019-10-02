@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, Redirect } from "react-router-dom";
 import axios from '../../Services/Axios';
 import MatchSearch from './Match_Search';
-import { getAge, resizeImage } from '../../Services/Fct';
+import { resizeImage } from '../../Services/Fct';
 import { decode } from '../../Services/Token';
 
 const ProfilMatch = () => {
@@ -31,7 +31,8 @@ const ProfilMatch = () => {
     const [Interest, setInterest] = useState([100]);
     const [Uid, setUid] = useState(() => {
         try{
-            return decode(localStorage.getItem('token').payload.uid || '');   
+            console.log('yeah token');
+            return decode(localStorage.getItem('token').payload.uid);   
         }catch(err){
             console.log('no token');
             return false;
@@ -84,7 +85,7 @@ const ProfilMatch = () => {
 
     const handleUser = async () => {
         await axios.post('/match/filter', filter)
-            .then((res, req) => { setUser(res.data); });
+            .then((res, req) => { console.log(req); setUser(res.data); });
         settingMatch();
     };
 
@@ -119,8 +120,6 @@ const ProfilMatch = () => {
     useEffect(() => {
         const Logo = document.getElementById('BigLogo');
         Logo.className = 'HideSvg';
-        if (Uid === false)
-            setContent(<Redirect to='/' />)
         handleUser();
     }, []);
 

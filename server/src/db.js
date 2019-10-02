@@ -16,9 +16,16 @@ const ProfilData = `uid
                     target,
                     text,
                     interest,
-                    user_pic`;
+                    user_pic,
+                    score`;
+const ProfilMatch = `uid
+                    username,
+                    match,
+                    reject,
+                    visit`;
 
-async function getUser() {
+                    
+async function getRandomUser() {
     dgraphClient = newClient();   
     const query = `{
         random(func: has(firstname)) {
@@ -27,7 +34,6 @@ async function getUser() {
     }`;
     const res = await dgraphClient.newTxn().query(query);
     const data = res.getJson();
-    //data.all.forEach((person) = console.log(person));
     return (data.random);
 }
 
@@ -48,7 +54,8 @@ async function filterUser(uid, gender, age_min, age_max, user_loc, km) {
     @filter(near(location, ${user_loc}, ${km})
     AND lt(dob, "${age_min}")
     AND gt(dob, "${age_max}")
-    AND NOT uid(${uid}))
+    AND NOT uid(${uid})
+    AND NOT uid_in(~match, ${uid}))
         {
             ${ProfilData},
         }
@@ -99,6 +106,22 @@ async function newMatch(uid1, uid2) {
         await txn.discard();
     }
     return (`Match from ${uid1} to ${uid2} done`);
+}
+
+//unmatch
+async function unMatch(uid1, uid2) {
+    dgraphClient = newClient();
+    const txn = dgraphClient.newTxn();
+    try {
+        const mu = new dgraph.Mutation();
+        matchData = `<${uid1}> <match> <${uid2}> .`;
+        mu.setDelNquads(matchData);
+        mu.setCommitNow(true);
+        await txn.mutate(mu);
+    } finally {
+        await txn.discard();
+    }
+    return (`Unlike from ${uid1} to ${uid2} done`);
 }
 
 //Return all match for a user
@@ -245,6 +268,7 @@ async function setSchema(dgraphClient) {
         location: geo @index(geo) .
         text: string .
         interest: string .
+        score: int .
     `;
     const op = new dgraph.Operation();
     op.setSchema(schema);
@@ -256,15 +280,10 @@ module.exports  = {
     newClient: newClient,
     createData: createData,
     addUser: addUser,
-    getUser: getUser,
     getUserID: getUserID,
     getUserProfile: getUserProfile,
-    getUserLike: getUserMatch,
-    getFullMatch: getFullMatch,
-    newMatch: newMatch,
     modifyUser: modifyUser,
     deleteUserInfo: deleteUserInfo,
     getUserPic: getUserPic,
-    filterUser: filterUser,
     setLocation: setLocation
 }
