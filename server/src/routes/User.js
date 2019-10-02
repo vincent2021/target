@@ -112,6 +112,7 @@ router.route('/delpic_admin').post((req, res) => {
 });
 
 router.route('/reportuser').post((req, res) => {
+    const uid2 = auth.decode(req.headers.authorization).payload.uid;
     uid = req.query['uid'];
     db.getUserProfile(uid)
         .then((ret) => {
@@ -121,6 +122,7 @@ router.route('/reportuser').post((req, res) => {
             });
             
         })
+    match.reject(uid2, uid);
 });
 
 module.exports = router;

@@ -10,6 +10,7 @@ import { isLogged } from "./Services/Token";
 import { isLogout } from "./Services/Fct";
 import BigLogo from "./Assets/Svg/BigLogo";
 import Notification from "./Services/Notification";
+import { ResetPwd } from "./Components/ResetPwd";
 
 import './Assets/Styles/App.css';
 import './Assets/Styles/Connection.css';
@@ -19,10 +20,6 @@ import './Assets/Styles/Profil_Target.css';
 import './Assets/Styles/Svg.css';
 import './Assets/Styles/Notification.css';
 
-const socket = io.connect('http://localhost:8000');
-socket.on('info', function (data) {
-    console.log(data);
-});
 
 const App = () => {
 
@@ -78,6 +75,7 @@ const App = () => {
                 )} />
                 <Route exact path='/login' render={() => <LoginPage setloggedIn={setLoggedIn} loggedIn={loggedIn}/>} />
                 <Route exact path='/register' component={RegisterPage} />
+                <Route exact path='/resetpwd' component={ResetPwd} />
                 <Route exact path='/profil' component={ProfilClient} />
                 <Route exact path='/match' component={ProfilMatch} />
                 <Route exact path="/user/:uid" component={ProfilUser} />
