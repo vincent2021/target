@@ -2,6 +2,8 @@ const router = require("express").Router();
 const db = require("../db.js");
 const auth = require("../auth.js");
 const mail = require("../mail.js");
+const match = require("../db_match.js");
+
 
 router.route('/getUser').post((req, res) => {
     let user_nb = Math.round(Math.random() * 50);
@@ -12,10 +14,12 @@ router.route('/getUser').post((req, res) => {
 
 
 router.route('/profile').post((req, res) => {
+    const myuid = auth.decode(req.headers.authorization).payload.uid;
     db.getUserProfile(req.query['uid'])
         .then(function (ret) {
             res.send(ret);
         })
+    match.visit(myuid, req.query['uid']);
 });
 
 

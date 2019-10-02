@@ -21,6 +21,11 @@ async function generateFakeUser(user) {
         newUser = await newUser.json();
         newUser = newUser.results[0];
         const gender = newUser.gender;
+        if (gender = "male") {
+            const target = "female";
+        } else {
+            const target = "male";
+        }
         const firstName = newUser.name.first;
         const lastName = newUser.name.last;
         const pic = await fetch(`https://source.unsplash.com/random/?${gender}`);
@@ -30,8 +35,8 @@ async function generateFakeUser(user) {
             .then(res => res.json())
             .then(jsonData => {return(jsonData)});
         let login;
-        if (user == 'test') {
-            login = 'vincent';
+        if (user != 'random') {
+            login = user;
         } else {
             login = faker.internet.userName(firstName, lastName);
         }
@@ -43,14 +48,16 @@ async function generateFakeUser(user) {
                 gender: gender,
                 dob: newUser.dob.date,
                 email: faker.internet.email(firstName, lastName),
-                password: '42born2code',
+                password: 'test42',
                 user_pic: pics_array,
                 city: city,
                 location: `{
                     "type": "Point",
                     "coordinates": [${geocode.latt}, ${geocode.longt}]
                 }`,
-                score: 50
+                score: 50,
+                target: target,
+                text: 'Loreum Ipsum'
         },};
         console.log(fakeUser);
         ret = db.addUser(fakeUser);
@@ -62,9 +69,11 @@ async function generateFakeUser(user) {
 //Pour supprimer la BD au moment du seed
 //db.createDb();
 
-//Generate a user with login Vincent
-//generateFakeUser('test');
+//Generate a user with specific login
+generateFakeUser('vincent');
+generateFakeUser('felix');
+generateFakeUser('test');
 
-for (let i = 0; i < 50; i++) {
+for (let i = 0; i < 600; i++) {
     generateFakeUser();
 }
