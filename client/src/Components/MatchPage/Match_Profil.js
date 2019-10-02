@@ -87,7 +87,6 @@ const ProfilMatch = () => {
 
     const handleMatch = e => {
         e.preventDefault();
-        console.log(Uid);
         if (e.target.value === "Yes") {
             let match = [Uid, user[number].uid];
             if (match[0] && match[1])

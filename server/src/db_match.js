@@ -19,13 +19,25 @@ const ProfilData = `uid
                     user_pic,
                     score`;
 
-async function filterUser(uid, looking_for, age_min, age_max, user_loc, km, score_min, score_max) {
+async function getTarget(uid) {
     dgraphClient = newClient();
-    if (looking_for == "both") {
-        looking_for = "male female";
+    const queryTarget = `{ user(func: uid(${uid})) {
+                target
+            }
+        }`;
+    const ret = await dgraphClient.newTxn().query(queryTarget);
+    const target = ret.getJson().user[0].target;
+    return(target)
+}
+
+async function filterUser(uid, age_min, age_max, user_loc, km, score_min, score_max) {
+    dgraphClient = newClient();
+    let target = await getTarget(uid);
+    if (target == "both") {
+        target = "male female";
     }
 
-    const query = `{ users(func: anyofterms(gender, "${looking_for}"))
+    const query = `{ users(func: anyofterms(gender, "${target}"))
     @filter(near(location, ${user_loc}, ${km})
     AND le(dob, "${age_min}")
     AND ge(dob, "${age_max}")
@@ -38,7 +50,7 @@ async function filterUser(uid, looking_for, age_min, age_max, user_loc, km, scor
             ${ProfilData},
         }
     }`;
-    console.log(`looking for ${looking_for}, near(location, ${user_loc}, ${km})
+    console.log(`looking for ${target}, near(location, ${user_loc}, ${km})
     AND age:[${age_min};${age_max}] AND score:[${score_min};${score_max}]`)
     const res = await dgraphClient.newTxn().query(query);
     const data = res.getJson();

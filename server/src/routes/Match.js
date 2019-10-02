@@ -21,6 +21,7 @@ router.route('/user').post((req, res) => {
 router.route('/unlike').post((req, res) => {
     const uid1 = tokenInfo = auth.decode(req.headers.authorization).payload.uid;
     const uid2 = req.query['uid'];
+    const name = tokenInfo = auth.decode(req.headers.authorization).payload.username;
     match.unMatch(uid1, uid2).then(function (ret) {
         res.send(ret);
     }, (err) => {console.log(err)});
@@ -47,6 +48,7 @@ router.route('/unreject').post((req, res) => {
 router.route('/visit').post((req, res) => {
     const uid1 = tokenInfo = auth.decode(req.headers.authorization).payload.uid;
     const uid2 = req.query['uid'];
+    const name = tokenInfo = auth.decode(req.headers.authorization).payload.username;
     match.visit(uid1, uid2).then(function (ret) {
         res.send(ret);
     }, (err) => {console.log(err)});
@@ -63,7 +65,8 @@ router.route('/filterVisit').post((req, res) => {
 
 
 router.route('/fullmatch').post((req, res) => {
-    match.getFullMatch(req.query['uid']).then(function (ret) {
+    const uid = tokenInfo = auth.decode(req.headers.authorization).payload.uid;
+    match.getFullMatch(uid).then(function (ret) {
         res.send(ret);
     }, (err) => {console.log(err)});
 });
@@ -77,20 +80,18 @@ router.route('/interaction').post((req, res) => {
 //PowerQuery to match with filter
 router.route('/filter').post((req, res) => {
     const token = tokenInfo = auth.decode(req.headers.authorization).payload;
-    console.log(req.body);
     let user_loc = '[48.8967052, 2.3183661]'
     if (token.loc) {
         user_loc = `[${token.loc.lat}, ${token.loc.lon}]`;
     };
     const uid = token.uid;
     const km = req.body.range * 1000;
-    const looking_for = req.body.gender;
     const age_max = tool.toDOB(req.body.age_max);
     const age_min = tool.toDOB(req.body.age_min);
     const score_max = req.body.score_max;
     const score_min = req.body.score_min;
 
-    match.filterUser(uid, looking_for, age_min, age_max, user_loc, km, score_min, score_max).then(function (ret) {
+    match.filterUser(uid, age_min, age_max, user_loc, km, score_min, score_max).then(function (ret) {
         res.send(ret);
     });
 });

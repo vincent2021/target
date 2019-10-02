@@ -83,6 +83,7 @@ const ProfilClient = () => {
 
     const ChangeProfils = e => {
         e.preventDefault();
+        console.log(e.target.id)
         setPage(e.target.id);
     }
 
@@ -116,7 +117,7 @@ const ProfilClient = () => {
                             Genre : {User.gender} <br />
                             Interest in : {User.target} <br />
                             Bio : {User.text} <br />
-                            {/* Interest : {User.interest.map(i => (i + ' '))} <br /> */}
+                            Interest : {User.interest} <br />
                             Localisation: {User.city} <br />
                         </p >
                     </div>
@@ -131,11 +132,11 @@ const ProfilClient = () => {
                         <p className="Titre" >&nbsp;/&nbsp;</p>
                         <p className="Titre" onClick={ChangeProfils} id="looks">LOOKS</p>
                     </div>
-                    <ProfilMatch MyUid={User.uid} Page={Page} />
+                    <ProfilMatch Page={Page} />
                 </div >
             </div >
         )
-    }, [User, OpenInfo, ImagesUser,Changes])
+    }, [User, OpenInfo, ImagesUser,Changes, Page])
 
     return Content;
 }

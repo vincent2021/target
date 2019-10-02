@@ -24,9 +24,8 @@ const ProfilMatch = (props) => {
 
     useEffect(() => {
         async function match() {
-            axios.post(`/match/fullmatch?uid=${props.MyUid}`)
+            axios.post(`/match/fullmatch`)
                 .then(async res => {
-                    console.log('res.data match : ' + res.data);
                     if (res.data.length > 0) {
                         const data = await Mapping(res.data);
                         setMatchImg(data.img);
@@ -35,9 +34,8 @@ const ProfilMatch = (props) => {
                 })
         }
         async function looks() {
-            axios.post(`/match/filterVisit?uid=${props.MyUid}`)
+            axios.post(`/match/filterVisit`)
                 .then(async res => {
-                    console.log('res.data looks : ' + res.data);
                     if (res.data.length > 0) {
                         const data = await Mapping(res.data);
                         setMatchImg(data.img);

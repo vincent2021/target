@@ -41,7 +41,6 @@ function LoginPage(props) {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (profil.username && profil.password) {
-            console.log(profil);
             axios({
                 method: 'post',
                 url: 'http://localhost:8000/login/connect/',
