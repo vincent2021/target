@@ -21,6 +21,7 @@ router.route('/user').post((req, res) => {
 router.route('/unlike').post((req, res) => {
     const uid1 = tokenInfo = auth.decode(req.headers.authorization).payload.uid;
     const uid2 = req.query['uid'];
+    const name = tokenInfo = auth.decode(req.headers.authorization).payload.username;
     match.unMatch(uid1, uid2).then(function (ret) {
         res.send(ret);
     }, (err) => {console.log(err)});
@@ -47,6 +48,7 @@ router.route('/unreject').post((req, res) => {
 router.route('/visit').post((req, res) => {
     const uid1 = tokenInfo = auth.decode(req.headers.authorization).payload.uid;
     const uid2 = req.query['uid'];
+    const name = tokenInfo = auth.decode(req.headers.authorization).payload.username;
     match.visit(uid1, uid2).then(function (ret) {
         res.send(ret);
     }, (err) => {console.log(err)});
@@ -63,7 +65,8 @@ router.route('/filterVisit').post((req, res) => {
 
 
 router.route('/fullmatch').post((req, res) => {
-    match.getFullMatch(req.query['uid']).then(function (ret) {
+    const uid = tokenInfo = auth.decode(req.headers.authorization).payload.uid;
+    match.getFullMatch(uid).then(function (ret) {
         res.send(ret);
     }, (err) => {console.log(err)});
 });
@@ -77,7 +80,6 @@ router.route('/interaction').post((req, res) => {
 //PowerQuery to match with filter
 router.route('/filter').post((req, res) => {
     const token = tokenInfo = auth.decode(req.headers.authorization).payload;
-    console.log(req.body);
     let user_loc = '[48.8967052, 2.3183661]'
     if (token.loc) {
         user_loc = `[${token.loc.lat}, ${token.loc.lon}]`;
