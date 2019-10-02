@@ -15,20 +15,21 @@ const ProfilMatch = () => {
             left: ''
         }
     });
-    const [filter, setFilter] = useState({
-        uid: '0x134',
-        age_min: '20',
-        age_max: '40',
-        gender: 'female',
-        range: '100'
-    });
     const [content, setContent] = useState(<div>is loading</div>);
     const [number, setNumber] = useState(0);
     const [Age, setAge] = useState([20, 40]);
     const [Score, setScore] = useState([0, 100]);
     const [Localisation, setLocalisation] = useState([100]);
     const [Interest, setInterest] = useState([100]);
-    const [Uid, setUid] = useState()
+    const [Uid, setUid] = useState();
+    const [filter, setFilter] = useState({
+        age_max: Age[0],
+        age_min: Age[1],
+        score_min: Score[0],
+        score_max: Score[1],
+        range: Localisation[0],
+        gender: 'female'
+    });
 
     const handleAge = e => {
         e.preventDefault();
@@ -43,8 +44,8 @@ const ProfilMatch = () => {
         e.preventDefault();
         setFilter({
             ...filter,
-            score_min: Score[1],
-            score_max: Score[2]
+            score_min: Score[0],
+            score_max: Score[1]
         })
     };
 

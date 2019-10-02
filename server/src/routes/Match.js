@@ -77,6 +77,7 @@ router.route('/interaction').post((req, res) => {
 //PowerQuery to match with filter
 router.route('/filter').post((req, res) => {
     const token = tokenInfo = auth.decode(req.headers.authorization).payload;
+    console.log(req.body);
     let user_loc = '[48.8967052, 2.3183661]'
     if (token.loc) {
         user_loc = `[${token.loc.lat}, ${token.loc.lon}]`;
