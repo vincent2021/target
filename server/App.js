@@ -1,4 +1,3 @@
-
 const Login = require('./src/routes/Login');
 const User = require('./src/routes/User');
 const Match = require('./src/routes/Match');
@@ -21,7 +20,7 @@ app.use(express.static('public'));
 
 //Proctected API
 app.use('/user', function (req, res, next) {
-  console.log("UserAPI token" + req.headers.authorization);
+  console.log(auth.decode(req.headers.authorization));
   auth.verify(req.headers.authorization).then(function (ret) {
     if (ret == false) {
         res.sendStatus(403);
@@ -30,8 +29,7 @@ app.use('/user', function (req, res, next) {
 }})}, User);
 
 app.use('/match', function (req, res, next) {
-  console.log("Match token");
-  console.log(req.headers.authorization);
+  console.log(auth.decode(req.headers.authorization));
   auth.verify(req.headers.authorization).then(function (ret) {
     if (ret == false) {
         res.sendStatus(403);
@@ -46,9 +44,6 @@ app.use('/upload', function (req, res, next) {
     } else {
       next();
 }})}, Upload);
-
-
-
 
 const server = app.listen(8000, () => console.log('Server listening on port 8000!'));
 
