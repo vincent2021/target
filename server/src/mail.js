@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
 
-async function sendResetMail(email, new_pwd) {
+async function sendResetMail(email, new_pwd, username) {
 
     // create reusable transporter object using the default Fake Email service
     const transporter = nodemailer.createTransport({
@@ -12,7 +12,7 @@ async function sendResetMail(email, new_pwd) {
         }
     });
 
-    const body = "Hi buddy,\nPlease find your new password for Target app: " + new_pwd + "\nRegards, Felix Foo."
+    const body = "Hi " + username + ",\nPlease find your new password for Target app: " + new_pwd + "\nRegards, Felix Foo."
 
     let info = await transporter.sendMail({
         from: '"Felix Foo 👻" <foo@target.com', 

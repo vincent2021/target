@@ -51,8 +51,6 @@ async function filterVisit(uid) {
             ${ProfilData}
         }
     }`;
-    console.log(query);
-
     const res = await dgraphClient.newTxn().query(query);
     const data = res.getJson();
     return (data.users);

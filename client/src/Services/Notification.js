@@ -1,8 +1,21 @@
 import React, { useState, useEffect } from 'react';
+import axios from './Axios';
 
 const Notification = (props) => {
+    
+    let array =["No Notification :("];
 
-    const [Notifications, setNotifications] = useState(['like de machin', 'comment de machine', 'block by trouduc', 'comment de machine']);
+    if(localStorage.getItem('token')) {
+        axios.post('/user/getNotif').then(res => {
+            array = res.data;
+            setNotifications(array);
+        })
+            .catch(err => {
+                console.log(err);
+        })
+    }
+    
+    const [Notifications, setNotifications] = useState([array]);
 
     useEffect(() => {
         props.loggedIn === true ? setContent(

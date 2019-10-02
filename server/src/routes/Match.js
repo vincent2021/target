@@ -1,12 +1,15 @@
 const router = require("express").Router();
 const match = require("../db_match.js");
+const db = require("../db.js");
 const tool = require("../Tool.js");
 const auth = require("../auth.js");
 
 router.route('/new').post((req, res) => {
+    const name = tokenInfo = auth.decode(req.headers.authorization).payload.username;
     match.newMatch(req.query['uid1'], req.query['uid2']).then(function (ret) {
         res.send(ret);
     }, (err) => {console.log(err)});
+    db.setNotif(req.query['uid2'], `"You have been liked by ${name}"`);
 });
 
 router.route('/user').post((req, res) => {
@@ -21,6 +24,7 @@ router.route('/unlike').post((req, res) => {
     match.unMatch(uid1, uid2).then(function (ret) {
         res.send(ret);
     }, (err) => {console.log(err)});
+    db.setNotif(req.query['uid2'], `"You have been unliked by ${name}"`);
 });
 
 router.route('/reject').post((req, res) => {
@@ -46,6 +50,7 @@ router.route('/visit').post((req, res) => {
     match.visit(uid1, uid2).then(function (ret) {
         res.send(ret);
     }, (err) => {console.log(err)});
+    db.setNotif(req.query['uid2'], `"You have been visited by ${name}"`);
 });
 
 
@@ -81,8 +86,8 @@ router.route('/filter').post((req, res) => {
     const looking_for = req.body.gender;
     const age_max = tool.toDOB(req.body.age_max);
     const age_min = tool.toDOB(req.body.age_min);
-    const score_max = req.body.score_max;
-    const score_min = req.body.score_min;
+    const score_max = 80;
+    const score_min = 10;
 
     match.filterUser(uid, looking_for, age_min, age_max, user_loc, km, score_min, score_max).then(function (ret) {
         res.send(ret);

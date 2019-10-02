@@ -103,6 +103,13 @@ function LoginPage(props) {
                 >
                     Create an account !
                     </Link>
+                <Link
+                    id='resetpwd'
+                    className='RouterLog'
+                    to='/resetpwd'
+                >
+                    Reset your password
+                    </Link>
             </form>
         </div>
     )

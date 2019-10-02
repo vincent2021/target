@@ -47,7 +47,6 @@ router.route('/change').post((req, res) => {
 router.route('/modifyInfo').post((req, res) => {
     const uid = auth.decode(req.headers.authorization).payload.uid;
     req.body['uid'] = uid;
-    console.log(req.body);
     db.createData(req.body).then(function (ret) {
         res.send("Info modified");
     });
@@ -56,6 +55,20 @@ router.route('/modifyInfo').post((req, res) => {
 router.route('/changePics').post((req, res) => {
     const uid = auth.decode(req.headers.authorization).payload.uid;
     db.changePics(uid, req.query['value']).then(function (ret) {
+        res.send(ret);
+    });
+});
+
+router.route('/getNotif').post((req, res) => {
+    const uid = auth.decode(req.headers.authorization).payload.uid;
+    db.getNotif(uid).then(function (ret) {
+        res.send(ret);
+    });
+});
+
+router.route('/setNotif').post((req, res) => {
+    const uid = auth.decode(req.headers.authorization).payload.uid;
+    db.setNotif(uid, req.query['msg']).then(function (ret) {
         res.send(ret);
     });
 });
@@ -98,6 +111,7 @@ router.route('/delpic_admin').post((req, res) => {
 });
 
 router.route('/reportuser').post((req, res) => {
+    const uid2 = auth.decode(req.headers.authorization).payload.uid;
     uid = req.query['uid'];
     db.getUserProfile(uid)
         .then((ret) => {
@@ -107,6 +121,8 @@ router.route('/reportuser').post((req, res) => {
             });
             
         })
+    match.unMatch(uid2, uid);
+    match.reject(uid2, uid);
 });
 
 module.exports = router;

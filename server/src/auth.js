@@ -84,23 +84,25 @@ const decode = (token) => {;
 
 async function resetPasswd(email) {
     let new_passwd =  Math.random().toString(36).substring(2, 15);
-    new_passwd = "test42"
     try {
         dgraphClient = newClient();
         const query = `{
             getUID(func: eq(email, "${email}")) {
-                uid
+                uid,
+                username
                 }
             }`;
         const res = await dgraphClient.newTxn().query(query);
-        const uid = res.getJson().getUID[0].uid;
+        const data = res.getJson().getUID[0];
+        const uid = data.uid;
+        const username = data.username;
         const txn = dgraphClient.newTxn();
         try {
           const mu = new dgraph.Mutation();
           mu.setSetNquads(`<${uid}> <password> "${new_passwd}" .`);
           mu.setCommitNow(true);
           await txn.mutate(mu);
-          ret = mail.sendResetMail(email, new_passwd);
+          ret = mail.sendResetMail(email, new_passwd, username);
           return (ret);
         } finally {
             await txn.discard();

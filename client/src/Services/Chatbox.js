@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Launcher } from 'react-chat-window'
+import { Launcher } from 'react-chat-window';
+import axios from "./Axios";
 
 class Demo extends Component {
 
@@ -9,7 +10,7 @@ class Demo extends Component {
             messageList: [{
                 author: 'them',
                 type: 'text',
-                data: { text: "yolo" }
+                data: { text: "Coucou" }
             }]
         };
     }
@@ -30,6 +31,7 @@ class Demo extends Component {
             messageList: [...this.state.messageList, message]
         })
         console.log(this.state);
+        axios.post('/user/modifyInfo', this.state);        
     }
 
     _sendMessage(text) {
