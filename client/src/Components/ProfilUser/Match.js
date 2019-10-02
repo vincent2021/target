@@ -5,7 +5,7 @@ import { resizeImage } from '../../Services/Fct';
 
 const ProfilMatch = (props) => {
 
-    const [content, setContent] = useState(<div>{props.MyUid}</div>)
+    const [content, setContent] = useState('')
     const [MatchImg, setMatchImg] = useState([]);
     const [MatchLink, setMatchLink] = useState([]);
 
@@ -33,7 +33,20 @@ const ProfilMatch = (props) => {
                     }
                 })
         }
-        match();
+        async function looks() {
+            axios.post(`/match/filterVisit?uid=${props.MyUid}`)
+                .then(async res => {
+                    if (res.data.length > 0) {
+                        const data = await Mapping(res.data);
+                        setMatchImg(data.img);
+                        setMatchLink(data.lien);
+                    }
+                })
+        }
+        if (props.Page === 'match')
+            match();
+        else if (props.Page === 'looks')
+            looks();
     }, [])
 
     useEffect(() => {

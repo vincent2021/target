@@ -14,7 +14,7 @@ const ModifyInfo = (props) => {
 
     const handleSubmit = async e => {
         e.preventDefault();
-        let genre = document.getElementsByName('genre');
+        let genre = document.getElementsByName('gender');
         let target = document.getElementsByName('target');
         let interest = document.getElementsByName('interest');
         let text = document.getElementById('TalkAboutYou');
@@ -54,11 +54,11 @@ const ModifyInfo = (props) => {
                                 <div className='BlocContentInfo'>
                                     <p>Genre :</p>
                                     <div>
-                                        <input type="radio" id="grmale" name="genre" value="male" required />
+                                        <input type="radio" id="grmale" name="gender" value="male" required />
                                         <label htmlFor="grmale">Male</label>
                                     </div>
                                     <div>
-                                        <input type="radio" id="grfemale" name="genre" value="female" />
+                                        <input type="radio" id="grfemale" name="gender" value="female" />
                                         <label htmlFor="grfemale">Female</label>
                                     </div>
 

@@ -7,6 +7,7 @@ import ProfilClient from "./Components/ProfilUser/Profil_User";
 import ProfilUser from "./Components/ProfilTarget/Profil_Target";
 import ProfilMatch from "./Components/MatchPage/Match_Profil";
 import { isLogged } from "./Services/Token";
+import { isLogout } from "./Services/Fct";
 import BigLogo from "./Assets/Svg/BigLogo";
 import Notification from "./Services/Notification";
 
@@ -44,11 +45,6 @@ const App = () => {
         profil.className = (loggedIn === true) ? "RouterProfil" : "Hide";
     }, [loggedIn])
 
-    const isLogout = () => {
-        localStorage.removeItem('token')
-        setLoggedIn(false);
-    }
-
     return (
         <div>
             <Link to='/' id="BigLogo">
@@ -57,20 +53,20 @@ const App = () => {
             <div className='RouterBloc'>
                 <Link
                     id='match'
-                    className='RouterMatch'
+                    className='Hide'
                     to='/match'
                 >
                     Target
                     </Link>
                 <Link
                     id='profilClient'
-                    className='RouterProfil'
+                    className='Hide'
                     to='/profil'
                 >
                     My Profil
                     </Link>
                 <Notification loggedIn={loggedIn} />
-                <button id="LogoutButton" onClick={isLogout} >Logout</button>
+                <button id="LogoutButton" onClick={isLogout} className="HideButton">Logout</button>
             </div>
             <Switch>
                 <Route exact path="/" render={() => (

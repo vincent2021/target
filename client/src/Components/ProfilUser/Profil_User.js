@@ -12,16 +12,19 @@ const ProfilClient = () => {
     const [IsLoading, setIsLoading] = useState(false);
     const [Changes, setChanges] = useState(false);
     const [Info, setInfo] = useState({
-        genre: '',
+        gender: '',
         target: '',
         text: '',
         interest: []
     });
     const [OpenInfo, setOpenInfo] = useState(false);
+    const [Page, setPage] = useState('match');
 
     const getToken = async () => {
         axios.post('/user/myprofile').then(res => {
             setUser({ ...res.data });
+            console.log(res.data)
+            // setInfo({});
             setImagesUser(res.data.user_pic);
             setIsLoading(false);
         })
@@ -76,9 +79,17 @@ const ProfilClient = () => {
 
     const ModifyInformation = e => {
         e.preventDefault();
-        // console.log(Info);
         setOpenInfo(true);
     }
+
+    const ChangeProfils = e => {
+        e.preventDefault();
+        setPage(e.target.id);
+    }
+
+    useEffect(() => {
+        // setInfo({...User})
+    }, [User])
 
     useEffect(() => {
         console.log('UseEffect Profil User...');
@@ -86,11 +97,14 @@ const ProfilClient = () => {
     }, []);
 
     useEffect(() => {
-        axios.post(`/user/modifyInfo`, Info)
-            .then(res => {
-                console.log(res);
-            })
-    }, [Info])
+        return (() => {
+            console.log(Info);
+            axios.post(`/user/modifyInfo`, Info)
+                .then(res => {
+                    console.log(res);
+                })
+        })
+    }, [setInfo])
 
     let content = <p style={{ fontSize: '40px', position: 'fixed', bottom: '0px' }} >User is loading...</p>;
 
@@ -107,7 +121,7 @@ const ProfilClient = () => {
                     </div>
                     <div className="BlocInformations">
                         <p className="BlocTexte">
-                            Genre : {Info.genre} <br />
+                            Genre : {Info.gender} <br />
                             Interest in : {Info.target} <br />
                             Bio : {Info.text} <br />
                             Interest : {Info.interest.map(i => (i + ' '))} <br />
@@ -120,8 +134,12 @@ const ProfilClient = () => {
                     </div>
                 </div >
                 <div className="BlocUser">
-                    <p className="Titre">MATCH</p>
-                    <ProfilMatch MyUid={User.uid} />
+                    <div className="ChooseProfil">
+                        <p className="Titre" onClick={ChangeProfils} id="match">MATCH</p>
+                        <p className="Titre" >&nbsp;/&nbsp;</p>
+                        <p className="Titre" onClick={ChangeProfils} id="looks">LOOKS</p>
+                    </div>
+                    <ProfilMatch MyUid={User.uid} Page={Page} />
                 </div >
             </div >;
     }
