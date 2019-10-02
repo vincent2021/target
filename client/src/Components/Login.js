@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Redirect } from "react-router-dom";
-import axios from '../Services/Axios';
+// import axios from '../Services/Axios';
+import axios from '../Services/Axioslogin';
 
 function LoginPage(props) {
 
@@ -34,7 +35,7 @@ function LoginPage(props) {
     }, [user_ip, user_loc])
 
     useEffect(() => {
-        if (props.loggedIn === true){
+        if (props.loggedIn === true) {
             setRedirection(<Redirect to="/match" />)
             console.log('login to match')
         }
@@ -48,16 +49,8 @@ function LoginPage(props) {
                     if (res.data === "Wrong Password" || res.data === "Wrong Username") {
                         alert(res.data);
                     } else {
-                        function WaitforToken(){
-                            return new Promise((res,rej) => {
-                                localStorage.setItem('token', res.data);
-                                if (localStorage.getItem('token') != null)
-                                    res('ok');
-                            })  
-                        }
-                        WaitforToken().then(() => {
-                            props.setloggedIn(true)
-                        })
+                        localStorage.setItem('token', res.data);
+                        props.setloggedIn(true)
                     }
                 })
                 .catch(err => {

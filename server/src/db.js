@@ -60,7 +60,6 @@ async function filterUser(uid, gender, age_min, age_max, user_loc, km) {
             ${ProfilData},
         }
     }`;
-    console.log(query);
     const res = await dgraphClient.newTxn().query(query);
     const data = res.getJson();
     return (data.users);
