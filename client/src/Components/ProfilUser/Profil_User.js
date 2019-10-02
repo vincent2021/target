@@ -116,7 +116,7 @@ const ProfilClient = () => {
                             Genre : {User.gender} <br />
                             Interest in : {User.target} <br />
                             Bio : {User.text} <br />
-                            {/* Interest : {User.interest.map(i => (i + ' '))} <br /> */}
+                            Interest : {User.interest} <br />
                             Localisation: {User.city} <br />
                         </p >
                     </div>
