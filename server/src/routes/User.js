@@ -78,7 +78,7 @@ router.route('/pics').post((req, res) => {
 
 router.route('/delpic').post((req, res) => {
     const uid = auth.decode(req.headers.authorization).payload.uid;
-    db.deleteUserInfo(uid, "user_pic", req.query['url']).then((ret) => {
+    db.deleteUserInfo(uid, "user_pic", req.body.img).then((ret) => {
         if (ret.mutated == true) {
             res.send("Picture Deleted");
         } else {

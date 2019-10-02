@@ -19,8 +19,7 @@ const ProfilData = `uid
                     user_pic,
                     score`;
 
-
-async function filterUser(uid, looking_for, age_min, age_max, user_loc, km) {
+async function filterUser(uid, looking_for, age_min, age_max, user_loc, km, score_min, score_max) {
     dgraphClient = newClient();
     if (looking_for == "both") {
         looking_for = "male female";
@@ -28,8 +27,10 @@ async function filterUser(uid, looking_for, age_min, age_max, user_loc, km) {
 
     const query = `{ users(func: anyofterms(gender, "${looking_for}"))
     @filter(near(location, ${user_loc}, ${km})
-    AND lt(dob, "${age_min}")
-    AND gt(dob, "${age_max}")
+    AND le(dob, "${age_min}")
+    AND ge(dob, "${age_max}")
+    AND ge(score, "${score_min}")
+    AND le(score, "${score_max}")
     AND NOT uid(${uid})
     AND NOT uid_in(~match, ${uid})
     AND NOT uid_in(~reject, ${uid}))
@@ -215,8 +216,8 @@ async function getInteraction(uid) {
 async function getFullMatch(uid) {
     dgraphClient = newClient();   
     const query = `{ userMatch(func: uid(${uid})) {
-            match @filter(uid_in(match, ${uid})) {
-            ${ProfilData}
+            match @filter(uid_in(~match, ${uid})) {
+                ${ProfilData}
             }
         }
     }`;
@@ -228,13 +229,6 @@ async function getFullMatch(uid) {
         return null;
     }
 }
-
-
-//Add a user
-async function addUser(user) {
-    return createData(user);
-}
-
 
 // Create a client.
 function newClient() {

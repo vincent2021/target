@@ -18,24 +18,6 @@ const ProfilData = `uid
                     interest,
                     user_pic,
                     score`;
-const ProfilMatch = `uid
-                    username,
-                    match,
-                    reject,
-                    visit`;
-
-                    
-async function getRandomUser() {
-    dgraphClient = newClient();   
-    const query = `{
-        random(func: has(firstname)) {
-            ${ProfilData}
-        }
-    }`;
-    const res = await dgraphClient.newTxn().query(query);
-    const data = res.getJson();
-    return (data.random);
-}
 
 async function getUserProfile(userID) {
     dgraphClient = newClient();   
@@ -46,23 +28,6 @@ async function getUserProfile(userID) {
     const res = await dgraphClient.newTxn().query(query);
     const data = res.getJson();
     return (data.userProfile[0]);
-}
-
-async function filterUser(uid, gender, age_min, age_max, user_loc, km) {
-    dgraphClient = newClient();
-    const query = `{ users(func: eq(gender, "${gender}"))
-    @filter(near(location, ${user_loc}, ${km})
-    AND lt(dob, "${age_min}")
-    AND gt(dob, "${age_max}")
-    AND NOT uid(${uid})
-    AND NOT uid_in(~match, ${uid}))
-        {
-            ${ProfilData},
-        }
-    }`;
-    const res = await dgraphClient.newTxn().query(query);
-    const data = res.getJson();
-    return (data.users);
 }
 
 async function getUserPic(userID) {
@@ -91,73 +56,6 @@ async function getUserID(email) {
     return (data.getUserID[0].uid);
 }
 
-//Match 2 users
-async function newMatch(uid1, uid2) {
-    dgraphClient = newClient();
-    const txn = dgraphClient.newTxn();
-    try {
-        const mu = new dgraph.Mutation();
-        matchData = `<${uid1}> <match> <${uid2}> .`;
-        mu.setSetNquads(matchData);
-        mu.setCommitNow(true);
-        await txn.mutate(mu);
-    } finally {
-        await txn.discard();
-    }
-    return (`Match from ${uid1} to ${uid2} done`);
-}
-
-//unmatch
-async function unMatch(uid1, uid2) {
-    dgraphClient = newClient();
-    const txn = dgraphClient.newTxn();
-    try {
-        const mu = new dgraph.Mutation();
-        matchData = `<${uid1}> <match> <${uid2}> .`;
-        mu.setDelNquads(matchData);
-        mu.setCommitNow(true);
-        await txn.mutate(mu);
-    } finally {
-        await txn.discard();
-    }
-    return (`Unlike from ${uid1} to ${uid2} done`);
-}
-
-//Return all match for a user
-async function getUserMatch(uid) {
-    dgraphClient = newClient();   
-    const query = `{ getUserLike(func: uid(${uid})) {
-            match {
-                ${ProfilData}
-            }
-        }
-    }`;
-    const res = await dgraphClient.newTxn().query(query);
-    const data = res.getJson();
-    if (data.getUserLike[0]) {
-        return data.getUserLike[0].match;
-    } else {
-        return null;
-    }
-}
-
-async function getFullMatch(uid) {
-    dgraphClient = newClient();   
-    const query = `{ userMatch(func: uid(${uid})) {
-            match @filter(uid_in(match, ${uid})) {
-            ${ProfilData}
-            }
-        }
-    }`;
-    const res = await dgraphClient.newTxn().query(query);
-    const data = res.getJson();
-    if (data.userMatch[0]) {
-        return data.userMatch[0].match;
-    } else {
-        return null;
-    }
-}
-
 // Change data for a specific UID
 async function modifyUser(uid, key, value) {
     dgraphClient = newClient();
@@ -172,7 +70,6 @@ async function modifyUser(uid, key, value) {
       return (txn);
   }
 }
-
 
 // Delete a specific picture (WIP)
 async function deleteUserInfo(uid, key, url) {
@@ -267,7 +164,7 @@ async function setSchema(dgraphClient) {
         location: geo @index(geo) .
         text: string .
         interest: string .
-        score: int .
+        score: int @index(int) .
         visit: uid .
         reject: uid @reverse .
     `;
