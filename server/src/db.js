@@ -18,7 +18,13 @@ const ProfilData = `uid
                     interest,
                     user_pic,
                     score`;
+const ProfilMatch = `uid
+                    username,
+                    match,
+                    reject,
+                    visit`;
 
+                    
 async function getRandomUser() {
     dgraphClient = newClient();   
     const query = `{
@@ -262,6 +268,7 @@ async function setSchema(dgraphClient) {
         location: geo @index(geo) .
         text: string .
         interest: string .
+        score: int .
     `;
     const op = new dgraph.Operation();
     op.setSchema(schema);
@@ -275,13 +282,8 @@ module.exports  = {
     addUser: addUser,
     getUserID: getUserID,
     getUserProfile: getUserProfile,
-    getUserLike: getUserMatch,
-    getFullMatch: getFullMatch,
-    newMatch: newMatch,
     modifyUser: modifyUser,
     deleteUserInfo: deleteUserInfo,
     getUserPic: getUserPic,
-    filterUser: filterUser,
-    setLocation: setLocation,
-    unMatch: unMatch
+    setLocation: setLocation
 }

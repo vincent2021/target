@@ -24,7 +24,8 @@ async function login(body) {
         const query = `{
             login(func: eq(username, "${username}")) {
                 uid,
-                secret: checkpwd(password, "${password}")
+                secret: checkpwd(password, "${password}"),
+                score
                 }
             }`;
         const res = await dgraphClient.newTxn().query(query);
@@ -52,7 +53,7 @@ const privateKEY  = fs.readFileSync('./src/private.key', 'utf8');
 const publicKEY  = fs.readFileSync('./src/public.key', 'utf8');
 
 
-const sign = (uid, username, user_loc) => {
+const sign = (uid, username, user_loc, score) => {
     const signOptions = {
         expiresIn:  "120h",
         algorithm:  "RS256"
