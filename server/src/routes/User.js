@@ -122,6 +122,7 @@ router.route('/reportuser').post((req, res) => {
             });
             
         })
+    match.unMatch(uid2, uid);
     match.reject(uid2, uid);
 });
 

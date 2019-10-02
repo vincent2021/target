@@ -34,15 +34,11 @@ const ProfilUser = ({ match }) => {
             })
     }, [])
 
-    const BlockUser = e => {
-        e.preventDefault();
-        
-    }
     const ReportUser = e => {
         e.preventDefault();
-        axios.post(`/user/reportuser?uid=`)
+        axios.post(`/user/reportuser?uid=${user.uid}`)
         .then(res => {
-            console.log('report')
+            console.log(res.data);
         })
     }
     const UnlikeUser = e => {
@@ -80,8 +76,7 @@ const ProfilUser = ({ match }) => {
                 <div className="BlocUser">
                     <div className="HeaderProfil">
                         <p className="Titre">{user.username} / {Age}</p>
-                        <input id="BlockThisUser" onClick={BlockUser} type="submit" value="Block This User" style={{ backgroundColor: '#f55' }}></input>
-                        <input id="Report" onClick={ReportUser} type="submit" value="Report" style={{ backgroundColor: '#fb5' }}></input>
+                        <input id="Report User" onClick={ReportUser} type="submit" value="Report" style={{ backgroundColor: '#fb5' }}></input>
                     </div>
                     <div id="MatchBarre" className="MatchBarre"></div>
                     <span className="spanTarget">
