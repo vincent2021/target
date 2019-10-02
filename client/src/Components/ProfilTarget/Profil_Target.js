@@ -15,6 +15,7 @@ const ProfilUser = ({ match }) => {
         text: '',
         interest: []
     });
+    const [content, setContent] = useState('');
 
     useEffect(() => {
         axios.post(`/user/profile?uid=${match.params.uid}`)
@@ -43,12 +44,8 @@ const ProfilUser = ({ match }) => {
     }
 
     useEffect(() => {
-        console.log(user);
-    }, [user])
-
-    return (
-        <div className="BlocBase">
-
+        setContent(
+            <div className="BlocBase">
             <div className="BlocUser">
                 <div className="HeaderProfil">
                     <p className="Titre">{user.username} / {Age}</p>
@@ -62,10 +59,10 @@ const ProfilUser = ({ match }) => {
                 <div id="BlocImage" className="BlocImage"></div>
                 <div className="BlocInformations">
                     <p className="BlocTexte">
-                        Genre : {Info.genre} <br />
-                        Interest in : {Info.target} <br />
-                        Bio : {Info.text} <br />
-                        Interest : {Info.interest.map(i => (i + ' '))} <br />
+                        Genre : {user.gender} <br />
+                        Interest in : {user.target} <br />
+                        Bio : {user.text} <br />
+                        Interest : {user.interest} <br />
                         localistation: Moscou / Russia <br />
                     </p >
                 </div >
@@ -81,9 +78,11 @@ const ProfilUser = ({ match }) => {
                 </div >
             </div>
         </div >
+        )
 
+    }, [user.interest, user.text, user.target, user.gender])
 
-    )
+    return content
 }
 
 export default ProfilUser 
