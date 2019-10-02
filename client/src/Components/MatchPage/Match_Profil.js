@@ -28,13 +28,7 @@ const ProfilMatch = () => {
     const [Score, setScore] = useState([0, 100]);
     const [Localisation, setLocalisation] = useState([100]);
     const [Interest, setInterest] = useState([100]);
-    const [Uid, setUid] = useState(() => {
-        try{
-            return decode(localStorage.getItem('token').payload.uid);   
-        }catch(err){
-            return false;
-        }
-    })
+    const [Uid, setUid] = useState()
 
     const handleAge = e => {
         e.preventDefault();
@@ -80,8 +74,6 @@ const ProfilMatch = () => {
         });
     }
 
-    // RENVOYER A L ACCUEIL SI PAS DE USER
-
     const handleUser = async () => {
         await axios.post('/match/filter', filter)
             .then((res, req) => {
@@ -93,6 +85,7 @@ const ProfilMatch = () => {
 
     const handleMatch = e => {
         e.preventDefault();
+        console.log(Uid);
         if (e.target.value === "Yes") {
             let match = [Uid, user[number].uid];
             if (match[0] && match[1])
@@ -100,8 +93,7 @@ const ProfilMatch = () => {
                     .then(res => {
                         console.log('match !');
                     })
-        }
-        else {
+        }else {
             let match = [Uid, user[number].uid];
             if (match[0] && match[1])
                 axios.post(`/match/reject?uid=${match[1]}`)
@@ -123,8 +115,10 @@ const ProfilMatch = () => {
     }, [filter])
 
     useEffect(() => {
+        const token = decode(localStorage.getItem('token'));
         const Logo = document.getElementById('BigLogo');
         Logo.className = 'HideSvg';
+        setUid(token.payload.uid);
     }, []);
 
     useEffect(() => {
