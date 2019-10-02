@@ -47,7 +47,6 @@ router.route('/change').post((req, res) => {
 router.route('/modifyInfo').post((req, res) => {
     const uid = auth.decode(req.headers.authorization).payload.uid;
     req.body['uid'] = uid;
-    console.log(req.body);
     db.createData(req.body).then(function (ret) {
         res.send("Info modified");
     });
