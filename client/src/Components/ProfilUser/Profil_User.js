@@ -23,8 +23,6 @@ const ProfilClient = () => {
     const getToken = async () => {
         axios.post('/user/myprofile').then(res => {
             setUser({ ...res.data });
-            console.log(res.data)
-            // setInfo({});
             setImagesUser(res.data.user_pic);
             setIsLoading(false);
         })
@@ -65,9 +63,12 @@ const ProfilClient = () => {
 
     const DeletePicture = e => {
         e.preventDefault();
+        console.log('deleted')
         let MainPicture = document.getElementById('ImageUser');
         ImagesUser.find((img, index) => {
             if (img === MainPicture.src) {
+                axios.post(`user/delpic?url=${img}`)
+                    .then(res => { console.log('image deleted on db')})
                 ImagesUser.splice(index, 1);
                 setImagesUser(ImagesUser);
                 setChanges(Changes === true ? false : true);
@@ -76,6 +77,10 @@ const ProfilClient = () => {
             }
         })
     }
+
+    useEffect(() => {
+        // console.log(ImagesUser);
+    }, [Changes])
 
     const ModifyInformation = e => {
         e.preventDefault();
@@ -113,7 +118,7 @@ const ProfilClient = () => {
             <div className="BlocBase">
                 <div className="BlocUser">
                     <p className="Titre">{User.username}</p>
-                    <ImageContainers User={User} Images={ImagesUser} Changes={Changes} />
+                    <ImageContainers User={User} Images={ImagesUser} setImages={setImagesUser} Changes={Changes} />
                     <div className="BlocImport">
                         <button id="DeletePicture" className="modify" onClick={DeletePicture} type="Submit" style={{ backgroundColor: '#f33' }}>Delete Pic</button>
                         <input id="ImportPicture" className="ImportPicture" onChange={ImportPicture} type="file" value=""></input>

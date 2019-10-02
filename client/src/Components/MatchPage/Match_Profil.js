@@ -74,8 +74,6 @@ const ProfilMatch = () => {
         });
     }
 
-    // RENVOYER A L ACCUEIL SI PAS DE USER
-
     const handleUser = async () => {
         await axios.post('/match/filter', filter)
             .then((res, req) => {
