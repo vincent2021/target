@@ -30,7 +30,8 @@ app.use('/user', function (req, res, next) {
 }})}, User);
 
 app.use('/match', function (req, res, next) {
-  console.log("Match token" + req.headers.authorization);
+  console.log("Match token");
+  console.log(req.headers.authorization);
   auth.verify(req.headers.authorization).then(function (ret) {
     if (ret == false) {
         res.sendStatus(403);
