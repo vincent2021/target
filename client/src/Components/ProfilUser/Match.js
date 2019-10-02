@@ -23,7 +23,6 @@ const ProfilMatch = (props) => {
     }
 
     useEffect(() => {
-        let img = [];
         async function match() {
             axios.post(`/match/fullmatch?uid=${props.MyUid}`)
                 .then(async res => {
