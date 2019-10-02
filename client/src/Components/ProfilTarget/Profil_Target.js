@@ -27,8 +27,12 @@ const ProfilUser = ({ match }) => {
         axios.post(`/user/profile?uid=${match.params.uid}`)
             .then(res => {
                 setUser(res.data);
-                setAge(getAge(res.data.dob));
-            })
+                async function blabla() {
+                    getAge(res.data.dob).then(res => setAge(res))
+                }
+                blabla();
+            }
+            )
             .catch(err => {
                 console.log(err);
             })
@@ -109,7 +113,7 @@ const ProfilUser = ({ match }) => {
             </div >
         )
 
-    }, [user.interest, user.text, user.target, user.gender, ImageContainer])
+    }, [user.interest, user.text, user.target, user.gender, ImageContainer, Age, chatison])
 
     return content
 }
