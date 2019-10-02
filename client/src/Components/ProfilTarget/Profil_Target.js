@@ -7,14 +7,7 @@ const ProfilUser = ({ match }) => {
 
     const [user, setUser] = useState('');
     const [Age, setAge] = useState('')
-    const [image, setImage] = useState({ pictures: [] });
     const [chatison, setChatison] = useState(true);
-    const [Info, setInfo] = useState({
-        genre: '',
-        target: '',
-        text: '',
-        interest: []
-    });
     const [content, setContent] = useState('');
     const [ImageContainer, setImageContainer] = useState('')
 
@@ -41,9 +34,9 @@ const ProfilUser = ({ match }) => {
     const ReportUser = e => {
         e.preventDefault();
         axios.post(`/user/reportuser?uid=${user.uid}`)
-        .then(res => {
-            console.log(res.data);
-        })
+            .then(res => {
+                console.log(res.data);
+            })
     }
     const UnlikeUser = e => {
         e.preventDefault();
@@ -63,12 +56,15 @@ const ProfilUser = ({ match }) => {
             document.getElementById('ImageTarget').src = user.user_pic[0];
             setImageContainer(
                 user.user_pic.map((imgs, index) => (
-                    <img
-                        src={imgs}
-                        key={index}
-                        alt=""
-                        onClick={SwapPic}
-                    />)
+                    <span className='SmallPic' key={index}>
+                        <img
+                            src={imgs}
+                            alt=""
+                            onClick={SwapPic}
+                            id={'min' + index}
+                            onLoad={e => { resizeImage(e, 57) }}
+                        />
+                    </span>)
                 )
             );
         }

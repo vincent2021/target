@@ -216,4 +216,11 @@ input.send {
     display:none;
 }
 
+span.SmallPic {
+    display: block;
+    overflow: hidden;
+    width: 57px;
+    height: 57px;
+}
+
 
