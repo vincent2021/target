@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from '../Services/Axios';
-import { getAge, resizeImage } from '../Services/Fct';
+import { resizeImage } from '../Services/Fct';
 
 export const convertPic = (pic) => {
     return new Promise((res, rej) => {
@@ -19,17 +18,20 @@ const ImageContainers = (props) => {
     }
 
     const [BlocImages, setBlocImages] = useState();
-    
+
     useEffect(() => {
         console.log('useEffect ImageUser...');
         setBlocImages(
             props.Images.map((imgs, index) => (
-                <img
-                    src={imgs}
-                    key={index}
-                    alt=""
-                    onClick={SwapPic}
-                />
+                <span className='SmallPic' key={index}>
+                    <img
+                        src={imgs}
+                        id={'minme' + index}
+                        alt=""
+                        onClick={SwapPic}
+                        onLoad={e => { resizeImage(e, 57) }}
+                    />
+                </span>
             ))
         )
     }, [props.Changes, props.Images])
