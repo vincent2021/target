@@ -5,15 +5,15 @@ const Notification = (props) => {
     
     let array =["No Notification :("];
 
-    if(localStorage.getItem('token')) {
-        axios.post('/user/getNotif').then(res => {
-            array = res.data;
-            setNotifications(array);
-        })
-            .catch(err => {
-                console.log(err);
-        })
-    }
+    // if(localStorage.getItem('token')) {
+    //     axios.post('/user/getNotif').then(res => {
+    //         array = res.data;
+    //         setNotifications(array);
+    //     })
+    //         .catch(err => {
+    //             console.log(err);
+    //     })
+    // }
     
     const [Notifications, setNotifications] = useState([array]);
 

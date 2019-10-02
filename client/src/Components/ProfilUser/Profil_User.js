@@ -117,7 +117,7 @@ const ProfilClient = () => {
                             Interest in : {User.target} <br />
                             Bio : {User.text} <br />
                             {/* Interest : {User.interest.map(i => (i + ' '))} <br /> */}
-                            localistation: Moscou / Russia <br />
+                            Localisation: {User.city} <br />
                         </p >
                     </div>
                     <div>

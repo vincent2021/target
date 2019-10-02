@@ -86,8 +86,8 @@ router.route('/filter').post((req, res) => {
     const looking_for = req.body.gender;
     const age_max = tool.toDOB(req.body.age_max);
     const age_min = tool.toDOB(req.body.age_min);
-    const score_max = 80;
-    const score_min = 10;
+    const score_max = req.body.score_max;
+    const score_min = req.body.score_min;
 
     match.filterUser(uid, looking_for, age_min, age_max, user_loc, km, score_min, score_max).then(function (ret) {
         res.send(ret);

@@ -19,27 +19,22 @@ upload_app.post('/', upload.single('image'), (req, res) => {
         const ts = Date.now();
         data = req.body.image;
         if (data.startsWith('data:image/png;base64')) {
-            console.log("uploading a PNG")
             filename = `upload/${uid}/${ts}.png`;
             base64Data = data.replace(/^data:image\/png;base64,/, "");
         } else if (data.search('data:image/jpeg;base64')) {
-            console.log("uploading a JPG")
             filename = `upload/${uid}/${ts}.jpg`;
             base64Data = data.replace(/^data:image\/jpeg;base64,/, "");
         }
         let stream = fs.createWriteStream("public/" + filename);
         stream.write(base64Data, 'base64');
-        stream.end(console.log('Image uploaded'));
-
+        stream.end();
         const url = "http://localhost:8000/" + filename;
         db.modifyUser(uid, "user_pic", url).then(res => {
-            console.log(res);
         });
-        console.log(url);
         res.send(url);
     } else {
         console.log('No image Uploaded');
-        res.sendStatus(500);
+        res.sendStatus(403);
     }
 });
 

@@ -24,7 +24,7 @@ async function login(body) {
             login(func: eq(username, "${username}")) {
                 uid,
                 secret: checkpwd(password, "${password}"),
-                score
+                target
                 }
             }`;
         const res = await dgraphClient.newTxn().query(query);
@@ -36,7 +36,7 @@ async function login(body) {
             } else if (ip) {
                 geo.setPosFromUser(uid, ip, user_loc.lat, user_loc.lon);
             }
-            token = sign(uid, username, user_loc);
+            token = sign(uid, username, user_loc, target);
             return (token);
         } else {
             return ("Wrong password");
@@ -51,7 +51,7 @@ const privateKEY  = fs.readFileSync('./src/private.key', 'utf8');
 const publicKEY  = fs.readFileSync('./src/public.key', 'utf8');
 
 
-const sign = (uid, username, user_loc, score) => {
+const sign = (uid, username, user_loc, target) => {
     const signOptions = {
         expiresIn:  "120h",
         algorithm:  "RS256"
@@ -60,7 +60,8 @@ const sign = (uid, username, user_loc, score) => {
     let payload = {
         uid: uid,
         username: username,
-        loc: user_loc
+        loc: user_loc,
+        target: target
        };
     
     return (jwt.sign(payload, privateKEY, signOptions));
