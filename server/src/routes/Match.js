@@ -31,10 +31,27 @@ router.route('/reject').post((req, res) => {
     }, (err) => {console.log(err)});
 });
 
+router.route('/unreject').post((req, res) => {
+    const uid1 = tokenInfo = auth.decode(req.headers.authorization).payload.uid;
+    const uid2 = req.query['uid'];
+    match.unreject(uid1, uid2).then(function (ret) {
+        res.send(ret);
+    }, (err) => {console.log(err)});
+});
+
+
 router.route('/visit').post((req, res) => {
     const uid1 = tokenInfo = auth.decode(req.headers.authorization).payload.uid;
     const uid2 = req.query['uid'];
     match.visit(uid1, uid2).then(function (ret) {
+        res.send(ret);
+    }, (err) => {console.log(err)});
+});
+
+
+router.route('/filterVisit').post((req, res) => {
+    const uid = tokenInfo = auth.decode(req.headers.authorization).payload.uid;
+    match.filterVisit(uid).then(function (ret) {
         res.send(ret);
     }, (err) => {console.log(err)});
 });
@@ -61,11 +78,12 @@ router.route('/filter').post((req, res) => {
     };
     const uid = token.uid;
     const km = req.body.range * 1000;
-    const gender = req.body.gender;
+    const looking_for = req.body.gender;
+    console.log(looking_for);
     const age_max = tool.toDOB(req.body.age_max);
     const age_min = tool.toDOB(req.body.age_min);
 
-    match.filterUser(uid, gender, age_min, age_max, user_loc, km).then(function (ret) {
+    match.filterUser(uid, looking_for, age_min, age_max, user_loc, km).then(function (ret) {
         res.send(ret);
     });
 });

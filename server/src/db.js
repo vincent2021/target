@@ -256,7 +256,7 @@ async function setSchema(dgraphClient) {
         lastname: string @index(fulltext) .
         name: string @index(fulltext) .
         password: password .
-        gender: string @index(exact) .
+        gender: string @index(term) .
         target: string @index(exact) .
         match: uid @reverse .
         dob: datetime @index(hour) .
@@ -267,6 +267,8 @@ async function setSchema(dgraphClient) {
         text: string .
         interest: string .
         score: int .
+        visit: uid .
+        reject: uid @reverse .
     `;
     const op = new dgraph.Operation();
     op.setSchema(schema);

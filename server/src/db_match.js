@@ -21,18 +21,36 @@ const ProfilData = `uid
 
 
 
-async function filterUser(uid, gender, age_min, age_max, user_loc, km) {
+async function filterUser(uid, looking_for, age_min, age_max, user_loc, km) {
     dgraphClient = newClient();
-    const query = `{ users(func: eq(gender, "${gender}"))
+    if (looking_for == "both") {
+        looking_for = "male female";
+    }
+    const query = `{ users(func: allofterms(gender, "${looking_for}"))
     @filter(near(location, ${user_loc}, ${km})
     AND lt(dob, "${age_min}")
     AND gt(dob, "${age_max}")
     AND NOT uid(${uid})
-    AND NOT uid_in(~match, ${uid}))
+    AND NOT uid_in(~match, ${uid})
+    AND NOT uid_in(~reject, ${uid}))
         {
             ${ProfilData},
         }
     }`;
+    const res = await dgraphClient.newTxn().query(query);
+    const data = res.getJson();
+    return (data.users);
+}
+
+async function filterVisit(uid) {
+    dgraphClient = newClient();
+    const query = `{ users(func: has(username)) @filter(uid_in(visit, ${uid}) AND NOT uid(${uid}))
+        {    
+            ${ProfilData}
+        }
+    }`;
+    console.log(query);
+
     const res = await dgraphClient.newTxn().query(query);
     const data = res.getJson();
     return (data.users);
@@ -81,6 +99,24 @@ async function reject(uid1, uid2) {
         await txn.discard();
     };
     return (`Reject from ${uid1} to ${uid2} done`);
+}
+
+async function unreject(uid1, uid2) {
+    dgraphClient = newClient();
+    let txn = dgraphClient.newTxn();
+    //set rejection
+    try {
+        let mu = new dgraph.Mutation();
+        Data = `<${uid1}> <reject> <${uid2}> .
+        <${uid2}> <reject> <${uid1}> .`;
+        mu.setDelNquads(Data);
+        mu.setCommitNow(true);
+        await txn.mutate(mu);
+    } finally {
+        await setScore(uid2, +2);
+        await txn.discard();
+    };
+    return (`UnReject from ${uid1} to ${uid2} done`);
 }
 
 async function visit(uid1, uid2) {
@@ -212,6 +248,8 @@ module.exports  = {
     filterUser: filterUser,
     unMatch: unMatch,
     reject: reject,
+    unreject: unreject,
     visit: visit,
+    filterVisit: filterVisit,
     getInteraction: getInteraction
 }
