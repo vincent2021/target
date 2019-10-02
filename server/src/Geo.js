@@ -9,9 +9,7 @@ function getPos(uid, ip) {
         params.setFields('city, latitude, longitude');
         params.setIPAddress(ip); 
         const handleResponse = (json) => {
-            console.log(json);
             db.setLocation(uid, json.city, json.latitude, json.longitude).then((ret) => {
-            console.log(ret);
             })
         };
         api.getGeolocation(handleResponse, params);

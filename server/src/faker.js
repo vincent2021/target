@@ -77,6 +77,7 @@ async function generateFakeUser(test_user) {
                 target: target,
                 text: 'Loreum Ipsum'
         },};
+        console.log(fakeUser);
         ret = db.addUser(fakeUser);
     } catch (err) {
         console.log(err);
