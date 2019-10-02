@@ -42,7 +42,8 @@ function LoginPage(props) {
                         alert(res.data);
                     } else {
                         localStorage.setItem('token', res.data);
-                        props.loggedIn();
+                        props.setloggedIn(true);
+                        console.log('setlog in login')
                     }
                 })
                 .catch(err => {

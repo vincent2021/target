@@ -26,6 +26,7 @@ socket.on('info', function (data) {
 const App = () => {
 
     const [loggedIn, setLoggedIn] = useState(false);
+    const [Redirection, setRedirection] = useState(<Route exact path="/" render={() => (<LoginPage setloggedIn={setLoggedIn} />)} />);
 
     useEffect(() => {
         console.log('component mont')
@@ -49,12 +50,14 @@ const App = () => {
         setLoggedIn(false);
     }
 
-    const changeState = () => {
-        setLoggedIn(true);
-        // changer ce truc horrible....
-        window.location.href('http://localhost:3000/profil')
-        window.location.reload();
-    }
+    useEffect(() => {
+        console.log(isLogged);
+        if (isLogged === true)
+            setRedirection(<Route exact path="/" render={() => (<Redirect to="/match" />)} />);
+        else
+            setRedirection(<Route exact path="/" render={() => (<LoginPage setloggedIn={setLoggedIn} />)} />);
+        console.log('Redirection!')
+    }, [setLoggedIn, loggedIn])
 
     return (
         <div>
@@ -80,21 +83,22 @@ const App = () => {
                 <button id="LogoutButton" onClick={isLogout} >Logout</button>
             </div>
             <Switch>
-                <Route exact path="/" render={() => (
+                {Redirection}
+                {/* <Route exact path="/" render={() => (
                     loggedIn === true ? (
                         <Redirect to="/match" />
                     ) : (
                             <LoginPage loggedIn={changeState} />
                         )
-                )} />
+                )} /> */}
                 <Route exact path='/login'
-                    render={() => <LoginPage loggedIn={changeState} />} />
+                    render={() => <LoginPage setloggedIn={setLoggedIn} />} />
                 <Route exact path='/register' component={RegisterPage} />
                 <Route exact path='/profil' component={ProfilClient} />
                 <Route exact path='/match' component={ProfilMatch} />
                 <Route exact path="/user/:uid" component={ProfilUser} />
                 <Route
-                    render={() => <LoginPage loggedIn={changeState} />} />
+                    render={() => <LoginPage setloggedIn={setLoggedIn} />} />
             </Switch>
         </div>
     )
