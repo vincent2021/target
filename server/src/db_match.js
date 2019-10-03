@@ -50,8 +50,8 @@ async function filterUser(uid, age_min, age_max, user_loc, km, score_min, score_
             ${ProfilData},
         }
     }`;
-    console.log(`looking for ${target}, near(location, ${user_loc}, ${km})
-    AND age:[${age_min};${age_max}] AND score:[${score_min};${score_max}]`)
+    // console.log(`looking for ${target}, near(location, ${user_loc}, ${km})
+    // AND age:[${age_min};${age_max}] AND score:[${score_min};${score_max}]`)
     const res = await dgraphClient.newTxn().query(query);
     const data = res.getJson();
     return (data.users);
@@ -99,7 +99,6 @@ async function setScore(uid, value) {
 async function reject(uid1, uid2) {
     dgraphClient = newClient();
     let txn = dgraphClient.newTxn();
-    //set rejection
     try {
         let mu = new dgraph.Mutation();
         Data = `<${uid1}> <reject> <${uid2}> .
@@ -117,7 +116,6 @@ async function reject(uid1, uid2) {
 async function unreject(uid1, uid2) {
     dgraphClient = newClient();
     let txn = dgraphClient.newTxn();
-    //set rejection
     try {
         let mu = new dgraph.Mutation();
         Data = `<${uid1}> <reject> <${uid2}> .
@@ -135,7 +133,6 @@ async function unreject(uid1, uid2) {
 async function visit(uid1, uid2) {
     dgraphClient = newClient();
     let txn = dgraphClient.newTxn();
-    //set rejection
     try {
         let mu = new dgraph.Mutation();
         Data = `<${uid1}> <visit> <${uid2}> .`;

@@ -78,7 +78,6 @@ const ProfilMatch = () => {
     }
 
     const handleUser = async () => {
-        console.log(filter);
         await axios.post('/match/filter', filter)
             .then((res, req) => {
                 setUser(res.data);

@@ -36,6 +36,7 @@ const ProfilUser = ({ match }) => {
         e.preventDefault();
         axios.post(`/user/reportuser?uid=${user.uid}`)
             .then(res => {
+                //Laisser ce console.log pour obtenir le mail envoye
                 console.log(res.data);
             })
     }
@@ -43,13 +44,11 @@ const ProfilUser = ({ match }) => {
         e.preventDefault();
         axios.post(`/match/unlike?uid=${user.uid}`)
             .then(res => {
-                console.log('unlike')
             })
     }
     const ActiveChat = e => {
         e.preventDefault();
         chatison === true ? setChatison(false) : setChatison(true);
-        console.log(chatison);
     }
 
     useEffect(() => {
