@@ -42,7 +42,6 @@ router.route("/resetpwd").post((req, res) => {
 router.route("/activate").get((req, res) => {
     const email = req.query['email'];
     const key = req.query['key'];
-    console.log(email  +key)
     auth.activate(email, key).then((ret) =>
         res.send(ret));
 });
