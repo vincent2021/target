@@ -23,8 +23,10 @@
     display: flex;
     flex-direction: column;
     background-color: rgb(255, 255, 255);
-    width: 300px;
-    height: calc(80vh - 20px);
+    width: 320px;
+    /* height: calc(80vh - 20px); */
+    height:624px;
+    overflow: auto;
     margin: 10px;
 }
 
@@ -45,7 +47,7 @@
 
 .ChooseProfil{
     display: flex;
-    width:500px;
+    width:300px;
     flex-direction: row;
 }
 
