@@ -116,6 +116,9 @@ const ProfilMatch = () => {
 
     useEffect(() => {
         const token = decode(localStorage.getItem('token'));
+        if (token === null){
+            document.location.href = 'http://localhost:3000/login';
+        }
         const Logo = document.getElementById('BigLogo');
         Logo.className = 'HideSvg';
         setUid(token.payload.uid);

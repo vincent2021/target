@@ -35,7 +35,7 @@ const App = () => {
 
     useEffect(() => {
         const logout = document.getElementById('LogoutButton');
-        const match = document.getElementById('match');
+        const match = document.getElementById('matcheux');
         const profil = document.getElementById('profilClient');
         logout.className = (loggedIn === true) ? "ShowButton" : "HideButton";
         match.className = (loggedIn === true) ? "RouterMatch" : "Hide";
@@ -49,7 +49,7 @@ const App = () => {
             </Link>
             <div className='RouterBloc'>
                 <Link
-                    id='match'
+                    id='matcheux'
                     className='Hide'
                     to='/match'
                 >
@@ -68,7 +68,7 @@ const App = () => {
             <Switch>
                 <Route exact path="/" render={() => (
                     loggedIn === true ? (
-                        <Redirect to="/match" />
+                        <Redirect to="/profil" />
                     ) : (
                         <Redirect to="/login" />
                         )

@@ -16,6 +16,17 @@ const ProfilClient = () => {
     const [Page, setPage] = useState('match');
     const [Content, setContent] = useState(<p style={{ fontSize: '40px', position: 'fixed', bottom: '0px' }} >User is loading...</p>);
 
+
+    useEffect(() => {
+        let title = document.getElementById(Page);
+        if (title != null) {
+            title.style.color = 'black';
+            return (() => {
+                title.style.color = 'rgb(182, 182, 182)';
+            })
+        }
+    }, [Page])
+
     const getToken = async () => {
         axios.post('/user/myprofile')
             .then(res => {
@@ -24,7 +35,8 @@ const ProfilClient = () => {
                 setIsLoading(false);
             })
             .catch(err => {
-                console.log(err);
+                console.log('err');
+                document.location.href = 'http://localhost:3000/login';
             })
     };
 
@@ -64,7 +76,6 @@ const ProfilClient = () => {
             if (img === MainPicture.src) {
                 let images = { img: img }
                 axios.post(`user/delpic`, images)
-                    .then(res => { alert('Image deleted') })
                 ImagesUser.splice(index, 1);
                 setImagesUser(ImagesUser);
                 setChanges(Changes === true ? false : true);
@@ -123,19 +134,19 @@ const ProfilClient = () => {
                         <input className="modify" onClick={ModifyInformation} type="submit" value="Modify Informations" style={{ backgroundColor: '#0b3b' }}></input>
                     </div>
                 </div >
-                <div className="BlocUser">
+                <div className="BlocUserImg">
                     <div className="ChooseProfil">
-                        <p className="Titre" onClick={ChangeProfils} id="match">MATCH</p>
-                        <p className="Titre" >&nbsp;/&nbsp;</p>
-                        <p className="Titre" onClick={ChangeProfils} id="target">TARGET</p>
-                        <p className="Titre" >&nbsp;/&nbsp;</p>
-                        <p className="Titre" onClick={ChangeProfils} id="looks">LOOKS</p>
+                        <p className="SmallTitre" onClick={ChangeProfils} id="Smallmatch">MATCH</p>
+                        <p className="SmallTitre" >&nbsp;/&nbsp;</p>
+                        <p className="SmallTitre" onClick={ChangeProfils} id="Smalltarget">TARGET</p>
+                        <p className="SmallTitre" >&nbsp;/&nbsp;</p>
+                        <p className="SmallTitre" onClick={ChangeProfils} id="Smalllooks">LOOKS</p>
                     </div>
                     <ProfilMatch Page={Page} />
                 </div >
             </div >
         )
-    }, [User, OpenInfo, ImagesUser,Changes, Page])
+    }, [User, OpenInfo, ImagesUser, Changes, Page])
 
     return Content;
 }

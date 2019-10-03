@@ -61,9 +61,6 @@ class RegisterPage extends Component {
         invalid = (!error.email || !error.username || !error.password)
             ? false : true;
 
-        // Supprimer la déclaration pour activer les erreurs
-        invalid = true;
-
         this.setState({
             error: error,
             errorMsg: msg,
@@ -88,7 +85,9 @@ class RegisterPage extends Component {
         }
         else if (user) {
             axios.post(`/login/register`, { user })
-                .then(res => {})
+                .then(() => {
+                    document.location.href = 'http://localhost:3000/profil';
+                })
                 .catch(err => {
                     console.log(err);
                 })

@@ -14,12 +14,23 @@
 @media only screen and (max-width:800px) {
     .BlocBase {
         align-items: center;
+        justify-content: center;
         flex-direction: column;
         top: 40px;
     }
 }
 
 .BlocUser {
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(255, 255, 255);
+    width: 300px;
+    /* height: calc(80vh - 20px); */
+    height:624px;
+    margin: 10px;
+}
+
+.BlocUserImg {
     display: flex;
     flex-direction: column;
     background-color: rgb(255, 255, 255);
@@ -41,6 +52,14 @@
 .Titre {
     font-size: 16px;
     text-transform: uppercase;
+    margin: 0;
+    padding-bottom: 5px;
+}
+
+.SmallTitre {
+    font-size: 16px;
+    text-transform: uppercase;
+    color: rgb(182, 182, 182);
     margin: 0;
     padding-bottom: 5px;
 }
@@ -162,6 +181,7 @@ input.send {
     border: black solid 1px;
     height: 545px;
     bottom: auto;
+    margin-bottom: 30px;
 }
 
 .sc-header {

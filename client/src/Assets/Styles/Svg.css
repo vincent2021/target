@@ -75,21 +75,17 @@ svg.prefix__titre {
     left: 50%;
     transform: translate(-50%);
     position: absolute;
-    width: 500px;
+    width: 620px;
 }
 
 
 @media screen and (max-width: 750px) {
 
 
-    svg.prefix__titre {
-        top: 10px;
-        width: 95vw;
+    svg{
+     display:none;
     }
 
-    .prefix__st2 {
-        stroke-width: 1.5px;
-    }
 }
 
 svg:hover>.prefix__st2 {

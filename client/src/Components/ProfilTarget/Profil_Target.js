@@ -28,6 +28,7 @@ const ProfilUser = ({ match }) => {
             }
             )
             .catch(err => {
+                document.location.href = 'http://localhost:3000/login';
                 console.log(err);
             })
     }, [])
@@ -42,9 +43,20 @@ const ProfilUser = ({ match }) => {
     }
     const UnlikeUser = e => {
         e.preventDefault();
-        axios.post(`/match/unlike?uid=${user.uid}`)
+        if (e.target.value === 'Unlike') {
+            e.target.value = 'Like';
+            e.target.style.backgroundColor = '#fcf';
+            axios.post(`/match/unlike?uid=${user.uid}`)
+                .then(res => {
+                })
+        }
+        else{
+            e.target.value = 'Unlike';
+            e.target.style.backgroundColor = 'rgb(236, 49, 49)'
+            axios.post(`/match/new?&uid2=${match.params.uid}`)
             .then(res => {
             })
+        }
     }
     const ActiveChat = e => {
         e.preventDefault();
@@ -85,7 +97,6 @@ const ProfilUser = ({ match }) => {
                     <div className="BlocImage">
                         {ImageContainer}
                     </div>
-                    <div id="BlocImage" className="BlocImage"></div>
                     <div className="BlocInformations">
                         <p className="BlocTexte">
                             Genre : {user.gender} <br />
@@ -96,7 +107,7 @@ const ProfilUser = ({ match }) => {
                         </p >
                     </div >
                     <div className="UserButton">
-                        <input id="Unlike" onClick={UnlikeUser} type="submit" value="Unlike" style={{ backgroundColor: '#fcf' }}></input>
+                        <input id="Unlike" onClick={UnlikeUser} type="submit" value="Like" style={{ backgroundColor: '#fcf' }}></input>
                         <input id="Chat" onClick={ActiveChat} type="submit" value="Chat" style={{ backgroundColor: '#0b3b' }}></input>
                     </div >
                 </div >
