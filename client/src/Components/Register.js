@@ -85,8 +85,9 @@ class RegisterPage extends Component {
         }
         else if (user) {
             axios.post(`/login/register`, { user })
-                .then(() => {
-                    document.location.href = 'http://localhost:3000/profil';
+                .then(res => {
+                    console.log(res.data);
+                    alert("Confirmation email sent.")
                 })
                 .catch(err => {
                     console.log(err);

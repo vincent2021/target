@@ -1,5 +1,32 @@
 const nodemailer = require('nodemailer');
 
+async function sendRegisterMail(email, key, username) {
+
+    // create reusable transporter object using the default Fake Email service
+    const transporter = nodemailer.createTransport({
+        host: 'smtp.ethereal.email',
+        port: 587,
+        auth: {
+            user: 'dahlia6@ethereal.email',
+            pass: 'RNd1BAFjqGgdGga3u9'
+        }
+    });
+
+    const body = "Hi " + username + ",\nPlease find activate your account with this link: http://localhost:8000/login/activate?email=" + email + "&key=" + key + "\nRegards, Felix Foo."
+
+    let info = await transporter.sendMail({
+        from: '"Felix Foo 👻" <foo@target.com', 
+        to: email, 
+        subject: "Please find your new password",
+        text: body,
+        html: `<b>${body}</b>`
+    });
+    ret = 'Mail sent with activation link: ' + nodemailer.getTestMessageUrl(info);
+    return (ret);
+}
+
+
+
 async function sendResetMail(email, new_pwd, username) {
 
     // create reusable transporter object using the default Fake Email service
@@ -55,5 +82,6 @@ async function sendReportMail(url, user_data) {
 
 module.exports = {
     sendResetMail: sendResetMail,
-    sendReportMail: sendReportMail
+    sendReportMail: sendReportMail,
+    sendRegisterMail: sendRegisterMail
 };

@@ -11,9 +11,15 @@ router.route("/connect").post((req, res) => {
 });
 
 router.route("/register").post((req, res) => {
-    db.addUser(req.body);
-    mail.sendMail("vincent2021@gmail.com", "Test", "Salut ma poule");
-    res.send("User added to the db");
+    const key = Math.random().toString(36).substring(2, 15);
+    const status = false;
+    req.body.user['key'] = key;
+    req.body.user['status'] = status;
+    db.addUser(req.body); 
+    mail.sendRegisterMail(req.body.user['email'], key, status).then((ret) => {
+        res.send(ret);
+        console.log(ret);
+    });
 });
 
 router.route("/userid").post((req, res) => {
@@ -30,6 +36,14 @@ router.route("/tokeninfo").post((req, res) => {
 router.route("/resetpwd").post((req, res) => {
     const email = req.query['email'];
     auth.resetPasswd(email).then((ret) =>
+        res.send(ret));
+});
+
+router.route("/activate").get((req, res) => {
+    const email = req.query['email'];
+    const key = req.query['key'];
+    console.log(email  +key)
+    auth.activate(email, key).then((ret) =>
         res.send(ret));
 });
 
