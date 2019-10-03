@@ -93,14 +93,12 @@ const ProfilMatch = () => {
             if (match[0] && match[1])
                 axios.post(`/match/new?uid1=${match[0]}&uid2=${match[1]}`)
                     .then(res => {
-                        console.log('match !');
                     })
         }else {
             let match = [Uid, user[number].uid];
             if (match[0] && match[1])
                 axios.post(`/match/reject?uid=${match[1]}`)
                     .then(res => {
-                        console.log('reject !');
                     })
         }
         if (!user[number + 1]){

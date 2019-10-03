@@ -27,7 +27,6 @@ const App = () => {
     const [loggedIn, setLoggedIn] = useState(false);
 
     useEffect(() => {
-        console.log('component mont')
         isLogged()
             .then(res => {
                 setLoggedIn(res);

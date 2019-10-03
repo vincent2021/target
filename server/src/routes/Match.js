@@ -12,11 +12,7 @@ router.route('/new').post((req, res) => {
     db.setNotif(req.query['uid2'], `"You have been liked by ${name}"`);
 });
 
-router.route('/user').post((req, res) => {
-    match.getUserLike(req.query['uid']).then(function (ret) {
-        res.send(ret);
-    }, (err) => {console.log(err)});
-});
+
 
 router.route('/unlike').post((req, res) => {
     const uid1 = tokenInfo = auth.decode(req.headers.authorization).payload.uid;
@@ -67,6 +63,13 @@ router.route('/filterVisit').post((req, res) => {
 router.route('/fullmatch').post((req, res) => {
     const uid = tokenInfo = auth.decode(req.headers.authorization).payload.uid;
     match.getFullMatch(uid).then(function (ret) {
+        res.send(ret);
+    }, (err) => {console.log(err)});
+});
+
+router.route('/smallmatch').post((req, res) => {
+    const uid = tokenInfo = auth.decode(req.headers.authorization).payload.uid;
+    match.getUserLike(uid).then(function (ret) {
         res.send(ret);
     }, (err) => {console.log(err)});
 });

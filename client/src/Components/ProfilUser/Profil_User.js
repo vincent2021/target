@@ -49,24 +49,22 @@ const ProfilClient = () => {
                         setChanges(Changes === true ? false : true);
                     })
                     .catch(err => {
-                        console.log('?' + err);
+                        console.log(err);
                     })
-                console.log('Image imported...')
             }
             else
-                console.log('Too much images...')
+                alert('Too much images...');
         }
     }
 
     const DeletePicture = e => {
         e.preventDefault();
-        console.log('deleted')
         let MainPicture = document.getElementById('ImageUser');
         ImagesUser.find((img, index) => {
             if (img === MainPicture.src) {
                 let images = { img: img }
                 axios.post(`user/delpic`, images)
-                    .then(res => { console.log('image deleted on db') })
+                    .then(res => { alert('Image deleted') })
                 ImagesUser.splice(index, 1);
                 setImagesUser(ImagesUser);
                 setChanges(Changes === true ? false : true);
@@ -83,7 +81,6 @@ const ProfilClient = () => {
 
     const ChangeProfils = e => {
         e.preventDefault();
-        console.log(e.target.id)
         setPage(e.target.id);
     }
 
