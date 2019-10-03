@@ -85,12 +85,12 @@ async function generateFakeUser(test_user) {
 };
 
 //Pour supprimer la BD au moment du seed
-//db.createDb();
+db.createDb();
 
 //Generate a user with specific login
-//generateFakeUser('vincent');
-//generateFakeUser('felix');
-//generateFakeUser('test');
+generateFakeUser('vincent');
+generateFakeUser('felix');
+generateFakeUser('test');
 
 async function seed(nb) {
     for (let i = 0; i < nb ; i++) {
@@ -98,4 +98,4 @@ async function seed(nb) {
     }
 }
 
-seed(150);
+seed(500);

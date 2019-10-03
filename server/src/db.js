@@ -1,7 +1,7 @@
 const dgraph = require("dgraph-js");
 const grpc = require("grpc");
 const tool = require("./tool.js");
-const SERVER_ADDR = "54.194.192.127:9080";
+const SERVER_ADDR = 'dgraph:9080';
 const SERVER_CREDENTIALS = grpc.credentials.createInsecure();
 const clientStub1 = new dgraph.DgraphClientStub(SERVER_ADDR, SERVER_CREDENTIALS);
 const ProfilData = `uid
@@ -129,13 +129,13 @@ async function setLocation(uid, city, lat, lon) {
         mu.setSetJson(jsonData);
         mu.setCommitNow(true);
         await txn.mutate(mu);
-        return(txn);
   } finally {
       await txn.discard();
   }
 }
 
 async function addUser(user) {
+    console.log("User Added.\n");
     return createData(user);
 }
 
@@ -146,8 +146,8 @@ async function createData(data) {
     try {
         const mu = new dgraph.Mutation();
         mu.setSetJson(data);
+        mu.setCommitNow(true);
         await txn.mutate(mu);
-        await txn.commit();
     } finally {
         await txn.discard();
     }
@@ -192,6 +192,8 @@ async function setSchema(dgraphClient) {
         visit: uid .
         reject: uid @reverse .
         notif: [string] .
+        key: string @index(exact) .
+        status: bool .
     `;
     const op = new dgraph.Operation();
     op.setSchema(schema);

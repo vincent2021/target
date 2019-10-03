@@ -3,7 +3,7 @@ const fs = require('fs');
 const jwt  = require('jsonwebtoken');
 const dgraph = require("dgraph-js");
 const grpc = require("grpc");
-const SERVER_ADDR = "54.194.192.127:9080";
+const SERVER_ADDR = 'dgraph:9080';
 const SERVER_CREDENTIALS = grpc.credentials.createInsecure();
 const clientStub1 = new dgraph.DgraphClientStub(SERVER_ADDR, SERVER_CREDENTIALS);
 const geo = require("./Geo");
@@ -24,21 +24,26 @@ async function login(body) {
             login(func: eq(username, "${username}")) {
                 uid,
                 secret: checkpwd(password, "${password}"),
-                target
+                status
                 }
             }`;
         const res = await dgraphClient.newTxn().query(query);
         const data = res.getJson();
-        const target = data.login[0].target;
-        if (data.login[0].secret === true) {
+        let status = true;
+        if (data.login[0].status === false) {
+            status = false;
+        }
+        if (data.login[0].secret === true && (status != false)) {
             const uid = data.login[0].uid;
             if (user_loc == undefined) {
                 geo.getPos(uid, ip);
             } else if (ip) {
                 geo.setPosFromUser(uid, ip, user_loc.lat, user_loc.lon);
             }
-            token = sign(uid, username, user_loc, target);
+            token = sign(uid, username, user_loc);
             return (token);
+        } else if (status == false) {
+            return ("Account not activated");
         } else {
             return ("Wrong password");
         }
@@ -61,8 +66,7 @@ const sign = (uid, username, user_loc, target) => {
     let payload = {
         uid: uid,
         username: username,
-        loc: user_loc,
-        target: target
+        loc: user_loc
        };
     
     return (jwt.sign(payload, privateKEY, signOptions));
@@ -115,10 +119,42 @@ async function resetPasswd(email) {
     }
 }
 
+async function activate(email, key) {
+    try {
+        dgraphClient = newClient();
+        const query = `{
+            getUID(func: eq(email, "${email}")) {
+                uid,
+                key,
+                status
+                }
+            }`;
+        const res = await dgraphClient.newTxn().query(query);
+        const data = res.getJson().getUID[0];
+        if (data.key === key) {
+            try {
+                const mu = new dgraph.Mutation();
+                txn = await dgraphClient.newTxn();
+                mu.setSetNquads(`<${data.uid}> <status> "true" .`);
+                mu.setCommitNow(true);
+                await txn.mutate(mu);
+                return ('Account activated, you can now go to <a href="http://localhost:3000/login">Login</a>');
+            } finally {
+                await txn.discard();
+            }
+        } else {
+            return "Wrong activation link";
+        }
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 module.exports = {
     sign: sign,
     verify: verify,
     decode: decode,
     login: login,
-    resetPasswd: resetPasswd
+    resetPasswd: resetPasswd,
+    activate: activate
 };

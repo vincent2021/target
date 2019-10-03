@@ -5,8 +5,13 @@ const tool = require("../Tool.js");
 const auth = require("../auth.js");
 
 router.route('/new').post((req, res) => {
-    const name = tokenInfo = auth.decode(req.headers.authorization).payload.username;
-    match.newMatch(req.query['uid1'], req.query['uid2']).then(function (ret) {
+    const tokenInfo = auth.decode(req.headers.authorization).payload;
+    const name = tokenInfo.username;
+    let uid1 = tokenInfo.uid;
+    if (req.query['uid1']) {
+        uid1 = req.query['uid1'];
+    }
+    match.newMatch(uid1, req.query['uid2']).then(function (ret) {
         res.send(ret);
     }, (err) => {console.log(err)});
     db.setNotif(req.query['uid2'], `"You have been liked by ${name}"`);

@@ -1,13 +1,13 @@
 const dgraph = require("dgraph-js");
 const grpc = require("grpc");
 const tool = require("./tool.js");
-const SERVER_ADDR = "54.194.192.127:9080";
+const SERVER_ADDR = 'dgraph:9080';
 const SERVER_CREDENTIALS = grpc.credentials.createInsecure();
 const clientStub1 = new dgraph.DgraphClientStub(SERVER_ADDR, SERVER_CREDENTIALS);
 const ProfilData = `uid
                     username,
                     email,
-                    firstname,
+                    firstname, 
                     lastname,
                     dob,
                     city,
@@ -20,13 +20,16 @@ const ProfilData = `uid
                     score`;
 
 async function getTarget(uid) {
+    let target = "both";
     dgraphClient = newClient();
     const queryTarget = `{ user(func: uid(${uid})) {
                 target
             }
         }`;
     const ret = await dgraphClient.newTxn().query(queryTarget);
-    const target = ret.getJson().user[0].target;
+    if (ret.getJson().user[0] != undefined && ret.getJson().user[0].target != undefined) {
+        target = ret.getJson().user[0].target;
+    }
     return(target)
 }
 

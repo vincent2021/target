@@ -47,7 +47,7 @@ function LoginPage(props) {
                 url: 'http://localhost:8000/login/connect/',
                 data: profil
               }).then(async res => {
-                    if (res.data === "Wrong password" || res.data === "Wrong username") {
+                    if (res.data === "Wrong password" || res.data === "Wrong username" || res.data === "Account not activated") {
                         alert(res.data);
                     } else {
                         localStorage.setItem('token', res.data);
