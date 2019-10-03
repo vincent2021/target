@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState, useEffect, createElement } from 'react';
 import ChatBox from '../../Services/Chatbox';
 import axios from '../../Services/Axios';

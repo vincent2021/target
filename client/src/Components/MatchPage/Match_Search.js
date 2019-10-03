@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState, useEffect } from "react";
 import Slider from '@material-ui/core/Slider';
 import { withStyles } from '@material-ui/styles';

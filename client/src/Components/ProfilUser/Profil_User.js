@@ -1,4 +1,4 @@
-// eslint-disable-next-line
+/* eslint-disable */
 import React, { useState, useEffect } from 'react';
 import axios from '../../Services/Axios';
 import ImageContainers, { convertPic } from '../../Services/ImageUser';
