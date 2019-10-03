@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState, useEffect } from "react";
 import Slider from '@material-ui/core/Slider';
 import { withStyles } from '@material-ui/styles';
@@ -65,13 +66,13 @@ const MatchSearch = (props) => {
                     onClickCapture={props.handleLocalisation}
                     defaultValue={props.Localisation}
                 />
-                <div>Interest : {props.Interest}%</div>
+                {/* <div>Interest : {props.Interest}%</div>
                 <MatchSlider
                     aria-label="Interest"
                     onChange={(e, newValue) => {props.setInterest(newValue) }}
                     onClickCapture={props.handleInterest}
                     defaultValue={props.Interest}
-                />
+                /> */}
             </div>
         );
     }, [props])

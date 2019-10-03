@@ -1,3 +1,4 @@
+/* eslint no-unused-vars: 0 */
 import React, { useState, useEffect, useCallback } from "react";
 import io from "socket.io-client";
 import { Route, Link, Switch, Redirect } from "react-router-dom";
@@ -26,7 +27,6 @@ const App = () => {
     const [loggedIn, setLoggedIn] = useState(false);
 
     useEffect(() => {
-        console.log('component mont')
         isLogged()
             .then(res => {
                 setLoggedIn(res);

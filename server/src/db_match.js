@@ -183,7 +183,7 @@ async function unMatch(uid1, uid2) {
 }
 
 //Return all like for a user
-async function getUserMatch(uid) {
+async function getUserLike(uid) {
     dgraphClient = newClient();   
     const query = `{ getUserLike(func: uid(${uid})) {
             match {
@@ -227,7 +227,7 @@ async function getInteraction(uid) {
 async function getFullMatch(uid) {
     dgraphClient = newClient();   
     const query = `{ userMatch(func: uid(${uid})) {
-            match @filter(uid_in(~match, ${uid})) {
+            match @filter(uid_in(match, ${uid})) {
                 ${ProfilData}
             }
         }
@@ -248,7 +248,7 @@ function newClient() {
 
 module.exports  = {
     newClient: newClient,
-    getUserLike: getUserMatch,
+    getUserLike: getUserLike,
     getFullMatch: getFullMatch,
     newMatch: newMatch,
     filterUser: filterUser,

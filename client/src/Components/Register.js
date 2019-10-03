@@ -88,9 +88,7 @@ class RegisterPage extends Component {
         }
         else if (user) {
             axios.post(`/login/register`, { user })
-                .then(res => {
-                    console.log(res.data);
-                })
+                .then(res => {})
                 .catch(err => {
                     console.log(err);
                 })
