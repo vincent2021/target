@@ -20,7 +20,6 @@ const ImageContainers = (props) => {
     const [BlocImages, setBlocImages] = useState();
 
     useEffect(() => {
-        console.log('useEffect ImageUser...');
         setBlocImages(
             props.Images.map((imgs, index) => (
                 <span className='SmallPic' key={index}>
