@@ -77,10 +77,9 @@ class RegisterPage extends Component {
             firstname: this.state.firstname,
             lastname: this.state.lastname,
             email: this.state.email,
-            password: this.state.password,
-            confPassword: this.state.confPassword
+            password: this.state.password
         };
-        if (user.confPassword !== user.password) {
+        if (this.state.confPassword !== this.state.password) {
             alert("confirmation password doesn't match");
         }
         else if (user) {
