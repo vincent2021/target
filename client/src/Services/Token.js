@@ -33,14 +33,11 @@ function isLogged() {
             verify(token)
                 .then(check => {
                     if (!check) {
-                        console.log('no token ...');
                         res(false);
                     } else if (check.exp < dateNow.getTime() / 1000) {
-                        console.log('deco token...');
                         localStorage.removeItem('token');
                         res(false);
                     } else {
-                        console.log('token valid ...');
                         res(true);
                     }
                 })

@@ -11,7 +11,10 @@ function ResetPwd(props) {
             axios({
                 method: 'post',
                 url: `http://localhost:8000/login/resetpwd?email=${state.email}`,
-              }).then(res => {console.log(res.data);})
+              }).then(res => {
+                //Laisser ce console.log pour obtenir le mail envoye
+                  console.log(res.data);
+                })
                 .catch(err => {
                     console.log(err);
                 })

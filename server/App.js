@@ -44,11 +44,3 @@ app.use('/upload', function (req, res, next) {
 }})}, Upload);
 
 const server = app.listen(8000, () => console.log('Backend started and listening on port 8000!'));
-
-//Mise en place du socket  pour le chat et notification
-// const io = require('socket.io')(server);
-// io.on('connection', function (socket) {
-//   socket.on('disconnect', function() {
-//   });
-//   socket.emit('info', "Hello socket is on baby !");
-// });
