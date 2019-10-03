@@ -54,11 +54,11 @@ const ProfilMatch = (props) => {
                     }
                 })
         }
-        if (props.Page === 'match')
+        if (props.Page === 'Smallmatch')
             match();
-        else if (props.Page === 'looks')
+        else if (props.Page === 'Smalllooks')
             looks();
-        else if (props.Page === 'target')
+        else if (props.Page === 'Smalltarget')
             target();
         return (() => {
             setMatchImg('');

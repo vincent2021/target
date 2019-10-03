@@ -61,9 +61,6 @@ class RegisterPage extends Component {
         invalid = (!error.email || !error.username || !error.password)
             ? false : true;
 
-        // Supprimer la déclaration pour activer les erreurs
-        invalid = true;
-
         this.setState({
             error: error,
             errorMsg: msg,

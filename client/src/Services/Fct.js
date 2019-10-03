@@ -1,10 +1,3 @@
-// eslint-disable-next-line
-function logout() {
-    // remove user from local storage to log user out
-    localStorage.removeItem('user');
-}
-
-// deplacer à l'inscription (calcul de l'age)
 const getAge = (date) => {
     return new Promise((res, rej) => {
         const dn = new Date(date)
