@@ -18,14 +18,14 @@ const ProfilMatch = () => {
     });
     const [content, setContent] = useState(<div>is loading</div>);
     const [number, setNumber] = useState(0);
-    const [Age, setAge] = useState([20, 40]);
+    const [Age, setAge] = useState([20, 60]);
     const [Score, setScore] = useState([0, 100]);
     const [Localisation, setLocalisation] = useState([100]);
     const [Interest, setInterest] = useState([100]);
     const [Uid, setUid] = useState();
     const [filter, setFilter] = useState({
-        age_max: Age[0],
-        age_min: Age[1],
+        age_min: Age[0],
+        age_max: Age[1],
         score_min: Score[0],
         score_max: Score[1],
         range: Localisation[0],
@@ -78,6 +78,7 @@ const ProfilMatch = () => {
     }
 
     const handleUser = async () => {
+        console.log(filter);
         await axios.post('/match/filter', filter)
             .then((res, req) => {
                 setUser(res.data);
@@ -193,7 +194,7 @@ const ProfilMatch = () => {
         return(() => {
             setContent('');
         })
-    }, [background, Age, Localisation, Score, Interest])
+    }, [background, Age, Localisation, Score, Interest, user])
 
     return content;
 }

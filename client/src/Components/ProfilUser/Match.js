@@ -44,10 +44,22 @@ const ProfilMatch = (props) => {
                     }
                 })
         }
+        async function target() {
+            axios.post(`/match/smallmatch`)
+                .then(async res => {
+                    if (res.data.length > 0) {
+                        const data = await Mapping(res.data);
+                        setMatchImg(data.img);
+                        setMatchLink(data.lien);
+                    }
+                })
+        }
         if (props.Page === 'match')
             match();
         else if (props.Page === 'looks')
             looks();
+        else if (props.Page === 'target')
+            target();
         return (() => {
             setMatchImg('');
             setMatchLink('');

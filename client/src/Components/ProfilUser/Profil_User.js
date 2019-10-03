@@ -102,7 +102,7 @@ const ProfilClient = () => {
         setContent(
             <div className="BlocBase">
                 <div className="BlocUser">
-                    <p className="Titre">{User.username} / score : {User.score}</p>
+                    <p className="Titre">{User.username} / score {User.score}</p>
                     <ImageContainers User={User} Images={ImagesUser} setImages={setImagesUser} Changes={Changes} />
                     <div className="BlocImport">
                         <button id="DeletePicture" className="modify" onClick={DeletePicture} type="Submit" style={{ backgroundColor: '#f33' }}>Delete Pic</button>
@@ -126,6 +126,8 @@ const ProfilClient = () => {
                 <div className="BlocUser">
                     <div className="ChooseProfil">
                         <p className="Titre" onClick={ChangeProfils} id="match">MATCH</p>
+                        <p className="Titre" >&nbsp;/&nbsp;</p>
+                        <p className="Titre" onClick={ChangeProfils} id="target">TARGET</p>
                         <p className="Titre" >&nbsp;/&nbsp;</p>
                         <p className="Titre" onClick={ChangeProfils} id="looks">LOOKS</p>
                     </div>
